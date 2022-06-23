@@ -20,6 +20,7 @@ import { selectAlert } from "./redux/alertSlice";
 import SimpleAlert from "./components/Alert";
 import SearchFlight from './pages/SearchFlight';
 import FlightDetail from "./pages/FlightDetail";
+import TermsAndCondition from './pages/TermsAndCondition';
 
 
 
@@ -52,6 +53,7 @@ function App() {
           <Route path="/search-hotels" element={<SearchHotels />} />
           <Route path='/flight-booking' element={<FlightDetail />} />
           <Route path="/faq" element={<Faq />} />
+          <Route path="/TermsAndCondition" element={<TermsAndCondition />} />
           <Route path="/flight-checkout" element={
             <RequireAuth>
               <BookingFlightPage />

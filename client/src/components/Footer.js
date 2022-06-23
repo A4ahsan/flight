@@ -76,7 +76,7 @@ function Footer() {
             <div className="bot2_wrapper">
                 <div className="container">
                     <div className="left_side">
-                        Copyright © 2022 <Link to="#"><strong>AXEN HOLIDAYS</strong></Link> <span>|</span> <Link to="/privacy-policy">Privacy Policy</Link> <span>|</span> <Link to="#">About Us</Link> <span>|</span> <Link to="faq.php">FAQ</Link> <span>|</span> <Link to="#">Contact Support</Link>
+                        Copyright © 2022 <Link to="#"><strong>AXEN HOLIDAYS</strong></Link> <span>|</span> <Link to="/privacy-policy">Privacy Policy</Link> <span>|</span> <Link to="/TermsAndCondition">Term's & Condition</Link> <span>|</span> <Link to="#">About Us</Link> <span>|</span> <Link to={"/faq"}>FAQ</Link> <span>|</span> <Link to="#">Contact Support</Link>
                     </div>
                     <div className="right_side">Designed by <Link to="#"><strong>AXEN HOLIDAYS</strong></Link></div>
                 </div>

@@ -7,6 +7,7 @@ import { store, persistor } from "./redux/Store";
 import { PersistGate } from 'redux-persist/integration/react'
 import "./styles/style.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap"; // importing bootstrap Js for collapse
 import { render } from 'react-dom'
 import { transitions, positions, Provider as AlertProvider } from 'react-alert'
 import AlertTemplate from 'react-alert-template-basic'
