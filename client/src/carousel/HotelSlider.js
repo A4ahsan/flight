@@ -8,7 +8,7 @@ function HotelSlider() {
     <div className="popular">
       <div className="popular_inner">
         <figure>
-          <img src="https://axen-trave-test.herokuapp.com/images/popular01.jpg" alt="" className="img-responsive" />
+          <img src="images/popular01.jpg" alt="" className="img-responsive" />
           <div className="over">
             <div className="v1">Bahamas <span>Our biggest sale</span></div>
             <div className="v2">Lorem ipsum dolor sit amet, concateus.</div>
@@ -20,11 +20,11 @@ function HotelSlider() {
           <div className="txt3 clearfix">
             <div className="left_side">
               <div className="stars1" style={{ display: "flex" }} >
-                <img src="https://axen-trave-test.herokuapp.com/images/star1.png" alt="" />
-                <img src="https://axen-trave-test.herokuapp.com/images/star1.png" alt="" />
-                <img src="https://axen-trave-test.herokuapp.com/images/star1.png" alt="" />
-                <img src="https://axen-trave-test.herokuapp.com/images/star1.png" alt="" />
-                <img src="https://axen-trave-test.herokuapp.com/images/star2.png" alt="" />
+                <img src="images/star1.png" alt="" />
+                <img src="images/star1.png" alt="" />
+                <img src="images/star1.png" alt="" />
+                <img src="images/star1.png" alt="" />
+                <img src="images/star2.png" alt="" />
               </div>
               <div className="nums">- 18 Reviews</div>
             </div>
