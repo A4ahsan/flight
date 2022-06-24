@@ -79,7 +79,7 @@ body {
 }
 
 .email1 a {
-    display: block;
+    /* display: block; */
     font-size: 13px;
     color: #acacac;
     text-decoration: none;
