@@ -2037,7 +2037,8 @@ header {
 #slider_wrapper {
     padding-bottom: 180px;
     padding-top: 270px;
-    background-image: url("https://axen-trave-test.herokuapp.com/images/slider.jpg");
+    /* background-image: url("https://axen-trave-test.herokuapp.com/images/slider.jpg"); */
+    background-image: url("../../public/images/slider.jpg");
     background-size: cover;
     z-index: -100;
 }
@@ -2520,7 +2521,7 @@ header {
     width: 100%;
     position: relative;
     overflow: hidden;
-    background-image: url("https://axen-trave-test.herokuapp.com/images/parallax1.jpg");
+    background-image: url("../../public/images/parallax1.jpg");
     z-index: -20;
 }
 
@@ -2561,11 +2562,11 @@ header {
 }
 
 .bg1 {
-    background-image: ("https://axen-trave-test.herokuapp.com/images/parallax1.jpg");
+    background-image: ("images/parallax1.jpg");
 }
 
 .bg2 {
-    background-image: ("https://axen-trave-test.herokuapp.com/images/parallax2.jpg");
+    background-image: ("images/parallax2.jpg");
 }
 
 #parallax1 {

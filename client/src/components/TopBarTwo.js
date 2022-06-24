@@ -260,7 +260,7 @@ function TopBarTwo() {
                     <Fade top>
                         <Link className='link' to="/" >
                             <div className="header sm:hidden lg:flex sm:-translate-x-40 sm:-translate-y-4">
-                                <img className='md:w-96 md:h-40 md:mt-8 xs:w-96 sm:w-80 lg:h-52 lg:mt-2' src="https://axen-trave-test.herokuapp.com/images/main_logo.png" alt="" />
+                                <img className='md:w-96 md:h-40 md:mt-8 xs:w-96 sm:w-80 lg:h-52 lg:mt-2' src="images/main_logo.png" alt="" />
                             </div>
                         </Link>
                     </Fade>

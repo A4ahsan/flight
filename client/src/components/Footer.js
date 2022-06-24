@@ -11,8 +11,8 @@ function Footer() {
                         <div className="col-sm-3">
                             <div className="logo2_wrapper">
                                 <Link to="index.html" className="logo2">
-                                    {/* <img src="images/logo2.png" alt="" className="img-responsive"> */}
-                                    AXEN Holidays
+                                    <img src="images/main_logo.png" alt="" className="img-responsive" />
+                                    {/* AXEN Holidays */}
                                 </Link>
                             </div>
                             <p>

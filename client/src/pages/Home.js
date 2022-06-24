@@ -182,7 +182,7 @@ function Home() {
             }
             setIsLoading(true)
             try {
-                const res = await axios.post('https://axen-trave-test.herokuapp.com/api/flight/date?search=true&first=0&last=9', finalData)
+                const res = await axios.post('api/flight/date?search=true&first=0&last=9', finalData)
                 setIsLoading(false)
                 dispatch(setRefreshs("false"))
                 navigate("/search-flights", { state: { flightOffers: res.data, details: finalData } });
@@ -208,7 +208,7 @@ function Home() {
             }
             setIsLoading(true)
             try {
-                const res = await axios.post('https://axen-trave-test.herokuapp.com/api/flight/date', finalData)
+                const res = await axios.post('api/flight/date', finalData)
                 setIsLoading(false)
 
                 navigate("/search-flights", { state: res.data });
@@ -649,8 +649,10 @@ function Home() {
                                             <div className="thumbnail clearfix">
                                                 <Link to="/search-flights">
                                                     <figure className="">
-                                                        <img src="https://axen-trave-test.herokuapp.com/images/why1.png" alt="" className="img1 img-responsive" />
-                                                        <img src="https://axen-trave-test.herokuapp.com/images/why1_hover.png" alt="" className="img2 img-responsive" />
+                                                        <img src="images/why1.png" alt="" className="img1 img-responsive" />
+                                                        <img src="images/why1_hover.png" alt="" className="img2 img-responsive" />
+                                                        {/* <img src="images/why1.png" alt="" className="img1 img-responsive" />
+                                                        <img src="images/why1_hover.png" alt="" className="img2 img-responsive" /> */}
                                                     </figure>
                                                     <div className="caption">
                                                         <div className="txt1">Amazing Travel</div>
@@ -668,8 +670,8 @@ function Home() {
                                             <div className="thumbnail clearfix">
                                                 <Link to="/search-flights">
                                                     <figure className="">
-                                                        <img src="https://axen-trave-test.herokuapp.com/images/why2.png" alt="" className="img1 img-responsive" />
-                                                        <img src="https://axen-trave-test.herokuapp.com/images/why2_hover.png" alt="" className="img2 img-responsive" />
+                                                        <img src="images/why2.png" alt="" className="img1 img-responsive" />
+                                                        <img src="images/why2_hover.png" alt="" className="img2 img-responsive" />
                                                     </figure>
                                                     <div className="caption">
                                                         <div className="txt1">Discover</div>
@@ -687,8 +689,8 @@ function Home() {
                                             <div className="thumbnail clearfix">
                                                 <Link to="search-flights">
                                                     <figure className="">
-                                                        <img src="https://axen-trave-test.herokuapp.com/images/why3.png" alt="" className="img1 img-responsive" />
-                                                        <img src="https://axen-trave-test.herokuapp.com/images/why3_hover.png" alt="" className="img2 img-responsive" />
+                                                        <img src="images/why3.png" alt="" className="img1 img-responsive" />
+                                                        <img src="images/why3_hover.png" alt="" className="img2 img-responsive" />
                                                     </figure>
                                                     <div className="caption">
                                                         <div className="txt1">Book Your Trip</div>
@@ -706,8 +708,8 @@ function Home() {
                                             <div className="thumbnail clearfix">
                                                 <Link to="/search-flights">
                                                     <figure className="">
-                                                        <img src="https://axen-trave-test.herokuapp.com/images/why4.png" alt="" className="img1 img-responsive" />
-                                                        <img src="https://axen-trave-test.herokuapp.com/images/why4_hover.png" alt="" className="img2 img-responsive" />
+                                                        <img src="images/why4.png" alt="" className="img1 img-responsive" />
+                                                        <img src="images/why4_hover.png" alt="" className="img2 img-responsive" />
                                                     </figure>
                                                     <div className="caption">
                                                         <div className="txt1">Nice Support</div>
@@ -847,7 +849,7 @@ function Home() {
                                 </div>
                                 <Fade left big duration={2500} >
                                     <div className="col-sm-12 col-md-6 col-md-pull-6">
-                                        <img src="https://axen-trave-test.herokuapp.com/images/people.png" alt="" className="img1 img-responsive" />
+                                        <img src="images/people.png" alt="" className="img1 img-responsive" />
                                     </div>
                                 </Fade>
                             </div>
@@ -862,8 +864,8 @@ function Home() {
                                             <div className="thumbnail clearfix">
                                                 <Link to="#">
                                                     <figure>
-                                                        <img src="https://axen-trave-test.herokuapp.com/images/partner1.jpg" alt="" className="img1 img-responsive" />
-                                                        <img src="https://axen-trave-test.herokuapp.com/images/partner1_hover.jpg" alt="" className="img2 img-responsive" />
+                                                        <img src="images/partner1.jpg" alt="" className="img1 img-responsive" />
+                                                        <img src="images/partner1_hover.jpg" alt="" className="img2 img-responsive" />
                                                     </figure>
                                                 </Link>
                                             </div>
@@ -876,8 +878,8 @@ function Home() {
                                             <div className="thumbnail clearfix">
                                                 <Link to="#">
                                                     <figure>
-                                                        <img src="https://axen-trave-test.herokuapp.com/images/partner2.jpg" alt="" className="img1 img-responsive" />
-                                                        <img src="https://axen-trave-test.herokuapp.com/images/partner2_hover.jpg" alt="" className="img2 img-responsive" />
+                                                        <img src="images/partner2.jpg" alt="" className="img1 img-responsive" />
+                                                        <img src="images/partner2_hover.jpg" alt="" className="img2 img-responsive" />
                                                     </figure>
                                                 </Link>
                                             </div>
@@ -890,8 +892,8 @@ function Home() {
                                             <div className="thumbnail clearfix">
                                                 <Link to="#">
                                                     <figure>
-                                                        <img src="https://axen-trave-test.herokuapp.com/images/partner3.jpg" alt="" className="img1 img-responsive" />
-                                                        <img src="https://axen-trave-test.herokuapp.com/images/partner3_hover.jpg" alt="" className="img2 img-responsive" />
+                                                        <img src="images/partner3.jpg" alt="" className="img1 img-responsive" />
+                                                        <img src="images/partner3_hover.jpg" alt="" className="img2 img-responsive" />
                                                     </figure>
                                                 </Link>
                                             </div>
@@ -904,8 +906,8 @@ function Home() {
                                             <div className="thumbnail clearfix">
                                                 <Link to="#">
                                                     <figure>
-                                                        <img src="https://axen-trave-test.herokuapp.com/images/partner4.jpg" alt="" className="img1 img-responsive" />
-                                                        <img src="https://axen-trave-test.herokuapp.com/images/partner4_hover.jpg" alt="" className="img2 img-responsive" />
+                                                        <img src="images/partner4.jpg" alt="" className="img1 img-responsive" />
+                                                        <img src="images/partner4_hover.jpg" alt="" className="img2 img-responsive" />
                                                     </figure>
                                                 </Link>
                                             </div>
@@ -918,8 +920,8 @@ function Home() {
                                             <div className="thumbnail clearfix">
                                                 <Link to="#">
                                                     <figure>
-                                                        <img src="https://axen-trave-test.herokuapp.com/images/partner5.jpg" alt="" className="img1 img-responsive" />
-                                                        <img src="https://axen-trave-test.herokuapp.com/images/partner5_hover.jpg" alt="" className="img2 img-responsive" />
+                                                        <img src="images/partner5.jpg" alt="" className="img1 img-responsive" />
+                                                        <img src="images/partner5_hover.jpg" alt="" className="img2 img-responsive" />
                                                     </figure>
                                                 </Link>
                                             </div>
@@ -932,8 +934,8 @@ function Home() {
                                             <div className="thumbnail clearfix">
                                                 <Link to="#">
                                                     <figure>
-                                                        <img src="https://axen-trave-test.herokuapp.com/images/partner6.jpg" alt="" className="img1 img-responsive" />
-                                                        <img src="https://axen-trave-test.herokuapp.com/images/partner6_hover.jpg" alt="" className="img2 img-responsive" />
+                                                        <img src="images/partner6.jpg" alt="" className="img1 img-responsive" />
+                                                        <img src="images/partner6_hover.jpg" alt="" className="img2 img-responsive" />
                                                     </figure>
                                                 </Link>
                                             </div>
