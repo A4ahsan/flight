@@ -260,7 +260,7 @@ function TopBarTwo() {
                     <Fade top>
                         <Link className='link' to="/" >
                             <div className="header sm:hidden lg:flex sm:-translate-x-40 sm:-translate-y-4">
-                                <img className='md:w-96 md:h-40 md:mt-8 xs:w-96 sm:w-80 lg:h-52 lg:mt-2' src="images/main_logo.png" alt="" />
+                                <img className='logoImg' src="images/main_logo.png" alt="" />
                             </div>
                         </Link>
                     </Fade>
@@ -345,12 +345,12 @@ function TopBarTwo() {
 const TopBarTwoWrpapper = styled.div`
     padding: 10px  0;
     width: 100vw;
-    height: 140px;
+    height: 130px;
     display: flex;
     justify-content: center;
     z-index: 20000;
-    margin-bottom: 25px;
-    ${mobile({ justifyContent: "flex-start" })}
+    // margin-bottom: 25px;
+    ${mobile({ justifyContent: "flex-start" , height: "80px" })}
     .topbar-two-wrapper{
         display: flex;
         justify-content: space-between;
@@ -370,7 +370,7 @@ const TopBarTwoWrpapper = styled.div`
             height: 4px;
             background-color: #00a99d;
             position: absolute;
-            bottom: -30px;
+            bottom: -10px;
             transition: all 250ms ease-in-out;
         }
         &:hover::before{

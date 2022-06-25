@@ -332,6 +332,18 @@ header {
     z-index: 31;
 }
 
+.logoImg {
+    width: 200px;
+    height: 100px;
+}
+
+@media screen and (max-width: 750px) {
+    .logoImg {
+        width: 100px;
+        height: 60px;
+    }
+  }
+
 /* ============================= slider ====================== */
 
 #slider_wrapper {
@@ -2335,7 +2347,42 @@ header {
 }
 
 /* ============================= footer ====================== */
-
+/* #mySidenav a {
+    position: fixed;
+    right: -80px;
+    transition: 0.3s;
+    padding: 15px;
+    width: 150px;
+    text-decoration: none;
+    font-size: 20px;
+    color: white;
+    border-radius: 0 5px 5px 0;
+  }
+  
+  #mySidenav a:hover {
+    right: 0;
+  }
+  
+  #about {
+    top: 20px;
+    background-color: #04AA6D;
+  }
+  
+  #blog {
+    top: 80px;
+    background-color: #2196F3;
+  }
+  
+  #projects {
+    top: 140px;
+    background-color: #f44336;
+  }
+  
+  #contact {
+    top: 200px;
+    background-color: #555
+  } */
+  
 .bot1_wrapper {
     background: #252525;
     border-top: 4px solid #1cbbb4;

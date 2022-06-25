@@ -5,6 +5,22 @@ function Footer() {
   return (
     <>
       <div className="bot1_wrapper">
+        {/* <div className="fixedDiv">
+          <div id="mySidenav" class="sidenav">
+            <a href="#" id="about">
+              About
+            </a>
+            <a href="#" id="blog">
+              Blog
+            </a>
+            <a href="#" id="projects">
+              Projects
+            </a>
+            <a href="#" id="contact">
+              Contact
+            </a>
+          </div>
+        </div> */}
         <div className="container">
           <div className="row">
             <div className="col-sm-3">
@@ -52,9 +68,12 @@ function Footer() {
               <div className="social2_wrapper">
                 <ul className="social2 clearfix">
                   <li className="nav1">
-                    <Link to="#"></Link>
+                    <a
+                      target="__blank"
+                      href="https://www.facebook.com/AXENholidays/"
+                    ></a>
                   </li>
-                  <li className="nav2">
+                  {/* <li className="nav2">
                     <Link to="#"></Link>
                   </li>
                   <li className="nav3">
@@ -62,12 +81,18 @@ function Footer() {
                   </li>
                   <li className="nav4">
                     <Link to="#"></Link>
-                  </li>
+                  </li> */}
                   <li className="nav5">
-                    <Link to="#"></Link>
+                    <a
+                      target="__blank"
+                      href="https://twitter.com/axenholidays"
+                    ></a>
                   </li>
                   <li className="nav6">
-                    <Link to="#"></Link>
+                    <a
+                      target="__blank"
+                      href="https://www.instagram.com/axenholidays/"
+                    ></a>
                   </li>
                 </ul>
               </div>
@@ -134,6 +159,7 @@ function Footer() {
             <Link to="/TermsAndCondition">Term's & Condition</Link>{" "}
             <span>|</span> <Link to="#">About Us</Link> <span>|</span>{" "}
             <Link to={"/faq"}>FAQ</Link> <span>|</span>{" "}
+            <Link to={"/LandingPage"}>Landing Page</Link> <span>|</span>{" "}
             <Link to="#">Contact Support</Link>
           </div>
           <div className="right_side">

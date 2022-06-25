@@ -21,6 +21,7 @@ import SimpleAlert from "./components/Alert";
 import SearchFlight from './pages/SearchFlight';
 import FlightDetail from "./pages/FlightDetail";
 import TermsAndCondition from './pages/TermsAndCondition';
+import LandingPage from './pages/LandingPage';
 
 
 
@@ -54,6 +55,7 @@ function App() {
           <Route path='/flight-booking' element={<FlightDetail />} />
           <Route path="/faq" element={<Faq />} />
           <Route path="/TermsAndCondition" element={<TermsAndCondition />} />
+          <Route path="/LandingPage" element={<LandingPage />} />
           <Route path="/flight-checkout" element={
             <RequireAuth>
               <BookingFlightPage />

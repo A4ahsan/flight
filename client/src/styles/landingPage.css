@@ -1,0 +1,136 @@
+.landing-page-area-contact {
+    padding: 30px 10px;
+    background: #1CBBB4;
+}
+.landing-page-area-contact h3 {
+    color: #fff;
+}
+.landing-page-area-contact p {
+    color: #fff;
+}
+
+.form-group {
+    margin-bottom: 25px;
+}
+
+.form-control-for-banner {
+    height: 40px;
+    width: 100%;
+    padding: 15px 20px;
+    font-size: 14px;
+    color: #000;
+    border: 1px solid #eeeeee;
+    border-radius: 4px;
+    background: #fff;
+    /* transition: $transition; */
+}
+
+.contact-form-for-Banner {
+    background-color: #efefef;
+    text-align: center;
+    border-radius: 10px;
+    padding: 20px;
+}
+.contact-title {
+    /* // margin-bottom: 30px; */
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.contact-title h2 {
+    color: darkgray;
+    font-size: 20px;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.sendBtn {
+    background: #1CBBB4;
+    width: 100%;
+    color: #fff;
+}
+.sendBtn:hover {
+    background: #fff;
+    width: 100%;
+    color: #000;
+}
+
+.contact-cta-box {
+    margin: 70px auto 0;
+    max-width: 800px;
+    border: 1px dashed #ebebeb;
+    padding: 30px 210px 30px 30px;
+    border-radius: 5px;
+    position: relative;
+    /* background-color: #000; */
+    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(201,215,233,1) 0%, rgba(28,187,180,1) 41%);  
+  }
+  
+  .contact-cta-box h3 {
+    margin-top: 0;
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 0px;
+  }
+  
+  .contact-cta-box p {
+    margin-bottom: 0;
+  }
+  
+  .contact-cta-box .btn {
+    position: absolute;
+    right: 30px;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+            transform: translateY(-50%);
+  }
+
+  .contact-cta-box .contactUs {
+    background-color: #eeeeee;
+  }
+
+  .section-title {
+    text-align: center;
+    margin: -5px auto 60px;
+    max-width: 720px;
+  }
+  
+  .section-title h2 {
+    margin-bottom: 15px;
+    font-size: 25px;
+  }
+  
+  .section-title p {
+    margin-bottom: 0;
+    margin: 0 auto;
+    max-width: 750px;
+  }
+  
+  .section-title .sub-title {
+    display: block;
+    margin-bottom: 12px;
+    font-size: 17px;
+    font-weight: 600;
+  }
+  
+  .section-title.white-color .sub-title, .section-title.white-color h2 {
+    color: #ffffff;
+  }
+  
+  .section-title .sub-title {
+    display: block;
+    margin-bottom: 10px;
+    color: #ff2c9c;
+    font-weight: 600;
+    font-size: 14px;
+  }
+
+  .funfacts-area .map-bg {
+    position: absolute;
+    z-index: -1;
+    top: 120px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    margin: 0 auto;
+  }
