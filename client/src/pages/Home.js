@@ -29,6 +29,7 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { useAlert } from "react-alert";
 import { setRefreshs } from "../redux/refreshSlice";
+import {auth , getBaseUrl} from "../components/Utilities";
 
 function Home() {
   const alert = useAlert();
@@ -57,6 +58,17 @@ function Home() {
       },
     ]);
   }, [header]);
+
+  useEffect(() => {
+    console.log(auth);
+    const fetchData = async () => {
+      const res = await axios.get(`${getBaseUrl()}BSFlight/GetCountry`, {
+        auth
+      });
+      console.log("Cities" , res);
+    }
+    fetchData();
+  } , [])
   // creating date functionality
   const [date, setDate] = useState([
     {
@@ -180,13 +192,32 @@ function Home() {
         ...rest,
         ...cabin2,
       };
+      console.log("Final Parameter" , finalData);
       setIsLoading(true);
       try {
         const res = await axios.post(
-          "api/flight/date?search=true&first=0&last=9",
-          finalData
+          `${getBaseUrl()}BSFlight/flightsearch`,
+          {
+            "TripType":"RT",
+            "Origin":"DXB",
+            "Destination":"LHR",
+            "AirlineCode":"",
+            "DepartDate":"20 Nov 2021",
+            "ArrivalDate":"30 Nov 2021",
+            "Class":"Economy",
+            "IsFlexibleDate":"false",
+            "IsDirectFlight":"false",
+            "NoOfAdultPax":"1",
+            "NoOfInfantPax":"0",
+            "NoOfChildPax":"0",
+            "NoOfYouthPax":"0",
+            "CompanyCode":"BS8106",
+            "WebsiteName":"axenholidays.com",
+            "ApplicationAccessMode":"TEST"
+            } , {auth}
         );
         setIsLoading(false);
+        debugger;
         dispatch(setRefreshs("false"));
         navigate("/search-flights", {
           state: { flightOffers: res.data, details: finalData },
@@ -200,6 +231,40 @@ function Home() {
       alert.error("input fields can not be empty.");
     }
   };
+  // const searchFlight = async (e) => {
+  //   e.preventDefault();
+  //   if (valueFromSearch && valueFromSearch2 && date[0].endDate) {
+  //     let finalData = {
+  //       originLocationCode: valueFromSearch.split("-")[0],
+  //       destinationLocationCode: valueFromSearch2.split("-")[0],
+  //       departureDate: format(date[0].startDate, "yyyy/MM/dd")
+  //         .split("/")
+  //         .join("-"),
+  //       returnDate: format(date[0].endDate, "yyyy/MM/dd").split("/").join("-"),
+  //       ...rest,
+  //       ...cabin2,
+  //     };
+  //     console.log("Final Parameter" , finalData);
+  //     setIsLoading(true);
+  //     try {
+  //       const res = await axios.post(
+  //         "api/flight/date?search=true&first=0&last=9",
+  //         finalData
+  //       );
+  //       setIsLoading(false);
+  //       dispatch(setRefreshs("false"));
+  //       navigate("/search-flights", {
+  //         state: { flightOffers: res.data, details: finalData },
+  //       });
+  //     } catch (err) {
+  //       setError(err);
+  //       setIsLoading(false);
+  //       alert.error("No flight found with these destinations or Dates.");
+  //     }
+  //   } else {
+  //     alert.error("input fields can not be empty.");
+  //   }
+  // };
 
   // search for Hotels
   const searchHotels = async (e) => {

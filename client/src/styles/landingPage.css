@@ -4,9 +4,11 @@
 }
 .landing-page-area-contact h3 {
     color: #fff;
+    /* font-size: 28px; */
 }
 .landing-page-area-contact p {
     color: #fff;
+    /* font-size: 16px; */
 }
 
 .form-group {
@@ -134,3 +136,35 @@
     text-align: center;
     margin: 0 auto;
   }
+
+  .landing-page-area-content {
+    padding: 100px 10px;
+    background: #fff;
+  }
+  .landing-page-area-content h3 {
+    color: #1CBBB4;
+    /* text-align: center; */
+  }
+  .bg-plane {
+    background-image: url("../../public/images/lp-2.jpg");
+  }
+
+  .cardBox {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: 0.25rem;
+    padding: 20px 20px;
+    box-shadow: 0px 2px 18px -5px rgba(0,0,0,0.43);
+    -webkit-box-shadow: 0px 2px 18px -5px rgba(0,0,0,0.43);
+    -moz-box-shadow: 0px 2px 18px -5px rgba(0,0,0,0.43);
+    min-height: 150px;
+  }
+  /* .cardBox label {
+    color: #1CBBB4;
+  } */
