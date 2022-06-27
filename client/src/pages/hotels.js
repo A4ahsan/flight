@@ -30,7 +30,7 @@ import Select from "@mui/material/Select";
 import { useAlert } from "react-alert";
 import { setRefreshs } from "../redux/refreshSlice";
 
-function Home() {
+function Hotels() {
   const alert = useAlert();
 
   const dispatch = useDispatch();
@@ -373,13 +373,13 @@ function Home() {
                   <div className="tabs_tabs tabs1_tabs">
                     <UL status={header}>
                       <Fade delay={50} left>
-                        <li onClick={flightClick} className="active flights">
+                        <li onClick={flightClick} className=" flights">
                           <ImAirplane style={{ marginRight: "8px" }} />
                           Flights
                         </li>
                       </Fade>
                       <Fade delay={100} top>
-                        <li onClick={hotelClick} className="hotels">
+                        <li onClick={hotelClick} className="active hotels">
                           <FaHotel style={{ marginRight: "5px" }} />
                           Hotels
                         </li>
@@ -1469,4 +1469,4 @@ const UL = styled.ul`
   }
 `;
 
-export default Home;
+export default Hotels;

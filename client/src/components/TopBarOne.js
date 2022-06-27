@@ -9,10 +9,10 @@ import Fade from 'react-reveal/Fade';
 function TopBarOne() {
     return (
         <div className="top1_wrapper">
-            <div className="container">
-                <div className="top1 clearfix">
+            <div className="container h-4">
+                <div className="top1 clearfix absolute  top-0 right-0 text-right">
                     <Fade delay={500} left>
-                        <div className="email1" style={{ display: "flex", alignItems: "center", color: "#ACACAC" }} >
+                        <div className="email1 text-right" style={{ display: "flex", alignItems: "right", color: "#ACACAC" }} >
                             <Link to="#">
                                 <MailIcon style={{ transform: "scale(1.5)", marginRight: "8px" }} />
                                 <a href="mailto:info@axenholidays.com">info@axenholidays.com</a>
@@ -20,9 +20,15 @@ function TopBarOne() {
                         </div>
                     </Fade>
                     <Fade delay={500} right>
-                        <div className="email1" style={{ display: "flex", alignItems: "center", color: "#ACACAC" }}  >
+                        <div className="email1 text-right" style={{ display: "flex", alignItems: "right", color: "#ACACAC" }}  >
                             <PhoneIcon style={{ transform: "scale(1.1)", marginRight: "8px" }} />
-                            <a href="tel:+02081383891">02081383891</a>
+                            <a href="tel:+02081383891">0208-1383-891</a>
+                        </div>
+                    </Fade>
+                    <Fade delay={500} right>
+                        <div className="email1 text-right" style={{ display: "flex", alignItems: "right", color: "#ACACAC" }}  >
+                            <PhoneIcon style={{ transform: "scale(1.1)", marginRight: "8px" }} />
+                            <a href="tel:+0208-1383-892">0208-1383-892</a>
                         </div>
                     </Fade>
                     <div className="social_wrapper">

@@ -71,8 +71,7 @@ body {
 
 .email1 {
     float: left;
-    padding-left: 25px;
-    background: ("https://axen-trave-test.herokuapp.com/images/email1.png") left center no-repeat;
+
     border-right: 1px solid #ebebeb;
     margin-right: 20px;
     padding-right: 20px;
@@ -89,7 +88,7 @@ body {
 .phone1 {
     float: left;
     padding-left: 25px;
-    background: ("http://localhost:3000ublic/images/phone1.png") left center no-repeat;
+
 }
 
 .social_wrapper {
@@ -2458,7 +2457,7 @@ header {
 }
 
 .social2 li.nav6 a {
-    background-image: url("../../public/images/social_ic6.png");
+    background-image: url("../../public/images/social_ic7.png");
 }
 
 

@@ -100,8 +100,23 @@ function TopBarTwo() {
                     </ListItem>
                 </Link>
             </List>
-            <List>
-                <ListItem onClick={() => setMenu2(!menu2)} button>
+            <List >
+            <Link className="link" to="/Flights">
+                <ListItem onClick={toggleDrawer(anchor, false)} button>
+                    <div style={{ display: "flex", alignItems: "center" }} >
+                        <ListItemIcon>
+                            <BalconyIcon style={{ transform: "scale(1.5)" }} />
+                        </ListItemIcon>
+                        <ListItemText>
+                            <p style={{ fontSize: "16px" }} >Flights</p>
+                        </ListItemText>
+                    </div>
+                </ListItem>
+                </Link>
+            </List> 
+            <List >
+            <Link className="link" to="/hotels" >
+                <ListItem onClick={toggleDrawer(anchor, false)} button>
                     <div style={{ display: "flex", alignItems: "center" }} >
                         <ListItemIcon>
                             <BalconyIcon style={{ transform: "scale(1.5)" }} />
@@ -111,25 +126,10 @@ function TopBarTwo() {
                         </ListItemText>
                     </div>
                 </ListItem>
-                {menu2 &&
-                    <div>
-                        <Link to="/search-hotels" style={{ color: "inherit", textDecoration: "none" }} >
-                            <ListItem onClick={toggleDrawer(anchor, false)} style={{ marginLeft: "70px", cursor: "pointer" }} Button>• Search Hotel
-                            </ListItem>
-                        </Link>
-                        <Link to="/book-hotel-page" style={{ color: "inherit", textDecoration: "none" }} >
-                            <ListItem onClick={toggleDrawer(anchor, false)} style={{ marginLeft: "70px", cursor: "pointer" }} Button>
-                                • Booking Hotel
-                            </ListItem>
-                        </Link>
-                        <Link to="/hotel-checkout" style={{ color: "inherit", textDecoration: "none" }} >
-                            <ListItem onClick={toggleDrawer(anchor, false)} style={{ marginLeft: "70px", cursor: "pointer" }} Button>
-                                • Hotel Reservation
-                            </ListItem>
-                        </Link>
-                    </div>
-                }
-            </List>  <List>
+                </Link>
+            </List>  
+             <List>
+             <Link className="link" to="/" >
                 <ListItem onClick={() => setMenu3(!menu3)} button>
                     <div style={{ display: "flex", alignItems: "center" }} >
                         <ListItemIcon>
@@ -140,48 +140,45 @@ function TopBarTwo() {
                         </ListItemText>
                     </div>
                 </ListItem>
-                {menu3 &&
-                    <div>
-                        <Link to="/search-cars" style={{ color: "inherit", textDecoration: "none" }} >
-                            <ListItem onClick={toggleDrawer(anchor, false)} style={{ marginLeft: "70px", cursor: "pointer" }} Button>• Search Car
-                            </ListItem>
-                        </Link>
-                        <Link to="/book-car" style={{ color: "inherit", textDecoration: "none" }} >
-                            <ListItem onClick={toggleDrawer(anchor, false)} style={{ marginLeft: "70px", cursor: "pointer" }} Button>
-                                • Booking Car
-                            </ListItem>
-                        </Link>
-                        <Link to="/book-car" style={{ color: "inherit", textDecoration: "none" }} >
-                            <ListItem onClick={toggleDrawer(anchor, false)} style={{ marginLeft: "70px", cursor: "pointer" }} Button>
-                                • Car Reservation
-                            </ListItem>
-                        </Link>
-                    </div>
-                }
-            </List>
+                </Link>
+            </List> 
             <List>
-                <Link className="link" to="/search-hotels" >
+                <Link className="link" to="/" >
                     <ListItem onClick={toggleDrawer(anchor, false)} button>
                         <div style={{ display: "flex", alignItems: "center" }} >
                             <ListItemIcon>
                                 <HouseboatIcon style={{ transform: "scale(1.5)" }} />
                             </ListItemIcon>
                             <ListItemText>
-                                <p style={{ fontSize: "16px" }} >Holidays</p>
+                                <p style={{ fontSize: "16px" }} >Holidays (Comming Soon)</p>
                             </ListItemText>
                         </div>
                     </ListItem>
                 </Link>
             </List>
             <List>
-                <Link className="link" to="/book-flight-page" >
+                <Link className="link" to="/about" >
                     <ListItem onClick={toggleDrawer(anchor, false)} button>
                         <div style={{ display: "flex", alignItems: "center" }} >
                             <ListItemIcon>
                                 <AddBusinessIcon style={{ transform: "scale(1.5)" }} />
                             </ListItemIcon>
                             <ListItemText>
-                                <p style={{ fontSize: "16px" }} >My Bookings</p>
+                                <p style={{ fontSize: "16px" }} >About </p>
+                            </ListItemText>
+                        </div>
+                    </ListItem>
+                </Link>
+            </List>
+            <List>
+                <Link className="link" to="/contact" >
+                    <ListItem onClick={toggleDrawer(anchor, false)} button>
+                        <div style={{ display: "flex", alignItems: "center" }} >
+                            <ListItemIcon>
+                                <AddBusinessIcon style={{ transform: "scale(1.5)" }} />
+                            </ListItemIcon>
+                            <ListItemText>
+                                <p style={{ fontSize: "16px" }} >Contact </p>
                             </ListItemText>
                         </div>
                     </ListItem>
@@ -271,40 +268,26 @@ function TopBarTwo() {
                             <div className="menues">
                                 <Link className="link" to="/" ><p className="text">Home</p></Link>
                             </div>
-                            <div ref={ctn} onMouseOver={onHover1} className="menues dropdown-menu1">
-                                <p className="text">Flights</p>
-                                {menu1 &&
-                                    <div onMouseOver={onHover1} onMouseLeave={onLeave1} className="dd-menu1">
-                                        <Link className="link" to="/book-flight-page" ><p className="text">Booking flights</p></Link>
-                                    </div>
-                                }
-                            </div>
-                            <div ref={ctn2} onMouseOver={onHover2} className="menues dropdown-menu2">
-                                <p className="text">Hotels</p>
-                                {menu2 &&
-                                    <div onMouseOver={onHover2} onMouseLeave={onLeave2} className="dd-menu2">
-                                        <Link className="link" to="/search-hotels" ><p className="text">Search Hotels</p></Link>
-                                        <Link className="link" to="/book-hotel-page" ><p className="text">Booking Hotels</p></Link>
-                                        <Link className="link" to="/hotel-checkout" ><p className="text">Hotels Reservation</p></Link>
-                                    </div>
-                                }
-                            </div>
-                            <div ref={ctn3} onMouseOver={onHover3} onMouseLeave={onLeave3} className="menues dropdown-menu3">
-                                <p className="text">Rent a Car</p>
-                                {menu3 &&
-                                    <div onMouseOver={onHover3} onMouseLeave={onLeave3} className="dd-menu3">
-                                        <Link className="link" to="/search-cars" ><p className="text">Search Car</p></Link>
-                                        <Link className="link" to="/book-car-page" ><p className="text">Booking Car</p></Link>
-                                        <Link className="link" to="/car-checkout" ><p className="text">Car Reservation</p></Link>
-                                    </div>
-                                }
+                            <div className="menues">
+                                <Link className="link" to="/flights" ><p className="text">Flights</p></Link>
                             </div>
                             <div className="menues">
-                                <Link className="link" to="/search-flights" ><p className="text">Holidays</p></Link>
+                                <Link className="link" to="/hotels" ><p className="text">Hotels</p></Link>
                             </div>
                             <div className="menues">
-                                <Link className="link" to="/book-flight-page" ><p className="text">My Bookings</p></Link>
+                                <Link className="link" to="/" ><p className="text">Cars (Comming Soon)</p></Link>
                             </div>
+                        
+                            <div className="menues">
+                                <Link className="link" to="/" ><p className="text">Holidays (Comming Soon)</p></Link>
+                            </div>
+                            <div className="menues">
+                                <Link className="link" to="/about" ><p className="text">About</p></Link>
+                            </div>
+                            <div className="menues">
+                                <Link className="link" to="/contact" ><p className="text">Contact</p></Link>
+                            </div>
+                            
                             <div className="menues">
                                 <Link className="link" to="/faq" ><p className="text">Help</p></Link>
                             </div>
@@ -380,7 +363,7 @@ const TopBarTwoWrpapper = styled.div`
     
     .menu{
         display: flex;
-        width: 60rem;
+        width: 80rem;
         justify-content: space-between;
         align-items: center;
         ${mobile({ display: "none" })}

@@ -41,31 +41,66 @@ function Footer() {
                 mission, or a routine flight that takes you to some other part
                 of the world.
               </p>
-              <p>
-                <Link
-                  to="#"
-                  style={{ background: "transparent" }}
-                  className="btn-default btn2"
-                >
-                  Read More
-                </Link>
-              </p>
             </div>
             <div className="col-sm-3">
               <div className="bot1_title">Travel Specialists</div>
               <ul className="ul1">
                 <li>
-                  <Link to="#">First Class Flights</Link>
+                  <Link to="#">Flights</Link>
                 </li>
                 <li>
-                  <Link to="#">Accessible Travel</Link>
+                  <Link to="#">Hotels</Link>
                 </li>
                 <li>
-                  <Link to="#">Amazing Cruises</Link>
+                  <Link to="#">Cars (Comming Soon)</Link>
                 </li>
               </ul>
 
-              <div className="social2_wrapper">
+              
+            </div>
+            <div className="col-sm-3">
+              <div className="bot1_title">Find us here</div>
+              <div className="twits1">
+                <div className="twit1">
+                  71-75 Shelton Street, Covent Garden, London, WC2H 9JQ.
+                  
+                </div>
+                <div className="phone2">
+                <a href="tel:+02081383891">0208-138-3891</a>
+              </div>
+              <div className="phone2">
+                <a href="tel:+02081383892">0208-138-3892</a>
+              </div>
+              <div className="support1">
+                {" "}
+                <a href="mailto:info@axenholidays.com">info@axenholidays.com</a>
+              </div>
+               
+              </div>
+            </div>
+            <div className="col-sm-3">
+              <div className="bot1_title">Newsletter</div>
+              <div className="newsletter_block">
+                <div className="txt1">
+                  Inspiration, ideas, news and your feedback.
+                </div>
+                <div className="newsletter-wrapper clearfix">
+                  <form className="newsletter" action="">
+                    <input
+                      type="text"
+                      name="s"
+                      value="Email Address"
+                      onBlur={"if(this.value=='') this.value='Email Address'"}
+                      onFocus={
+                        "if(this.value =='Email Address' ) this.value=''"
+                      }
+                    />
+                    <Link to="#" className="btn-default btn3">
+                      SUBMIT
+                    </Link>
+                  </form>
+                </div>
+                <div className="social2_wrapper">
                 <ul className="social2 clearfix">
                   <li className="nav1">
                     <a
@@ -96,52 +131,9 @@ function Footer() {
                   </li>
                 </ul>
               </div>
-            </div>
-            <div className="col-sm-3">
-              <div className="bot1_title">Our Twitter</div>
-              <div className="twits1">
-                <div className="twit1">
-                  <Link to="#"> @demo</Link> Lorem ipsum dolor sit amet,
-                  consectetuer adipiscing elit
-                  <div className="date">5 minutes ago</div>
-                </div>
-                <div className="twit1">
-                  <Link to="#">@demo</Link> Nam liber tempor cum soluta nobis
-                  option congue nihil imperdiet doming id quod mazim.
-                  <div className="date">2 days ago</div>
-                </div>
               </div>
-            </div>
-            <div className="col-sm-3">
-              <div className="bot1_title">Newsletter</div>
-              <div className="newsletter_block">
-                <div className="txt1">
-                  Inspiration, ideas, news and your feedback.
-                </div>
-                <div className="newsletter-wrapper clearfix">
-                  <form className="newsletter" action="">
-                    <input
-                      type="text"
-                      name="s"
-                      value="Email Address"
-                      onBlur={"if(this.value=='') this.value='Email Address'"}
-                      onFocus={
-                        "if(this.value =='Email Address' ) this.value=''"
-                      }
-                    />
-                    <Link to="#" className="btn-default btn3">
-                      SUBMIT
-                    </Link>
-                  </form>
-                </div>
-              </div>
-              <div className="phone2">
-                <a href="tel:+02081383891">02081383891</a>
-              </div>
-              <div className="support1">
-                {" "}
-                <a href="mailto:info@axenholidays.com">info@axenholidays.com</a>
-              </div>
+              
+              
             </div>
           </div>
         </div>
@@ -157,7 +149,7 @@ function Footer() {
             <span>|</span> <Link to="/privacy-policy">Privacy Policy</Link>{" "}
             <span>|</span>{" "}
             <Link to="/TermsAndCondition">Term's & Condition</Link>{" "}
-            <span>|</span> <Link to="#">About Us</Link> <span>|</span>{" "}
+            <span>|</span> <Link to="/about">About Us</Link> <span>|</span>{" "}
             <Link to={"/faq"}>FAQ</Link> <span>|</span>{" "}
             <Link to={"/LandingPage"}>Landing Page</Link> <span>|</span>{" "}
             <Link to="#">Contact Support</Link>
@@ -165,7 +157,7 @@ function Footer() {
           <div className="right_side">
             Designed by{" "}
             <Link to="#">
-              <strong>AXEN HOLIDAYS</strong>
+              <strong>AXEN SYSTEMS</strong>
             </Link>
           </div>
         </div>

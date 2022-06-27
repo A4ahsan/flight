@@ -30,7 +30,7 @@ import Select from "@mui/material/Select";
 import { useAlert } from "react-alert";
 import { setRefreshs } from "../redux/refreshSlice";
 
-function Home() {
+function Cars() {
   const alert = useAlert();
 
   const dispatch = useDispatch();
@@ -1469,4 +1469,4 @@ const UL = styled.ul`
   }
 `;
 
-export default Home;
+export default Cars;
