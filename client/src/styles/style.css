@@ -2300,6 +2300,24 @@ header {
 #happy1 .content .txt3 {
     padding-bottom: 20px;
 }
+#happy1 .content2 {
+    padding-top: 100px;
+}
+
+#happy1 .content2 .txt1 {
+    font-size: 42px;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+#happy1 .content2 .txt2 {
+    font-weight: 600;
+    padding-bottom: 40px;
+}
+
+#happy1 .content2 .txt3 {
+    padding-bottom: 20px;
+}
 
 .distance1 {
     position: relative;

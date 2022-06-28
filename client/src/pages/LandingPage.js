@@ -2,8 +2,15 @@ import React from "react";
 import Footer from "../components/Footer";
 import TopBarOne from "../components/TopBarOne";
 import TopBarTwo from "../components/TopBarTwo";
+import { SiMinds } from "react-icons/si";
+import { BsCurrencyExchange } from "react-icons/bs";
+import { MdPaid, MdPayments } from "react-icons/md";
+import { FaBrain, FaHandHoldingHeart, FaHeart } from "react-icons/fa";
+import { RiMentalHealthFill } from "react-icons/ri";
 // import { Link } from "react-router-dom";
 import "../styles/landingPage.css";
+import { ImPriceTag } from "react-icons/im";
+import { Fade } from "react-reveal";
 
 const LandingPage = (props) => {
   return (
@@ -163,83 +170,16 @@ const LandingPage = (props) => {
         </div>
       </div>
 
-      <div className={`landing-page-area-content bg-plane`}></div>
-
-      <div className={`landing-page-area-content`}>
-        <div className="container">
-          <div className="row">
-            <div className="col-md-12">
-              <h3 className="text-center">
-                Some interesting facts regarding traveling & tourism
-              </h3>
-            </div>
-            <div className="col-md-12">
-              <h4 className="text-left">Travel Increases Intelligence</h4>
-              <div className="row">
-                <div className="col-md-4">
-                  <div className="cardBox">
-                    <label>
-                      You're doing more than just creating memories while you
-                      take in the sights, sounds, and sensations of a new place.
-                      Traveling is supposed to stimulate your brain to think
-                      more creatively and differently.
-                    </label>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="col-md-12">
-              <h4 className="text-left">Travel can make your heart stronger</h4>
-              <div className="row">
-                <div className="col-md-4">
-                  <div className="cardBox">
-                    <label>
-                      More than only your mental health suffers when you carry
-                      additional tension.
-                    </label>
-                  </div>
-                </div>
-                <div className="col-md-4">
-                  <div className="cardBox">
-                    <label>
-                      Your heart may suffer as a result of such stress,
-                      increasing your risk of cardiovascular events. In fact,
-                      studies show that males who don't take an annual vacation
-                      have a 30% higher risk of having a heart attack.
-                    </label>
-                  </div>
-                </div>
-                <div className="col-md-4">
-                  <div className="cardBox">
-                    <label>
-                      The positive news Vacations can assist in reducing that
-                      danger! According to one study, nearly 90% of participants
-                      reported feeling less stressed even after just a day or
-                      two away.
-                    </label>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
       <div className="funfacts-area pt-5 pb-5 bg-fcfbfb">
         <div className="container">
           <div className="section-title">
-            <h2>Dubai Overview</h2>
+            <h2>What distinguishes Axen Vacations?</h2>
             <p>
-              Fly to the global city and the capital of the United Arab Emirates
-              by our cheap flights to Dubai. A business hub, located on the
-              South East coast of the Persian Gulf, Dubai city has emerged as
-              central place in South Asia. Often referred as the “land of
-              opportunities”, Dubai offers great prospects to its visitors, and
-              locals. Dubai is a city of high rises and its eccentricities,
-              architecture, design, tourism, and night-life has transformed
-              Dubai from a desert outpost to an ultra-modern destination, where
-              tourists flock for shopping festivals, family fun, and career
-              opportunities.
+              You may see the world and make the most of your travels with the
+              assistance of our team of knowledgeable travelers and enthusiastic
+              explorers. We have insider knowledge, travel inspiration, and
+              trip-planning advice that you won't find anyplace else. Even
+              better, we'll send you an email with our special offers.
             </p>
           </div>
 
@@ -257,6 +197,256 @@ const LandingPage = (props) => {
           </div>
         </div>
       </div>
+
+      {/* <div className={`landing-page-area-content bg-plane`}></div> */}
+
+      <div className={`landing-page-area-content`}>
+        <div className="container">
+          <div className="row">
+            <div className="col-md-5">
+              <img src="images/lp-1.jpg" />
+            </div>
+            <div className="col-md-7">
+              <h3>GET READY</h3>
+              <p>
+                If you want to travel the world, you should first make sure you
+                have sturdy luggage and the necessary documents, including a
+                passport and possibly visas. You should also determine how much
+                vacation time you'll need but don't forget to learn about the
+                flight information and online hotel booking so that we can offer
+                you the best assistance.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className={`landing-page-area-content`}>
+        <div className="container">
+          <div className="row">
+            <div className="col-md-12">
+              <h3 className="text-center">
+                Some interesting facts regarding traveling & tourism
+              </h3>
+            </div>
+            <div className="col-md-12">
+              <h4 className="text-left">Travel Increases Intelligence</h4>
+              <div className="row">
+                <div className="col-md-4">
+                  <div className="cardBox">
+                    <div className="iconBox">
+                      <FaBrain />
+                    </div>
+                    <label>
+                      You're doing more than just creating memories while you
+                      take in the sights, sounds, and sensations of a new place.
+                      Traveling is supposed to stimulate your brain to think
+                      more creatively and differently.
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="col-md-12">
+              <h4 className="text-left">
+                The Economy Remains Active Due to Tourism
+              </h4>
+              <div className="row">
+                <div className="col-md-4">
+                  <div className="cardBox">
+                    <div className="iconBox">
+                      <ImPriceTag />
+                    </div>
+                    <label>
+                      Did you realize that tourism is a determinant of 1 in 9
+                      American jobs? The travel sector alone provides close to
+                      four million employees in the United Kingdom.
+                    </label>
+                  </div>
+                </div>
+                <div className="col-md-4">
+                  <div className="cardBox">
+                    <div className="iconBox">
+                      <BsCurrencyExchange />
+                    </div>
+                    <label>
+                      Remember this interesting travel information the next time
+                      you make vacation plans, and you'll be supporting your
+                      community's economy!
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="col-md-12">
+              <h4 className="text-left">Travel can make your heart stronger</h4>
+              <div className="row">
+                <div className="col-md-4">
+                  <div className="cardBox">
+                    <div className="iconBox">
+                      <RiMentalHealthFill />
+                    </div>
+                    <label>
+                      More than only your mental health suffers when you carry
+                      additional tension.
+                    </label>
+                  </div>
+                </div>
+                <div className="col-md-4">
+                  <div className="cardBox">
+                    <div className="iconBox">
+                      <FaHeart />
+                    </div>
+                    <label>
+                      Your heart may suffer as a result of such stress,
+                      increasing your risk of cardiovascular events. In fact,
+                      studies show that males who don't take an annual vacation
+                      have a 30% higher risk of having a heart attack.
+                    </label>
+                  </div>
+                </div>
+                <div className="col-md-4">
+                  <div className="cardBox">
+                    <div className="iconBox">
+                      <FaHandHoldingHeart />
+                    </div>
+                    <label>
+                      The positive news Vacations can assist in reducing that
+                      danger! According to one study, nearly 90% of participants
+                      reported feeling less stressed even after just a day or
+                      two away.
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="col-md-12">
+              <h4 className="text-left">Vacation Pay Varies by Country</h4>
+              <div className="row">
+                <div className="col-md-4">
+                  <div className="cardBox">
+                    <div className="iconBox">
+                      <MdPayments />
+                    </div>
+                    <label>
+                      Except for the United States, every industrialized nation
+                      offers its workers at least one legally required paid
+                      vacation day or holiday.
+                    </label>
+                  </div>
+                </div>
+                <div className="col-md-4">
+                  <div className="cardBox">
+                    <div className="iconBox">
+                      <MdPaid />
+                    </div>
+                    <label>
+                      which nation is the most giving? In addition to 13 paid
+                      holidays, Austrian law mandates a minimum of 22 paid
+                      vacation days annually.
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="happy1">
+        <div className="container">
+          <div className="row">
+            <div className="col-sm-12 col-md-6 col-md-push-6">
+              <div className="content2">
+                <Fade delay={400} top>
+                  <div className="txt1">The Best Travel Spot is France</div>
+                </Fade>
+                <Fade delay={300} right>
+                  <div className="txt2">
+                    Forget Italy, the California coast, or Turks and Caicos.
+                    France attracts more tourists annually than any other
+                    country on Earth.
+                  </div>
+                </Fade>
+                <Fade right cascade>
+                  <div className="txt3">
+                    <p>
+                      Every year, 81.4 million tourists come to the nation. The
+                      southern coast is among the most stunning areas. Here are
+                      some of my suggestions for organizing a memorable camping
+                      vacation.
+                    </p>
+                  </div>
+                </Fade>
+                {/* <Fade delay={50} bottom>
+                  <div className="distance1">
+                    <div className="txt">Flights</div>
+                    <div className="bg">
+                      <div className="animated-distance">
+                        <span></span>
+                      </div>
+                    </div>
+                  </div>
+                </Fade>
+                <Fade delay={300} bottom>
+                  <div className="distance1 ">
+                    <div className="txt">Hotels</div>
+                    <div className="bg">
+                      <div className="animated-distance">
+                        <span></span>
+                      </div>
+                    </div>
+                  </div>
+                </Fade>
+                <Fade duration={2000} delay={500} bottom>
+                  <div className="distance1">
+                    <div className="txt">Cars</div>-
+                    <div className="bg">
+                      <div className="animated-distance">
+                        <span></span>
+                      </div>
+                    </div>
+                  </div>
+                </Fade> */}
+              </div>
+            </div>
+            <Fade left big duration={2500}>
+              <div className="col-sm-12 col-md-6 col-md-pull-6">
+                <img src="images/tower.png" alt="" className="img-responsive" />
+              </div>
+            </Fade>
+          </div>
+        </div>
+      </div>
+
+      <div className="funfacts-area pt-5 pb-5 bg-f5f4f2">
+        <div className="container">
+          <div className="section-title">
+            <h2>
+              Are You Flying Over the USA? So Are Over 60,000 Other Individuals
+            </h2>
+            <p>
+              Although it may seem like there is only one person flying over the
+              United States at any given moment, there are really about 61,000
+              people doing so.
+            </p>
+          </div>
+
+          <div className="contact-cta-box">
+            <h3>Give us a call</h3>
+            <p>Don't hesitate to contact us</p>
+
+            {/* <Link href="/contact"> */}
+            <a className="btn contactUs">Contact Us</a>
+            {/* </Link> */}
+          </div>
+
+          <div className="map-bg">
+            <img src="images/map.png" alt="map" />
+          </div>
+        </div>
+      </div>
+
       <Footer />
     </div>
   );

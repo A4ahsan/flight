@@ -29,7 +29,7 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { useAlert } from "react-alert";
 import { setRefreshs } from "../redux/refreshSlice";
-import {auth , getBaseUrl} from "../components/Utilities";
+import { auth, getBaseUrl } from "../components/Utilities";
 
 function Home() {
   const alert = useAlert();
@@ -63,12 +63,12 @@ function Home() {
     console.log(auth);
     const fetchData = async () => {
       const res = await axios.get(`${getBaseUrl()}BSFlight/GetCountry`, {
-        auth
+        auth,
       });
-      console.log("Cities" , res);
-    }
+      console.log("Cities", res);
+    };
     fetchData();
-  } , [])
+  }, []);
   // creating date functionality
   const [date, setDate] = useState([
     {
@@ -142,10 +142,10 @@ function Home() {
 
   // passengers
   const [passenger, setPassenger] = useState({
-    adults: 1,
-    children: 0,
-    infants: 0,
-    reserve: 0,
+    NoOfAdultPax: 1,
+    NoOfChildPax: 0,
+    NoOfInfantPax: 0,
+    NoOfYouthPax: 0,
   });
   const [passengerInput, setPassengerInput] = useState(false);
   const showPassengerInput = () => {
@@ -157,10 +157,10 @@ function Home() {
   const passengerCount = (one, two, three, four) => {
     setPassenger({
       ...passenger,
-      adults: one,
-      children: two,
-      infants: three,
-      reserve: four,
+      NoOfAdultPax: one,
+      NoOfChildPax: two,
+      NoOfInfantPax: three,
+      NoOfYouthPax: four,
     });
   };
   const { reserve, ...rest } = passenger;
@@ -183,38 +183,29 @@ function Home() {
     e.preventDefault();
     if (valueFromSearch && valueFromSearch2 && date[0].endDate) {
       let finalData = {
-        originLocationCode: valueFromSearch.split("-")[0],
-        destinationLocationCode: valueFromSearch2.split("-")[0],
-        departureDate: format(date[0].startDate, "yyyy/MM/dd")
+        TripType: "RT",
+        Origin: valueFromSearch.split("-")[0],
+        Destination: valueFromSearch2.split("-")[0],
+        AirlineCode: "",
+        DepartDate: format(date[0].startDate, "yyyy/MM/dd")
           .split("/")
           .join("-"),
-        returnDate: format(date[0].endDate, "yyyy/MM/dd").split("/").join("-"),
+        ArrivalDate: format(date[0].endDate, "yyyy/MM/dd").split("/").join("-"),
+        Class: cabin,
+        IsFlexibleDate: "false",
+        IsDirectFlight: "false",
         ...rest,
-        ...cabin2,
+        CompanyCode: "BS8106",
+        WebsiteName: "axenholidays.com",
+        ApplicationAccessMode: "TEST",
       };
-      console.log("Final Parameter" , finalData);
+      console.log("Final Parameter", finalData);
       setIsLoading(true);
       try {
         const res = await axios.post(
           `${getBaseUrl()}BSFlight/flightsearch`,
-          {
-            "TripType":"RT",
-            "Origin":"DXB",
-            "Destination":"LHR",
-            "AirlineCode":"",
-            "DepartDate":"28 Nov 2022",
-            "ArrivalDate":"30 Nov 2022",
-            "Class":"Economy",
-            "IsFlexibleDate":"false",
-            "IsDirectFlight":"false",
-            "NoOfAdultPax":"1",
-            "NoOfInfantPax":"0",
-            "NoOfChildPax":"0",
-            "NoOfYouthPax":"0",
-            "CompanyCode":"BS8106",
-            "WebsiteName":"axenholidays.com",
-            "ApplicationAccessMode":"TEST"
-            } , {auth}
+          finalData,
+          { auth }
         );
         setIsLoading(false);
         debugger;
@@ -1317,7 +1308,7 @@ function Home() {
             </div>
           </div> */}
 
-           {/* <div id="popular_cruises1">
+          {/* <div id="popular_cruises1">
             <div className="container">
               <Fade delay={400} right>
                 <h2>POPULAR LOCATIONS</h2>
@@ -1376,7 +1367,8 @@ function Home() {
                     </Fade>
                     <Fade delay={300} right>
                       <div className="txt2">
-                      Axen Holidays, is one of the UK's premier private travel businesses. 
+                        Axen Holidays, is one of the UK's premier private travel
+                        businesses.
                       </div>
                     </Fade>
                     <Fade right cascade>
@@ -1451,12 +1443,14 @@ function Home() {
                       <div className="thumbnail clearfix ">
                         <Link to="#">
                           <figure>
-                            <img style={{  width: "10rem" }}
+                            <img
+                              style={{ width: "10rem" }}
                               src="images/IATA-1.png"
                               alt=""
                               className="img1 img-responsive object-center"
                             />
-                            <img style={{  width: "10rem" }}
+                            <img
+                              style={{ width: "10rem" }}
                               src="images/IATA-1.png"
                               alt=""
                               className="img2 img-responsive"
@@ -1467,19 +1461,21 @@ function Home() {
                     </div>
                   </div>
                 </Flip>
-                
+
                 <Flip delay={150}>
                   <div className="col-sm-4 col-md-2 col-xs-6">
                     <div className="thumb1">
                       <div className="thumbnail clearfix">
                         <Link to="#">
-                          <figure style={{  textAlign: "center" }}>
-                            <img style={{  width: "10rem" }}
+                          <figure style={{ textAlign: "center" }}>
+                            <img
+                              style={{ width: "10rem" }}
                               src="images/ATOL.png"
                               alt=""
                               className="img1 img-responsive "
                             />
-                            <img style={{  width: "10rem" }}
+                            <img
+                              style={{ width: "10rem" }}
                               src="images/ATOL.png"
                               alt=""
                               className="img2 img-responsive"
@@ -1490,8 +1486,6 @@ function Home() {
                     </div>
                   </div>
                 </Flip>
-                
-                
               </div>
             </div>
           </div>
