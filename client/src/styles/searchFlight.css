@@ -1,0 +1,20 @@
+.searchFlightSection .airlineDiv label{
+    text-align: center !important;
+    font-size: 10px;
+}
+.searchFlightSection .airlineDiv img {
+    text-align: center !important;
+}
+.searchFlightSection .countryCode {
+    font-size: 25px;
+}
+.searchFlightSection .priceSection {
+    text-align: center;
+    padding-top: 50%;
+}
+.searchFlightSection .priceSection label {
+    font-size: 25px;
+}
+.searchFlightSection .airlineBottom {
+    border-bottom: 1px solid lightgray;
+}
