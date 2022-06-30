@@ -6,6 +6,7 @@ import TopBarTwo from "../components/TopBarTwo";
 import { FaHeart } from "react-icons/fa";
 import { ImAirplane } from "react-icons/im";
 import "../styles/searchFlight.css";
+import { getBaseUrl } from "../components/Utilities";
 
 const SearchFlight2 = (props) => {
   const { state } = useLocation();
@@ -14,6 +15,30 @@ const SearchFlight2 = (props) => {
   const [airSolutions, setairSolutions] = useState(
     state.flightOffers.result.airSolutions
   );
+
+  const hitFlightPriceAPI = async (key) => {
+    // let finalData = {
+    //   "Key": key,
+    //   "TripType":"RT",
+    //   "AccountCode":"Btres",
+    //   "InboundKey":"PaSICQZYlDKAXKp1iDAAAA==",
+    //   "OutBoundKey":"PaSICQZYlDKATKp1iDAAAA==",
+    //   CompanyCode: "BS8106",
+    //   WebsiteName: "axenholidays.com",
+    //   "ApplicationAccessMode":"TEST",
+    //   "token":"e202021b-872d-4d80-a07a-52530aa5a3fa",
+    //   "supp":"GAL",
+    //   "IsFlexibleDate":0,
+    //   "OptionKeyList":["PaSICQZYlDKATKp1iDAAAA==","PaSICQZYlDKAXKp1iDAAAA=="],
+    //   "NoOfAdultPax":"1",
+    //   "NoOfChildPax":"0",
+    //   "NoOfYouthPax":"0"
+    // };
+    // const res = await axios.post(
+    //   `${getBaseUrl()}BSFlight/flightprice`,
+    //   finalData,
+    //   { auth })
+  }
   console.log("Flight Info", globalScope);
   console.log("Air Solutions", airSolutions);
 
@@ -146,7 +171,7 @@ const SearchFlight2 = (props) => {
                 <div className="priceSection">
                   <label>$ {item.totalPrice}</label>
                   <p>Tax & Fees Included</p>
-                  <button className="btn btn-primary">Book Online</button>
+                  <button onClick={() => hitFlightPriceAPI(item.key)} className="btn btn-primary">Book Online</button>
                 </div>
               </div>
             </div>

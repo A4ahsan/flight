@@ -28,6 +28,7 @@ import LandingPage from './pages/LandingPage';
 import About from './pages/About';
 import Contact from './pages/contact';
 import SearchFlight2 from './pages/SearchFlight2';
+import BookingFlightPage2 from './pages/BookingFlightPage2';
 
 
 
@@ -72,6 +73,10 @@ function App() {
             <RequireAuth>
               <BookingFlightPage />
             </RequireAuth>
+          } />
+          <Route path="/flight-checkout2" element={
+            
+              <BookingFlightPage2 />
           } />
           <Route path="/hotel-checkout" element={
             <RequireAuth>

@@ -197,7 +197,7 @@ function Home() {
         ...rest,
         CompanyCode: "BS8106",
         WebsiteName: "axenholidays.com",
-        ApplicationAccessMode: "TEST",
+        // ApplicationAccessMode: "TEST",
       };
       console.log("Final Parameter", finalData);
       setIsLoading(true);
@@ -205,7 +205,11 @@ function Home() {
         const res = await axios.post(
           `${getBaseUrl()}BSFlight/flightsearch`,
           finalData,
-          { auth }
+          { auth },
+          {headers : {
+            'Access-Control-Allow-Origin' : '*',
+  'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+          }},
         );
         debugger;
         if (res.data.result.airSolutions.length >= 0) {
