@@ -224,6 +224,13 @@ function BookingFlightPage2() {
                                             </div>
                                         </div>
                                         <div className="clearfix"></div>
+                                        <div className="select1_wrapper">
+                                            <label className="col-md-5" style={{ paddingLeft: "0", paddingTop: "15px" }}>Phone Number</label>
+                                            <div className="col-md-7 relative" style={{ paddingRight: "0", paddingLeft: "0" }}>
+                                                <input autoComplete='off' onChange={onChange} placeholder="0311-2396511" required name="number" type="phone" className="form-control" spellCheck="false" />
+                                            </div>
+                                        </div>
+                                        <div className="clearfix"></div>
                                         <div className="margin-top"></div>
                                         <h3>PASSPORT INFORMATION</h3>
                                         <div className="input2_wrapper">
@@ -263,7 +270,6 @@ function BookingFlightPage2() {
                                         <div className="select1_wrapper  flex items-center">
                                             <label className="col-md-5" style={{ paddingLeft: "0", paddingTop: "15px" }}>Issuance Date</label>
                                             <div className="col-md-7 relative" style={{ paddingRight: "0", paddingLeft: "0" }}>
-                                                {/* <input autoComplete='off' onChange={onChange} required name="issuanceDate" type="date" className="form-control" spellCheck="false" /> */}
                                                 <DatePicker clearIcon={null} minDate={minMaxDate("issuance")} className="border-none" value={new Date(userInfo["issuanceDate"])} onChange={(newDate) => handleDateChange("issuanceDate", newDate)} format="y-MM-dd" ></DatePicker>
                                             </div>
                                         </div>
@@ -303,7 +309,6 @@ function BookingFlightPage2() {
                                         <div className="select1_wrapper flex items-center">
                                             <label className="col-md-5" style={{ paddingLeft: "0", paddingTop: "15px" }}>Expiry Date</label>
                                             <div className="col-md-7 relative" style={{ paddingRight: "0", paddingLeft: "0" }}>
-                                                {/* <input autoComplete='off' onChange={onChange} required name="expiryDate" type="date" className="form-control" spellCheck="false" /> */}
                                                 <DatePicker clearIcon={null} minDate={minMaxDate("expiry")} className="border-none" value={new Date(userInfo["expiryDate"])} onChange={(newDate) => handleDateChange("expiryDate", newDate)} format="y-MM-dd" ></DatePicker>
                                             </div>
                                         </div>
@@ -371,7 +376,7 @@ function BookingFlightPage2() {
                                         </div>
                                         <div className="clearfix"></div>
                                         <div className="margin-top"></div>
-                                        <h3>BILLING ADDRESS</h3>
+                                        <h3>Billing Details</h3>
                                         <div className="input2_wrapper">
                                             <label className="col-md-5" style={{ paddingLeft: "0", paddingTop: "12px" }}>Country</label>
                                             <div className="col-md-7  relative" style={{ paddingRight: "0", paddingLeft: "0" }} >

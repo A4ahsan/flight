@@ -7,8 +7,11 @@ import { FaHeart } from "react-icons/fa";
 import { ImAirplane } from "react-icons/im";
 import "../styles/searchFlight.css";
 import { getBaseUrl } from "../components/Utilities";
+import { Link, useNavigate } from "react-router-dom";
+
 
 const SearchFlight2 = (props) => {
+  let navigate = useNavigate();
   const { state } = useLocation();
   const globalScope = state.flightOffers;
 
@@ -16,20 +19,24 @@ const SearchFlight2 = (props) => {
     state.flightOffers.result.airSolutions
   );
 
-  const hitFlightPriceAPI = async (key) => {
+  const hitFlightPriceAPI = async (data) => {
+    debugger
+    navigate("/flight-checkout2", {
+      state: { flightOffers: data },
+    });
     // let finalData = {
-    //   "Key": key,
+    //   "Key": data.key,
     //   "TripType":"RT",
     //   "AccountCode":"Btres",
-    //   "InboundKey":"PaSICQZYlDKAXKp1iDAAAA==",
-    //   "OutBoundKey":"PaSICQZYlDKATKp1iDAAAA==",
+    //   "InboundKey": data.journey[1]['optionInfos'][0]['optionKey'],
+    //   "OutBoundKey": data.journey[0]['optionInfos'][0]['optionKey'],
     //   CompanyCode: "BS8106",
     //   WebsiteName: "axenholidays.com",
     //   "ApplicationAccessMode":"TEST",
-    //   "token":"e202021b-872d-4d80-a07a-52530aa5a3fa",
+    //   "token": state.flightOffers.result.token,
     //   "supp":"GAL",
     //   "IsFlexibleDate":0,
-    //   "OptionKeyList":["PaSICQZYlDKATKp1iDAAAA==","PaSICQZYlDKAXKp1iDAAAA=="],
+    //   "OptionKeyList":[data.journey[0]['optionInfos'][0]['optionKey'],data.journey[1]['optionInfos'][0]['optionKey']],
     //   "NoOfAdultPax":"1",
     //   "NoOfChildPax":"0",
     //   "NoOfYouthPax":"0"
@@ -171,7 +178,7 @@ const SearchFlight2 = (props) => {
                 <div className="priceSection">
                   <label>$ {item.totalPrice}</label>
                   <p>Tax & Fees Included</p>
-                  <button onClick={() => hitFlightPriceAPI(item.key)} className="btn btn-primary">Book Online</button>
+                  <button onClick={() => hitFlightPriceAPI(item)} className="btn btn-primary">Book Online</button>
                 </div>
               </div>
             </div>

@@ -1,5 +1,5 @@
 export const getBaseUrl = () => {
-  var baseUrl = "http://api.brightsun.co.uk/api/"; //live link
+  var baseUrl = "https://rocky-earth-65689.herokuapp.com/?url=http://api.brightsun.co.uk/api/"; //live link
   return baseUrl;
 };
 
