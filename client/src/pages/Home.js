@@ -207,12 +207,19 @@ function Home() {
           finalData,
           { auth }
         );
-        setIsLoading(false);
         debugger;
-        dispatch(setRefreshs("false"));
-        navigate("/search-flights", {
-          state: { flightOffers: res.data, details: finalData },
-        });
+        if (res.data.result.airSolutions.length >= 0) {
+          setIsLoading(false);
+          debugger;
+          dispatch(setRefreshs("false"));
+          navigate("/search-flights", {
+            state: { flightOffers: res.data, details: finalData },
+          });
+        } else if (res.data.result.apiFault.errorCode != "112") {
+          debugger;
+          setIsLoading(false);
+          alert.error("No Flight Found");
+        }
       } catch (err) {
         setError(err);
         setIsLoading(false);
