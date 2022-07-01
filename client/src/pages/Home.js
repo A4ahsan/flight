@@ -14,6 +14,7 @@ import Search from "../components/Search";
 import CancelIcon from "@material-ui/icons/Cancel";
 import axios from "axios";
 import Loading from "../components/Loading";
+import Covid from "../components/Covid";
 import Fade from "react-reveal/Fade";
 import Flip from "react-reveal/Flip";
 import Zoom from "react-reveal/Zoom";
@@ -354,6 +355,7 @@ function Home() {
     <>
       <div>
         <div id="main">
+          <Covid />
           <TopBarOne />
           <TopBarTwo />
           <div id="slider_wrapper">
@@ -1447,46 +1449,23 @@ function Home() {
           </div>
           <div id="partners">
             <div className="container">
-              <div className="row flex justify-center">
-                <Flip>
-                  <div className="col-sm-4 col-md-2 col-xs-6">
-                    <div className="thumb1 ">
-                      <div className="thumbnail clearfix ">
-                        <Link to="#">
-                          <figure>
-                            <img
-                              style={{ width: "10rem" }}
-                              src="images/IATA-1.png"
-                              alt=""
-                              className="img1 img-responsive object-center"
-                            />
-                            <img
-                              style={{ width: "10rem" }}
-                              src="images/IATA-1.png"
-                              alt=""
-                              className="img2 img-responsive"
-                            />
-                          </figure>
-                        </Link>
-                      </div>
-                    </div>
-                  </div>
-                </Flip>
+              <div className="row flex ">
+               
 
                 <Flip delay={150}>
-                  <div className="col-sm-4 col-md-2 col-xs-6">
+                  <div className="col-sm-12 col-md-12 col-xs-12 col-lg-4">
                     <div className="thumb1">
                       <div className="thumbnail clearfix">
                         <Link to="#">
                           <figure style={{ textAlign: "center" }}>
                             <img
-                              style={{ width: "10rem" }}
+                              style={{width:"20rem"}}
                               src="images/ATOL.png"
                               alt=""
                               className="img1 img-responsive "
                             />
                             <img
-                              style={{ width: "10rem" }}
+                              
                               src="images/ATOL.png"
                               alt=""
                               className="img2 img-responsive"
@@ -1497,6 +1476,13 @@ function Home() {
                     </div>
                   </div>
                 </Flip>
+                <div className="col-sm-12 col-md-12 col-xs-12 col-lg-8">
+                    <h2>ATOL</h2>
+                    <p>We act as an agent for all ATOL holders. Please ask for further information when you make your booking query.</p>
+                    <p>All the flights advertised on the website originated from the UK are proctected by ATOL scheme. You will be provided your ATOL certificate onceyour booking is fully paid</p>
+                    <p>Please see our Terms & Conditions for further information about ATOL protection <Link to="/TermsAndCondition"> here </Link></p>
+                  </div>
+
               </div>
             </div>
           </div>

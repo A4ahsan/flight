@@ -15,20 +15,20 @@ function TopBarOne() {
                         <div className="email1 text-right" style={{ display: "flex", alignItems: "right", color: "#ACACAC" }} >
                             <Link to="#">
                                 <MailIcon style={{ transform: "scale(1.5)", marginRight: "8px" }} />
-                                <a href="mailto:info@axenholidays.com">info@axenholidays.com</a>
+                                <a href="mailto:cs@axenholidays.com">cs@axenholidays.com</a>
                             </Link>
                         </div>
                     </Fade>
                     <Fade delay={500} right>
                         <div className="email1 text-right" style={{ display: "flex", alignItems: "right", color: "#ACACAC" }}  >
                             <PhoneIcon style={{ transform: "scale(1.1)", marginRight: "8px" }} />
-                            <a href="tel:+02081383891">0208-1383-891</a>
+                            <a href="tel:+02081383891">0208-138-3891</a>
                         </div>
                     </Fade>
                     <Fade delay={500} right>
                         <div className="email1 text-right" style={{ display: "flex", alignItems: "right", color: "#ACACAC" }}  >
                             <PhoneIcon style={{ transform: "scale(1.1)", marginRight: "8px" }} />
-                            <a href="tel:+0208-1383-892">0208-1383-892</a>
+                            <a href="tel:+0208-1383-892">0208-138-3892</a>
                         </div>
                     </Fade>
                     <div className="social_wrapper">

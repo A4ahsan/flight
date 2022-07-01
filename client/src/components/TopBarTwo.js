@@ -150,7 +150,7 @@ function TopBarTwo() {
                                 <HouseboatIcon style={{ transform: "scale(1.5)" }} />
                             </ListItemIcon>
                             <ListItemText>
-                                <p style={{ fontSize: "16px" }} >Holidays (Comming Soon)</p>
+                                <p style={{ fontSize: "16px" }} >Holidays (Coming Soon)</p>
                             </ListItemText>
                         </div>
                     </ListItem>
@@ -275,11 +275,11 @@ function TopBarTwo() {
                                 <Link className="link" to="/hotels" ><p className="text">Hotels</p></Link>
                             </div>
                             <div className="menues">
-                                <Link className="link" to="/" ><p className="text">Cars (Comming Soon)</p></Link>
+                                <Link className="link" to="/" ><p className="text">Cars (Coming Soon)</p></Link>
                             </div>
                         
                             <div className="menues">
-                                <Link className="link" to="/" ><p className="text">Holidays (Comming Soon)</p></Link>
+                                <Link className="link" to="/" ><p className="text">Holidays (Coming Soon)</p></Link>
                             </div>
                             <div className="menues">
                                 <Link className="link" to="/about" ><p className="text">About</p></Link>

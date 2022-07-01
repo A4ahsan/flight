@@ -52,7 +52,7 @@ function Footer() {
                   <Link to="#">Hotels</Link>
                 </li>
                 <li>
-                  <Link to="#">Cars (Comming Soon)</Link>
+                  <Link to="#">Cars (Coming Soon)</Link>
                 </li>
               </ul>
 
@@ -73,7 +73,7 @@ function Footer() {
               </div>
               <div className="support1">
                 {" "}
-                <a href="mailto:info@axenholidays.com">info@axenholidays.com</a>
+                <a href="mailto:cs@axenholidays.com">cs@axenholidays.com</a>
               </div>
                
               </div>
@@ -152,7 +152,7 @@ function Footer() {
             <span>|</span> <Link to="/about">About Us</Link> <span>|</span>{" "}
             <Link to={"/faq"}>FAQ</Link> <span>|</span>{" "}
             <Link to={"/LandingPage"}>Landing Page</Link> <span>|</span>{" "}
-            <Link to="#">Contact Support</Link>
+            <Link to="/contact">Contact Support</Link>
           </div>
           <div className="right_side">
             Designed by{" "}
