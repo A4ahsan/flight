@@ -52,10 +52,12 @@ export default function ChoosePayment() {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
     };
-    const publishableKey = process.env.REACT_APP_STRIPE_KEY;
+    const publishableKey = "pk_test_51KyznpAapFKrkoR42tEKHEyQEo93YmaAcMEyoL0R6yDxjTRSWeMWJiDxvnyVYEyol6ArY5ZA9knoztqjZGWKrYM300Hu61HsOe";
     const [token, setToken] = useState(null);
     const onToken = (T) => {
+        debugger;
         setToken(T);
+        navigate("/");
     }
     const amount = 80000;
 
@@ -65,7 +67,7 @@ export default function ChoosePayment() {
     const handleSquare = () => {
         navigate("/paypal", { state: state });
     }
-
+console.log("AMount" , state);
     return (
         <ThemeProvider theme={theme}>
             <Container component="main" maxWidth="xs">
@@ -82,10 +84,10 @@ export default function ChoosePayment() {
                         <img style={{ transform: "scale(0.8)", objectFit: "cover" }} src="https://axen-trave-test.herokuapp.com/images/main_logo.png" alt="" />
                     </Avatar>
                     <Typography component="h1" variant="h3">
-                        Choose a payment Method
+                        Select payment Method
                     </Typography>
                     <Box onSubmit={handleSubmit} noValidate sx={{ mt: 1, display: "flex", flexDirection: "column", alignItems: "center" }}>
-                        <Button
+                        {/* <Button
                             type="submit"
                             fullWidth
                             variant="contained"
@@ -103,15 +105,16 @@ export default function ChoosePayment() {
                             onClick={handleSquare}
                         >
                             Square
-                        </SquareButton>
+                        </SquareButton> */}
                         <StripeCheckOut
                             label='Pay Now'
                             name='AXEN HOLIDAYS'
                             billingAddress
                             shippingAddress
                             image={`https://axen-trave-test.herokuapp.com/images/main_logo.png`}
-                            description={`Your total is $ ${amount.toLocaleString("en-US")}`}
-                            amount={amount * 100}
+                            description={`Your total is £ ${state.flightPrice}`}
+                            amount={state.flightPrice}
+                            // amount={amount * 100}
                             panelLabel='Pay Now'
                             token={onToken}
                             stripeKey={publishableKey}
@@ -122,7 +125,7 @@ export default function ChoosePayment() {
                                 variant="contained"
                                 sx={{ mt: 3, mb: 2, fontSize: "18px", width: "38rem" }}
                             >
-                                Stripe
+                                Pay With Card
                             </StripeButton>
                         </StripeCheckOut>
                     </Box>
