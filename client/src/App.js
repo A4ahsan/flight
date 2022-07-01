@@ -95,9 +95,9 @@ function App() {
             </Login>
           } />
           <Route path="/choose-payment" element={
-            <RequireAuth>
+            // <RequireAuth>
               <ChoosePayment />
-            </RequireAuth>
+            // </RequireAuth>
           } />
           <Route path="/paypal" element={
             <RequireAuth>
