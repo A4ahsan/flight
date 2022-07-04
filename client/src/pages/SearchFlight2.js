@@ -22,6 +22,8 @@ const SearchFlight2 = (props) => {
     state.flightOffers.result.airSolutions
   );
   const [isLoading, setIsLoading] = useState(false);
+  const [byPrice, setbyPrice] = useState("LtoH");
+  const [byName, setbyName] = useState("ZtoA");
 
   const hitFlightPriceAPI = async (data) => {
     setIsLoading(true);
@@ -67,6 +69,58 @@ const SearchFlight2 = (props) => {
     console.log("Final Data for Price", finalData);
     console.log("Flight Price Response", res.data);
   };
+
+  const sortByPrice = (action) => {
+    if (action == "LtoH") {
+      airSolutions.sort(function (a, b) {
+        return a.totalPrice - b.totalPrice;
+      });
+    } else {
+      airSolutions.sort(function (a, b) {
+        return b.totalPrice - a.totalPrice;
+      });
+    }
+    setbyPrice(action);
+  };
+
+  const sortByName = (action) => {
+    debugger;
+    if (action == "AtoZ") {
+      airSolutions.sort(function (a, b) {
+        if (
+          a.journey[0]["optionInfos"][0]["airSegmentInfos"][0]["arlineName"] <
+          b.journey[0]["optionInfos"][0]["airSegmentInfos"][0]["arlineName"]
+        ) {
+          return -1;
+        }
+        if (
+          a.journey[0]["optionInfos"][0]["airSegmentInfos"][0]["arlineName"] >
+          b.journey[0]["optionInfos"][0]["airSegmentInfos"][0]["arlineName"]
+        ) {
+          return 1;
+        }
+        return 0;
+      });
+    } else {
+      airSolutions.sort(function (a, b) {
+        if (
+          a.journey[0]["optionInfos"][0]["airSegmentInfos"][0]["arlineName"] >
+          b.journey[0]["optionInfos"][0]["airSegmentInfos"][0]["arlineName"]
+        ) {
+          return -1;
+        }
+        if (
+          a.journey[0]["optionInfos"][0]["airSegmentInfos"][0]["arlineName"] <
+          b.journey[0]["optionInfos"][0]["airSegmentInfos"][0]["arlineName"]
+        ) {
+          return 1;
+        }
+        return 0;
+      });
+    }
+    debugger;
+    setbyName(action);
+  };
   console.log("Flight Info", globalScope);
   console.log("Air Solutions", airSolutions);
 
@@ -75,130 +129,190 @@ const SearchFlight2 = (props) => {
       <div>
         <TopBarOne />
         <TopBarTwo />
-        <div className="container mb-12 mt-20 searchFlightSection">
+        <div className="mb-12 mt-20 searchFlightSection">
+          <h4 className="font-weight-bold">Sort Result By:</h4>
+          <div className="d-flex">
+            <div>
+              {byPrice == "HtoL" ? (
+                <button
+                  className="btn btn-primary active mr-2"
+                  onClick={() => sortByPrice("LtoH")}
+                >
+                  Total Price (High to Low)
+                </button>
+              ) : (
+                <button
+                  className="btn btn-light mr-2"
+                  onClick={() => sortByPrice("HtoL")}
+                >
+                  Total Price (Low to High)
+                </button>
+              )}
+            </div>
+            <div>
+              {byName == "AtoZ" ? (
+                <button
+                  className="btn btn-primary active"
+                  onClick={() => sortByName("ZtoA")}
+                >
+                  Airline Name (A to Z)
+                </button>
+              ) : (
+                <button
+                  className="btn btn-light"
+                  onClick={() => sortByName("AtoZ")}
+                >
+                  Airline Name (A to Z)
+                </button>
+              )}
+            </div>
+            {/* <div>
+              <button className="btn btn-light">Flight Duration</button>
+            </div> */}
+          </div>
+
           {airSolutions.map((item, index) => (
             <div
+              key={index}
               className="row mt-20"
               style={{ boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px" }}
             >
-              <div className="col-sm-4 col-md-10 px-4 hidden-xs hidden-sm">
+              <div className="col-md-10">
                 {item.journey.map((journeyData) => (
-                  <div className="px-4 py-3 rounded-lg d-flex justify-content-between airlineBottom">
-                    <div className="airlineDiv" style={{ textAlign: "center" }}>
-                      <img
-                        width={50}
-                        height={50}
-                        src={
-                          journeyData.optionInfos[0]["airSegmentInfos"][0][
-                            "airlineLogoUrl"
-                          ]
-                        }
-                      />
-                      <label>
-                        {
-                          journeyData.optionInfos[0]["airSegmentInfos"][0][
-                            "arlineName"
-                          ]
-                        }
-                      </label>
-                      <p>
-                        {
-                          journeyData.optionInfos[0]["airSegmentInfos"][0][
-                            "ticketCarrier"
-                          ]
-                        }
-                        {
-                          journeyData.optionInfos[0]["airSegmentInfos"][0][
-                            "flightNumber"
-                          ]
-                        }
-                      </p>
-                    </div>
+                  <>
+                    <div className="rounded-lg d-flex justify-content-between airlineBottom">
+                      <div
+                        className="airlineDiv"
+                        style={{ textAlign: "center" }}
+                      >
+                        <img
+                          width={50}
+                          height={50}
+                          src={
+                            journeyData.optionInfos[0]["airSegmentInfos"][0][
+                              "airlineLogoUrl"
+                            ]
+                          }
+                        />
+                        <label>
+                          {
+                            journeyData.optionInfos[0]["airSegmentInfos"][0][
+                              "arlineName"
+                            ]
+                          }
+                        </label>
+                        <p>
+                          {
+                            journeyData.optionInfos[0]["airSegmentInfos"][0][
+                              "ticketCarrier"
+                            ]
+                          }
+                          {
+                            journeyData.optionInfos[0]["airSegmentInfos"][0][
+                              "flightNumber"
+                            ]
+                          }
+                        </p>
+                      </div>
 
-                    <div>
-                      <label className="countryCode">
-                        {journeyData.origin}
-                      </label>{" "}
-                      <br />
-                      <label>
-                        {
-                          journeyData.optionInfos[0]["airSegmentInfos"][0][
-                            "originAirportName"
-                          ]
-                        }
-                      </label>{" "}
-                      <br />
-                      <label>
-                        {
-                          journeyData.optionInfos[0]["airSegmentInfos"][0][
-                            "departDate"
-                          ]
-                        }
-                      </label>
-                    </div>
-
-                    <div className="d-flex justify-content-between">
                       <div>
-                        <label>Departure</label> <br />
-                        <label>
+                        <label className="countryCode">
+                          {journeyData.origin}
+                        </label>{" "}
+                        <br />
+                        <label className="airportName">
                           {
                             journeyData.optionInfos[0]["airSegmentInfos"][0][
-                              "departTime"
+                              "originAirportName"
+                            ]
+                          }
+                        </label>{" "}
+                        <br />
+                        <label className="airportName">
+                          {
+                            journeyData.optionInfos[0]["airSegmentInfos"][0][
+                              "departDate"
                             ]
                           }
                         </label>
                       </div>
-                      <ImAirplane className="ml-5 mr-5" />
-                      <div style={{ textAlign: "right" }}>
-                        <label>Arrival</label> <br />
-                        <label>
+
+                      <div className="d-flex justify-content-between">
+                        <div className="centerBoxDates">
+                          <label>Departure</label> <br />
+                          <label>
+                            {
+                              journeyData.optionInfos[0]["airSegmentInfos"][0][
+                                "departTime"
+                              ]
+                            }
+                          </label>
+                        </div>
+                        <ImAirplane className="ml-5 mr-5" />
+                        <div
+                          className="centerBoxDates"
+                          style={{ textAlign: "right" }}
+                        >
+                          <label>Arrival</label> <br />
+                          <label>
+                            {
+                              journeyData.optionInfos[0]["airSegmentInfos"][0][
+                                "arrivalTime"
+                              ]
+                            }
+                          </label>
+                        </div>
+                      </div>
+
+                      <div className="" style={{ textAlign: "right" }}>
+                        <label className="countryCode">
+                          {journeyData.destination}
+                        </label>{" "}
+                        <br />
+                        <label className="airportName">
                           {
                             journeyData.optionInfos[0]["airSegmentInfos"][0][
-                              "arrivalTime"
+                              "destinationAirportName"
+                            ]
+                          }
+                        </label>{" "}
+                        <br />
+                        <label className="airportName">
+                          {
+                            journeyData.optionInfos[0]["airSegmentInfos"][0][
+                              "arrivalDate"
                             ]
                           }
                         </label>
                       </div>
-                    </div>
 
-                    <div className="" style={{ textAlign: "right" }}>
-                      <label className="countryCode">
-                        {journeyData.destination}
-                      </label>{" "}
-                      <br />
-                      <label>
-                        {
-                          journeyData.optionInfos[0]["airSegmentInfos"][0][
-                            "destinationAirportName"
-                          ]
-                        }
-                      </label>{" "}
-                      <br />
-                      <label>
-                        {
-                          journeyData.optionInfos[0]["airSegmentInfos"][0][
-                            "arrivalDate"
-                          ]
-                        }
-                      </label>
+                      <div className="luggageInfo d-none d-sm-block">
+                        <label>1 Piece</label> <br />
+                        <label>
+                          {journeyData.optionInfos[0]["totalFlightDuration"]}
+                        </label>
+                        {/* <label>27 Jan</label> */}
+                      </div>
                     </div>
-
-                    <div>
-                      <label>1 Piece</label> <br />
-                      <label>
+                    <div
+                      className="luggageInfo d-md-none"
+                      style={{ textAlign: "center" }}
+                    >
+                      <label>1 Piece</label>
+                      <label className="ml-5">
                         {journeyData.optionInfos[0]["totalFlightDuration"]}
                       </label>
                       {/* <label>27 Jan</label> */}
                     </div>
-                  </div>
+                  </>
                 ))}
               </div>
 
               <div
-                className="col-sm-4 col-md-2 px-4 hidden-xs hidden-sm"
+                className="col-md-2"
                 style={{ boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px" }}
               >
-                <div className="px-4 py-3 rounded-lg d-flex justify-content-between">
+                <div className="rounded-lg">
                   <div className="priceSection">
                     <label>$ {item.totalPrice}</label>
                     <p>Tax & Fees Included</p>

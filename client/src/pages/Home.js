@@ -492,11 +492,11 @@ function Home() {
                                       onChange={handleChange}
                                       placeholder="Search City or Airport"
                                       value={valueFromSearch || value}
-                                      className="input datepicker"
+                                      className=""
                                       style={{
                                         width: "100%",
                                         outline: "none",
-                                        border: "none",
+                                        border: "none",  
                                       }}
                                     />
                                     {(value || valueFromSearch) && (
@@ -542,7 +542,7 @@ function Home() {
                                       onChange={handleChange2}
                                       placeholder="Search City or Airport"
                                       value={valueFromSearch2 || value2}
-                                      className="input datepicker"
+                                      className=""
                                       style={{ width: "100%", outline: "none" }}
                                     />
                                     {(value2 || valueFromSearch2) && (
