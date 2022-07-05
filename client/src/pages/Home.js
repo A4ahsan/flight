@@ -688,12 +688,13 @@ function Home() {
                                   )}
                                 </div>
                               </div>
-                              <div className="col-sm-4 col-md-1">
+                              <div className="col-sm-4 col-md-2">
                                 <FormControl
                                   variant="standard"
                                   sx={{ m: 1, width: "100%" }}
+                                  className="mt-5"
                                 >
-                                  <InputLabel
+                                  {/* <InputLabel
                                     style={{
                                       fontSize: "15px",
                                       fontFamily: "sans-serif",
@@ -701,7 +702,7 @@ function Home() {
                                     id="demo-simple-select-standard-label"
                                   >
                                     Cabin
-                                  </InputLabel>
+                                  </InputLabel> */}
                                   <Select
                                     labelId="demo-simple-select-standard-label"
                                     id="demo-simple-select-standard"
@@ -739,7 +740,7 @@ function Home() {
                                 </FormControl>
                               </div>
 
-                              <div className="col-sm-4 col-md-2">
+                              <div className="col-sm-4 col-md-1">
                                 <div
                                   className="button1_wrapper"
                                   style={{

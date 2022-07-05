@@ -69,7 +69,7 @@ function Footer() {
                 <a href="tel:+02081383891">0208-138-3891</a>
               </div>
               <div className="phone2">
-                <a href="tel:+02081383892">0208-138-3893</a>
+                <a href="tel:+02081383893">0208-138-3893</a>
               </div>
               <div className="support1">
                 {" "}

@@ -30,7 +30,8 @@ function BookingFlightPage2() {
     dateOfBirth: new Date(),
     expiryDate: new Date(),
     issuanceDate: new Date(),
-    countryCallingCode: 44
+    countryCallingCode: 44,
+    number: +44
   });
   const [value, setValue] = useState("");
   const [value2, setValue2] = useState("");
@@ -300,11 +301,11 @@ function BookingFlightPage2() {
                     {FlightPriceData.origin} To {FlightPriceData.destination}{" "}
                     (Round-trip)
                   </h3>
-                  <div className="clearfix"></div>
+                  {/* <div className="clearfix"></div>
                   <p className="address text-center">
                     {findCity(departCity)} ({departCity}) /{" "}
                     {findCity(arriveCity)} ({arriveCity})
-                  </p>
+                  </p> */}
 
                   <div className="clearfix"></div>
                   <div className="col-md-4 booking-row">
@@ -746,6 +747,7 @@ function BookingFlightPage2() {
                           onChange={onChange}
                           placeholder="0311-2396511"
                           required
+                          value={userInfo.number}
                           name="number"
                           type="phone"
                           className="form-control"
@@ -1229,7 +1231,7 @@ function BookingFlightPage2() {
                         style={{ paddingRight: "0", paddingLeft: "0" }}
                       >
                         <span className="red">
-                          £ {FlightPriceData.airSolutions[0]["strBasePrice"]}
+                          £{FlightPriceData.airSolutions[0]["strBasePrice"]}
                         </span>
                       </div>
                     </div>
@@ -1246,7 +1248,7 @@ function BookingFlightPage2() {
                         style={{ paddingRight: "0", paddingLeft: "0" }}
                       >
                         <span className="red">
-                          £ {FlightPriceData.airSolutions[0]["strTax"]}
+                          £{FlightPriceData.airSolutions[0]["strTax"]}
                         </span>
                       </div>
                     </div>
@@ -1263,7 +1265,7 @@ function BookingFlightPage2() {
                         style={{ paddingRight: "0", paddingLeft: "0" }}
                       >
                         <span className="red">
-                          £ 5.00
+                          £5.00
                         </span>
                       </div>
                     </div>
@@ -1280,7 +1282,7 @@ function BookingFlightPage2() {
                         style={{ paddingRight: "0", paddingLeft: "0" }}
                       >
                         <span className="red">
-                          £ 2.50
+                          £2.50
                         </span>
                       </div>
                     </div>
@@ -1297,7 +1299,7 @@ function BookingFlightPage2() {
                         style={{ paddingRight: "0", paddingLeft: "0" }}
                       >
                         <span className="red">
-                          £ {FlightPriceData.airSolutions[0]["totalPrice"] +  5 + 2.50}
+                          £{FlightPriceData.airSolutions[0]["totalPrice"] +  5 + 2.50}
                         </span>
                       </div>
                     </div>
@@ -1337,7 +1339,7 @@ function BookingFlightPage2() {
                         style={{ paddingRight: "0", paddingLeft: "0" }}
                       >
                         <span className="red" style={{ fontSize: "30px" }}>
-                          £ {FlightPriceData.airSolutions[0]["totalPrice"] +  5 + 2.50}
+                          £{FlightPriceData.airSolutions[0]["totalPrice"] +  5 + 2.50}
                         </span>
                       </div>
                     </div>

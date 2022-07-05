@@ -22,13 +22,13 @@ function TopBarOne() {
                     <Fade delay={500} right>
                         <div className="email1 text-right" style={{ display: "flex", alignItems: "right", color: "#ACACAC" }}  >
                             <PhoneIcon style={{ transform: "scale(1.1)", marginRight: "8px" }} />
-                            <a href="tel:+02081383891">0208-1383-891</a>
+                            <a href="tel:+02081383891">0208-138-3891</a>
                         </div>
                     </Fade>
                     <Fade delay={500} right>
                         <div className="email1 text-right" style={{ display: "flex", alignItems: "right", color: "#ACACAC" }}  >
                             <PhoneIcon style={{ transform: "scale(1.1)", marginRight: "8px" }} />
-                            <a href="tel:+0208-1383-892">0208-1383-893</a>
+                            <a href="tel:+0208-1383-892">0208-138-3893</a>
                         </div>
                     </Fade>
                     <div className="social_wrapper">
