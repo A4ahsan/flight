@@ -314,7 +314,7 @@ const SearchFlight2 = (props) => {
               >
                 <div className="rounded-lg">
                   <div className="priceSection">
-                    <label>$ {item.totalPrice}</label>
+                    <label>£ {item.totalPrice}</label>
                     <p>Tax & Fees Included</p>
                     <button
                       onClick={() => hitFlightPriceAPI(item)}

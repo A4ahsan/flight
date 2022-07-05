@@ -142,7 +142,7 @@ function Home() {
 
   // passengers
   const [passenger, setPassenger] = useState({
-    NoOfAdultPax: 1,
+    NoOfAdultPax: 0,
     NoOfChildPax: 0,
     NoOfInfantPax: 0,
     NoOfYouthPax: 0,
@@ -163,11 +163,11 @@ function Home() {
       NoOfYouthPax: four,
     });
   };
-  const { reserve, ...rest } = passenger;
+  const { NoOfYouthPax, ...rest } = passenger;
   const totalPassengers = Object.values(rest).reduce((a, b) => a + b);
 
   // cabin
-  const [cabin, setCabin] = useState("");
+  const [cabin, setCabin] = useState("ECONOMY");
   const [cabin2, setCabin2] = useState({});
   const settingCabin = (e) => {
     setCabin(e.target.value);
