@@ -142,7 +142,7 @@ function Home() {
 
   // passengers
   const [passenger, setPassenger] = useState({
-    NoOfAdultPax: 0,
+    NoOfAdultPax: 1,
     NoOfChildPax: 0,
     NoOfInfantPax: 0,
     NoOfYouthPax: 0,
