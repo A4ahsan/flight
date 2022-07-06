@@ -113,9 +113,10 @@ console.log("AMount" , state);
                             shippingAddress
                             image={`https://axen-trave-test.herokuapp.com/images/main_logo.png`}
                             description={`Your total is £ ${state.flightPrice}`}
-                            amount={state.flightPrice}
+                            amount={state.flightPrice * 100}
                             // amount={amount * 100}
                             panelLabel='Pay Now'
+                            currency='GBP'
                             token={onToken}
                             stripeKey={publishableKey}
                         >

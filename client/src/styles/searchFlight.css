@@ -1,6 +1,10 @@
+.searchFlightSection {
+    padding: 0px 50px;
+}
 .searchFlightSection .airlineDiv label{
     text-align: center !important;
     font-size: 10px;
+    
 }
 .searchFlightSection .airlineDiv img {
     text-align: center !important;
@@ -10,11 +14,36 @@
 }
 .searchFlightSection .priceSection {
     text-align: center;
-    padding-top: 50%;
+    padding: 30px 30px;
 }
 .searchFlightSection .priceSection label {
     font-size: 25px;
 }
 .searchFlightSection .airlineBottom {
     border-bottom: 1px solid lightgray;
+    padding: 10px 0px;
+}
+
+@media (max-width: 768px) {
+    .searchFlightSection {
+        padding: 0px 20px;
+    }
+    .searchFlightSection .airlineDiv label {
+        font-size: 8px;
+    }
+    .searchFlightSection .airlineDiv p {
+        font-size: 8px;
+    }
+    .searchFlightSection .countryCode {
+        font-size: 20px;
+    }
+    .searchFlightSection .airportName {
+        font-size: 10px;
+    }
+    .searchFlightSection .centerBoxDates {
+        font-size: 10px;
+    }
+    .searchFlightSection .luggageInfo {
+        font-size: 10px;
+    }
 }

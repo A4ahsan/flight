@@ -164,11 +164,11 @@ function Home() {
       NoOfYouthPax: four,
     });
   };
-  const { reserve, ...rest } = passenger;
+  const { NoOfYouthPax, ...rest } = passenger;
   const totalPassengers = Object.values(rest).reduce((a, b) => a + b);
 
   // cabin
-  const [cabin, setCabin] = useState("");
+  const [cabin, setCabin] = useState("ECONOMY");
   const [cabin2, setCabin2] = useState({});
   const settingCabin = (e) => {
     setCabin(e.target.value);
@@ -494,11 +494,11 @@ function Home() {
                                       onChange={handleChange}
                                       placeholder="Search City or Airport"
                                       value={valueFromSearch || value}
-                                      className="input datepicker"
+                                      className=""
                                       style={{
                                         width: "100%",
                                         outline: "none",
-                                        border: "none",
+                                        border: "none",  
                                       }}
                                     />
                                     {(value || valueFromSearch) && (
@@ -544,7 +544,7 @@ function Home() {
                                       onChange={handleChange2}
                                       placeholder="Search City or Airport"
                                       value={valueFromSearch2 || value2}
-                                      className="input datepicker"
+                                      className=""
                                       style={{ width: "100%", outline: "none" }}
                                     />
                                     {(value2 || valueFromSearch2) && (
@@ -690,12 +690,13 @@ function Home() {
                                   )}
                                 </div>
                               </div>
-                              <div className="col-sm-4 col-md-1">
+                              <div className="col-sm-4 col-md-2">
                                 <FormControl
                                   variant="standard"
                                   sx={{ m: 1, width: "100%" }}
+                                  className="mt-5"
                                 >
-                                  <InputLabel
+                                  {/* <InputLabel
                                     style={{
                                       fontSize: "15px",
                                       fontFamily: "sans-serif",
@@ -703,7 +704,7 @@ function Home() {
                                     id="demo-simple-select-standard-label"
                                   >
                                     Cabin
-                                  </InputLabel>
+                                  </InputLabel> */}
                                   <Select
                                     labelId="demo-simple-select-standard-label"
                                     id="demo-simple-select-standard"
@@ -741,7 +742,7 @@ function Home() {
                                 </FormControl>
                               </div>
 
-                              <div className="col-sm-4 col-md-2">
+                              <div className="col-sm-4 col-md-1">
                                 <div
                                   className="button1_wrapper"
                                   style={{

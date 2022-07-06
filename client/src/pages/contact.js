@@ -104,7 +104,7 @@ function Contact() {
                                             <div className="caption">
                                                 <div className="txt1" style={{ fontWeight: "900", textAlign: "center" }}>Please feel free to contact us for any assistance </div>
                                                 <div className="txt2 text-center">
-                                                    <p>Phone: +44 208 1383 891 – 92</p>
+                                                    <p>Phone: +44 208 1383 891 – 93</p>
                                                     <p>Email: cs@axenholidays.com</p>
 
                                                 </div>

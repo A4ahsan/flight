@@ -30,6 +30,8 @@ function BookingFlightPage2() {
     dateOfBirth: new Date(),
     expiryDate: new Date(),
     issuanceDate: new Date(),
+    countryCallingCode: 44,
+    number: +44
   });
   const [value, setValue] = useState("");
   const [value2, setValue2] = useState("");
@@ -270,7 +272,7 @@ function BookingFlightPage2() {
       );
       setIsLoading(false);
       console.log("Booking Creatoin Response", res);
-      navigate("/choose-payment", { state: {flightPrice: FlightPriceData.airSolutions[0]["totalPrice"]} });
+      navigate("/choose-payment", { state: {flightPrice: FlightPriceData.airSolutions[0]["totalPrice"] +  5 + 2.50}});
       dispatch(setAlert("bookFlight"));
       setTimeout(() => {
         dispatch(resetAlert());
@@ -299,11 +301,11 @@ function BookingFlightPage2() {
                     {FlightPriceData.origin} To {FlightPriceData.destination}{" "}
                     (Round-trip)
                   </h3>
-                  <div className="clearfix"></div>
+                  {/* <div className="clearfix"></div>
                   <p className="address text-center">
                     {findCity(departCity)} ({departCity}) /{" "}
                     {findCity(arriveCity)} ({arriveCity})
-                  </p>
+                  </p> */}
 
                   <div className="clearfix"></div>
                   <div className="col-md-4 booking-row">
@@ -472,7 +474,7 @@ function BookingFlightPage2() {
                         </select>
                       </div>
                     </div>
-                    <div className="clearfix"></div>
+                    {/* <div className="clearfix"></div>
                     <div className="select1_wrapper">
                       <label
                         className="col-md-5"
@@ -495,7 +497,7 @@ function BookingFlightPage2() {
                           spellCheck="false"
                         />
                       </div>
-                    </div>
+                    </div> */}
                     <div className="clearfix"></div>
                     <div className="margin-top"></div>
                     <h3>PASSPORT INFORMATION</h3>
@@ -745,6 +747,7 @@ function BookingFlightPage2() {
                           onChange={onChange}
                           placeholder="0311-2396511"
                           required
+                          value={userInfo.number}
                           name="number"
                           type="phone"
                           className="form-control"
@@ -1228,7 +1231,7 @@ function BookingFlightPage2() {
                         style={{ paddingRight: "0", paddingLeft: "0" }}
                       >
                         <span className="red">
-                          £ {FlightPriceData.airSolutions[0]["strBasePrice"]}
+                          £{FlightPriceData.airSolutions[0]["strBasePrice"]}
                         </span>
                       </div>
                     </div>
@@ -1238,14 +1241,48 @@ function BookingFlightPage2() {
                         className="col-md-6"
                         style={{ paddingLeft: "0", paddingTop: "12px" }}
                       >
-                        Tax
+                        Taxes
                       </label>
                       <div
                         className="col-md-6"
                         style={{ paddingRight: "0", paddingLeft: "0" }}
                       >
                         <span className="red">
-                          £ {FlightPriceData.airSolutions[0]["strTax"]}
+                          £{FlightPriceData.airSolutions[0]["strTax"]}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="clearfix"></div>
+                    <div className="input2_wrapper">
+                      <label
+                        className="col-md-6"
+                        style={{ paddingLeft: "0", paddingTop: "12px" }}
+                      >
+                        Flight Booking Charges
+                      </label>
+                      <div
+                        className="col-md-6"
+                        style={{ paddingRight: "0", paddingLeft: "0" }}
+                      >
+                        <span className="red">
+                          £5.00
+                        </span>
+                      </div>
+                    </div>
+                    <div className="clearfix"></div>
+                    <div className="input2_wrapper">
+                      <label
+                        className="col-md-6"
+                        style={{ paddingLeft: "0", paddingTop: "12px" }}
+                      >
+                        Atol Charges
+                      </label>
+                      <div
+                        className="col-md-6"
+                        style={{ paddingRight: "0", paddingLeft: "0" }}
+                      >
+                        <span className="red">
+                          £2.50
                         </span>
                       </div>
                     </div>
@@ -1262,7 +1299,7 @@ function BookingFlightPage2() {
                         style={{ paddingRight: "0", paddingLeft: "0" }}
                       >
                         <span className="red">
-                          £ {FlightPriceData.airSolutions[0]["totalPrice"]}
+                          £{FlightPriceData.airSolutions[0]["totalPrice"] +  5 + 2.50}
                         </span>
                       </div>
                     </div>
@@ -1282,7 +1319,7 @@ function BookingFlightPage2() {
                       name="termsAndConditions"
                     />{" "}
                     <b style={{ color: "#464646", paddingLeft: "10px" }}>
-                      I agree to the booking conditions
+                      I agree to the <a href="/TermsAndCondition" target="__blank">booking conditions</a>
                     </b>
                     <div className="margin-top"></div>
                     <div className="clearfix"></div>
@@ -1302,7 +1339,7 @@ function BookingFlightPage2() {
                         style={{ paddingRight: "0", paddingLeft: "0" }}
                       >
                         <span className="red" style={{ fontSize: "30px" }}>
-                          £ {FlightPriceData.airSolutions[0]["totalPrice"]}
+                          £{FlightPriceData.airSolutions[0]["totalPrice"] +  5 + 2.50}
                         </span>
                       </div>
                     </div>
