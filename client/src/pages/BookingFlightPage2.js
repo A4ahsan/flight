@@ -18,7 +18,7 @@ function BookingFlightPage2() {
   const alert = useAlert();
   const dispatch = useDispatch();
   const { state } = useLocation();
-  const { FlightPriceData } = state;
+  const { FlightPriceData, passengersArray } = state;
   const DATA = [];
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
@@ -31,7 +31,7 @@ function BookingFlightPage2() {
     expiryDate: new Date(),
     issuanceDate: new Date(),
     countryCallingCode: 44,
-    number: +44
+    number: +44,
   });
   const [value, setValue] = useState("");
   const [value2, setValue2] = useState("");
@@ -43,6 +43,8 @@ function BookingFlightPage2() {
   const [value8, setValue8] = useState("");
   const [terms, setTerms] = useState(false);
 
+
+  const [Pax, setPax] = useState(passengersArray);
   const onChange = (e) => {
     if (e.target.name === "firstName" || e.target.name === "lastName") {
       setUserInfo({
@@ -272,7 +274,11 @@ function BookingFlightPage2() {
       );
       setIsLoading(false);
       console.log("Booking Creatoin Response", res);
-      navigate("/choose-payment", { state: {flightPrice: FlightPriceData.airSolutions[0]["totalPrice"] +  5 + 2.50}});
+      navigate("/choose-payment", {
+        state: {
+          flightPrice: FlightPriceData.airSolutions[0]["totalPrice"] + 5 + 2.5,
+        },
+      });
       dispatch(setAlert("bookFlight"));
       setTimeout(() => {
         dispatch(resetAlert());
@@ -287,6 +293,16 @@ function BookingFlightPage2() {
     }
     console.log("User Info", userInfo);
   };
+  const handleInputChange = (index, event) => {
+    const values = [...Pax];
+    const updatedValue = event.target.name;
+    values[index][updatedValue] = event.target.value;
+    debugger;
+    setPax(values);
+  };
+
+  console.log("Passenger Array", Pax);
+
   return (
     <>
       <div id="main">
@@ -306,7 +322,202 @@ function BookingFlightPage2() {
                     {findCity(departCity)} ({departCity}) /{" "}
                     {findCity(arriveCity)} ({arriveCity})
                   </p> */}
+                  <div className="row">
+                    <div className="col-md-12 booking-row">
+                      <h3 className="line">Contact Details (Lead Passenger)</h3>
+                      <div className="row">
+                        <div className="col-md-6 booking-row">
+                          <div className="input2_wrapper">
+                            <label
+                              className=""
+                              style={{ paddingLeft: "0", paddingTop: "12px" }}
+                            >
+                              EMAIL ADDRESS
+                            </label>
 
+                            <input
+                              autoComplete="off"
+                              required
+                              onChange={onChange}
+                              name="firstName"
+                              type="text"
+                              className="form-control"
+                              placeholder="Michael"
+                              spellCheck="false"
+                            />
+                          </div>
+                        </div>
+
+                        <div className="col-md-6 booking-row">
+                          <label
+                            className=""
+                            style={{ paddingLeft: "0", paddingTop: "12px" }}
+                          >
+                            VERIFY EMAIL ADDRESS
+                          </label>
+
+                          <input
+                            autoComplete="off"
+                            required
+                            onChange={onChange}
+                            name="firstName"
+                            type="text"
+                            className="form-control"
+                            placeholder="Michael"
+                            spellCheck="false"
+                          />
+                        </div>
+
+                        <div className="col-md-6 booking-row">
+                          <label
+                            className=""
+                            style={{ paddingLeft: "0", paddingTop: "12px" }}
+                          >
+                            MAIN CONTACT NUMBER
+                          </label>
+
+                          <input
+                            autoComplete="off"
+                            required
+                            onChange={onChange}
+                            name="firstName"
+                            type="text"
+                            className="form-control"
+                            placeholder="Michael"
+                            spellCheck="false"
+                          />
+                        </div>
+
+                        <div className="col-md-6 booking-row">
+                          <label
+                            className=""
+                            style={{ paddingLeft: "0", paddingTop: "12px" }}
+                          >
+                            MOBILE NUMBER
+                          </label>
+
+                          <input
+                            autoComplete="off"
+                            required
+                            onChange={onChange}
+                            name="firstName"
+                            type="text"
+                            className="form-control"
+                            placeholder="Michael"
+                            spellCheck="false"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="row">
+                    <div className="col-md-12 booking-row">
+                      <h3 className="line">
+                        Passenger Names (Please enter all details as shown on
+                        the passport)
+                      </h3>
+                    </div>
+
+                    {Pax.map((item, index) => (
+                      <div className="row mt-5">
+                        <div className="col-md-2">
+                          <label className="mt-4">{item.PaxType}</label>
+                        </div>
+                        <div className="col-md-1 booking-row">
+                          <div className="select1_wrapper">
+                            <label className="" style={{ paddingLeft: "0" }}>
+                              Title
+                            </label>
+                            <br />
+                            <div
+                              className="select1_inner mt-3"
+                              // style={{
+                              //   marginTop: "12px",
+                              //   paddingRight: "0",
+                              //   paddingLeft: "0",
+                              //   display: "inline-block",
+                              // }}
+                            >
+                              <select
+                                onChange={(e) => handleInputChange(index , e)}
+                                name="Title"
+                                value={item.Title}
+                                className="select2 select select3"
+                                style={{ width: "100%", outline: "none" }}
+                              >
+                                <option selected value="Mr">
+                                  Mr
+                                </option>
+                                <option selected value="Mrs">
+                                  Mrs
+                                </option>
+                                <option selected value="Ms">
+                                  Ms
+                                </option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="col-md-3 booking-row">
+                          <label className="">FIRST NAME</label>
+
+                          <input
+                            autoComplete="off"
+                            required
+                            onChange={(e) => handleInputChange(index , e)}
+                            name="FirstName"
+                            value={item.FirstName}
+                            type="text"
+                            className="form-control"
+                            placeholder="Michael"
+                            spellCheck="false"
+                          />
+                        </div>
+
+                        <div className="col-md-3 booking-row">
+                          <label className="">LAST NAME</label>
+
+                          <input
+                            autoComplete="off"
+                            required
+                            onChange={onChange}
+                            name="firstName"
+                            type="text"
+                            className="form-control"
+                            placeholder="Michael"
+                            spellCheck="false"
+                          />
+                        </div>
+
+                        <div className="col-md-3">
+                          <label
+                            className=""
+                            style={{ paddingLeft: "0", paddingTop: "10px" }}
+                          >
+                            Date of Birth
+                          </label>
+                          <div
+                            className="mt-4"
+                            // style={{ paddingRight: "0", paddingLeft: "0" }}
+                          >
+                            <DatePicker
+                              clearIcon={null}
+                              minDate={minMaxDate("birth")}
+                              className="border-none"
+                              value={new Date(userInfo["dateOfBirth"])}
+                              onChange={(newDate) =>
+                                handleDateChange("dateOfBirth", newDate)
+                              }
+                              format="y-MM-dd"
+                            ></DatePicker>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* old value */}
                   <div className="clearfix"></div>
                   <div className="col-md-4 booking-row">
                     <h3 className="line">TRAVELLER INFORMATION</h3>
@@ -1264,9 +1475,7 @@ function BookingFlightPage2() {
                         className="col-md-6"
                         style={{ paddingRight: "0", paddingLeft: "0" }}
                       >
-                        <span className="red">
-                          £5.00
-                        </span>
+                        <span className="red">£5.00</span>
                       </div>
                     </div>
                     <div className="clearfix"></div>
@@ -1281,9 +1490,7 @@ function BookingFlightPage2() {
                         className="col-md-6"
                         style={{ paddingRight: "0", paddingLeft: "0" }}
                       >
-                        <span className="red">
-                          £2.50
-                        </span>
+                        <span className="red">£2.50</span>
                       </div>
                     </div>
                     <div className="clearfix"></div>
@@ -1299,7 +1506,10 @@ function BookingFlightPage2() {
                         style={{ paddingRight: "0", paddingLeft: "0" }}
                       >
                         <span className="red">
-                          £{FlightPriceData.airSolutions[0]["totalPrice"] +  5 + 2.50}
+                          £
+                          {FlightPriceData.airSolutions[0]["totalPrice"] +
+                            5 +
+                            2.5}
                         </span>
                       </div>
                     </div>
@@ -1319,7 +1529,10 @@ function BookingFlightPage2() {
                       name="termsAndConditions"
                     />{" "}
                     <b style={{ color: "#464646", paddingLeft: "10px" }}>
-                      I agree to the <a href="/TermsAndCondition" target="__blank">booking conditions</a>
+                      I agree to the{" "}
+                      <a href="/TermsAndCondition" target="__blank">
+                        booking conditions
+                      </a>
                     </b>
                     <div className="margin-top"></div>
                     <div className="clearfix"></div>
@@ -1339,7 +1552,10 @@ function BookingFlightPage2() {
                         style={{ paddingRight: "0", paddingLeft: "0" }}
                       >
                         <span className="red" style={{ fontSize: "30px" }}>
-                          £{FlightPriceData.airSolutions[0]["totalPrice"] +  5 + 2.50}
+                          £
+                          {FlightPriceData.airSolutions[0]["totalPrice"] +
+                            5 +
+                            2.5}
                         </span>
                       </div>
                     </div>

@@ -12,7 +12,7 @@ import Zoom from "react-reveal/Zoom";
 
 function PassengersField({count, hide, total}) {
     // passengers logic
-    const [numberOfPassengers, setNumberOfPassengers] = useState(total.NoOfYouthPax);
+    const [numberOfPassengers, setNumberOfPassengers] = useState(total.total);
     const [adult, setAdult] = useState(total.NoOfAdultPax);
     const [child, setChild] = useState(total.NoOfChildPax);
     const [infant, setInfant] = useState(total.NoOfInfantPax);

@@ -147,7 +147,17 @@ function Home() {
     NoOfChildPax: 0,
     NoOfInfantPax: 0,
     NoOfYouthPax: 0,
+    total: 0
   });
+  const [passengerArray, setpassengerArray] = useState([{
+    Title: "",
+    FirstName: "",
+    LastName: "",
+    PaxType: "ADT",
+    Gender: "",
+    PaxDOB: "",
+    IsLeadName: true,
+  }]);
   const [passengerInput, setPassengerInput] = useState(false);
   const showPassengerInput = () => {
     setPassengerInput(!passengerInput);
@@ -161,10 +171,12 @@ function Home() {
       NoOfAdultPax: one,
       NoOfChildPax: two,
       NoOfInfantPax: three,
-      NoOfYouthPax: four,
+      NoOfYouthPax: 0,
+      total: four
     });
   };
-  const { NoOfYouthPax, ...rest } = passenger;
+  console.log("Passernger ARRAY" , passengerArray);
+  const { total, ...rest } = passenger;
   const totalPassengers = Object.values(rest).reduce((a, b) => a + b);
 
   // cabin
@@ -182,6 +194,41 @@ function Home() {
   //  search for Flights
   const searchFlight = async (e) => {
     e.preventDefault();
+
+    for (var i = 1; i < rest.NoOfAdultPax; i++) {
+      debugger;
+      passengerArray.push({
+        Title: "",
+        FirstName: "",
+        LastName: "",
+        PaxType: "ADT",
+        Gender: "",
+        PaxDOB: "",
+      });
+    }
+    for (var i = 0; i < rest.NoOfChildPax; i++) {
+      debugger;
+      passengerArray.push({
+        Title: "",
+        FirstName: "",
+        LastName: "",
+        PaxType: "CHD",
+        Gender: "",
+        PaxDOB: "",
+      });
+    }
+    for (var i = 0; i < rest.NoOfInfantPax; i++) {
+      debugger;
+      passengerArray.push({
+        Title: "",
+        FirstName: "",
+        LastName: "",
+        PaxType: "INF",
+        Gender: "",
+        PaxDOB: "",
+      });
+    }
+
     if (valueFromSearch && valueFromSearch2 && date[0].endDate) {
       let finalData = {
         TripType: "RT",
@@ -218,7 +265,7 @@ function Home() {
           debugger;
           dispatch(setRefreshs("false"));
           navigate("/search-flights", {
-            state: { flightOffers: res.data, details: finalData },
+            state: { flightOffers: res.data, details: finalData , passengersArray: passengerArray },
           });
         } else if (res.data.result.apiFault.errorCode != "112") {
           debugger;

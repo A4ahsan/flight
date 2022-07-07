@@ -5,5 +5,5 @@ export const getBaseUrl = () => {
 
 export const auth = {
   username: "BS8106",
-  password: "axenholidays@TestBS8106",
+  password: "axenholidays@BSCore",
 };

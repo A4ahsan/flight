@@ -38,7 +38,7 @@ const SearchFlight2 = (props) => {
       WebsiteName: "axenholidays.com",
       ApplicationAccessMode: "TEST",
       token: state.flightOffers.result.token,
-      supp: "GAL",
+      supp: data.supp,
       IsFlexibleDate: 0,
       OptionKeyList: [
         data.journey[0]["optionInfos"][0]["optionKey"],
@@ -58,7 +58,7 @@ const SearchFlight2 = (props) => {
       debugger;
       setIsLoading(false);
       navigate("/flight-checkout2", {
-        state: { flightAllData: data, FlightPriceData: res.data.result },
+        state: { flightAllData: data, FlightPriceData: res.data.result, passengersArray: state.passengersArray },
       });
     } else {
       debugger;
