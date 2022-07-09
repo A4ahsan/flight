@@ -43,7 +43,6 @@ function BookingFlightPage2() {
   const [value8, setValue8] = useState("");
   const [terms, setTerms] = useState(false);
 
-
   const [Pax, setPax] = useState(passengersArray);
   const onChange = (e) => {
     if (e.target.name === "firstName" || e.target.name === "lastName") {
@@ -221,18 +220,19 @@ function BookingFlightPage2() {
       AccountCode: "BS8106",
       CompanyCode: "BS8106",
       WebsiteName: "axenholidays.com",
-      Supp: "GAL",
-      Pax: [
-        {
-          Title: title,
-          FirstName: userInfo.firstName,
-          LastName: userInfo.lastName,
-          PaxType: "ADT",
-          Gender: userInfo.gender,
-          PaxDOB: userInfo.dateOfBirth,
-          IsLeadName: true,
-        },
-      ],
+      Supp: FlightPriceData.airSolutions[0]["supp"],
+      Pax,
+      // Pax: [
+      //   {
+      //     Title: title,
+      //     FirstName: userInfo.firstName,
+      //     LastName: userInfo.lastName,
+      //     PaxType: "ADT",
+      //     Gender: userInfo.gender,
+      //     PaxDOB: userInfo.dateOfBirth,
+      //     IsLeadName: true,
+      //   },
+      // ],
       AddressInfo: {
         City: {
           CityCode: null,
@@ -293,6 +293,7 @@ function BookingFlightPage2() {
     }
     console.log("User Info", userInfo);
   };
+
   const handleInputChange = (index, event) => {
     const values = [...Pax];
     const updatedValue = event.target.name;
@@ -301,7 +302,21 @@ function BookingFlightPage2() {
     setPax(values);
   };
 
+  const handleInputChangeDate = (index, event, name) => {
+    debugger;
+    const date = new Date(event);
+    // const actualDate = new Date(date.setDate(date.getDate() + 1))
+    // .toISOString()
+    // .split("T")[0];
+    const values = [...Pax];
+    const updatedValue = name;
+    values[index][updatedValue] = date;
+    debugger;
+    setPax(values);
+  };
+
   console.log("Passenger Array", Pax);
+  console.log("Price Data", FlightPriceData);
 
   return (
     <>
@@ -323,7 +338,7 @@ function BookingFlightPage2() {
                     {findCity(arriveCity)} ({arriveCity})
                   </p> */}
                   <div className="row">
-                    <div className="col-md-12 booking-row">
+                    <div className="col-md-8 booking-row">
                       <h3 className="line">Contact Details (Lead Passenger)</h3>
                       <div className="row">
                         <div className="col-md-6 booking-row">
@@ -339,16 +354,16 @@ function BookingFlightPage2() {
                               autoComplete="off"
                               required
                               onChange={onChange}
-                              name="firstName"
-                              type="text"
+                              name="email"
+                              type="email"
                               className="form-control"
-                              placeholder="Michael"
+                              placeholder="xyz@gmail.com"
                               spellCheck="false"
                             />
                           </div>
                         </div>
 
-                        <div className="col-md-6 booking-row">
+                        {/* <div className="col-md-6 booking-row">
                           <label
                             className=""
                             style={{ paddingLeft: "0", paddingTop: "12px" }}
@@ -366,7 +381,7 @@ function BookingFlightPage2() {
                             placeholder="Michael"
                             spellCheck="false"
                           />
-                        </div>
+                        </div> */}
 
                         <div className="col-md-6 booking-row">
                           <label
@@ -380,10 +395,11 @@ function BookingFlightPage2() {
                             autoComplete="off"
                             required
                             onChange={onChange}
-                            name="firstName"
+                            // value={userInfo.number}
+                            name="number"
                             type="text"
                             className="form-control"
-                            placeholder="Michael"
+                            placeholder=""
                             spellCheck="false"
                           />
                         </div>
@@ -400,1174 +416,377 @@ function BookingFlightPage2() {
                             autoComplete="off"
                             required
                             onChange={onChange}
-                            name="firstName"
+                            value={userInfo.number}
+                            name="number"
                             type="text"
                             className="form-control"
-                            placeholder="Michael"
+                            placeholder="44"
                             spellCheck="false"
                           />
                         </div>
                       </div>
-                    </div>
-                  </div>
 
-                  <div className="row">
-                    <div className="col-md-12 booking-row">
                       <h3 className="line">
                         Passenger Names (Please enter all details as shown on
                         the passport)
                       </h3>
-                    </div>
 
-                    {Pax.map((item, index) => (
-                      <div className="row mt-5">
-                        <div className="col-md-2">
-                          <label className="mt-4">{item.PaxType}</label>
-                        </div>
-                        <div className="col-md-1 booking-row">
-                          <div className="select1_wrapper">
-                            <label className="" style={{ paddingLeft: "0" }}>
-                              Title
+                      {Pax.map((item, index) => (
+                        <div className="row mt-5">
+                          <div className="col-md-2">
+                            <label className="mt-4">
+                              {item.PaxType == "ADT" && item.IsLeadName
+                                ? "Lead Passenger"
+                                : item.PaxType == "ADT"
+                                ? "Adult"
+                                : item.PaxType == "CHD"
+                                ? "Child"
+                                : item.PaxType == "INF"
+                                ? "Infant"
+                                : null}
                             </label>
-                            <br />
-                            <div
-                              className="select1_inner mt-3"
-                              // style={{
-                              //   marginTop: "12px",
-                              //   paddingRight: "0",
-                              //   paddingLeft: "0",
-                              //   display: "inline-block",
-                              // }}
-                            >
-                              <select
-                                onChange={(e) => handleInputChange(index , e)}
-                                name="Title"
-                                value={item.Title}
-                                className="select2 select select3"
-                                style={{ width: "100%", outline: "none" }}
+                          </div>
+                          <div className="col-md-2 booking-row">
+                            <div className="select1_wrapper">
+                              <label className="" style={{ paddingLeft: "0" }}>
+                                Gender
+                              </label>
+                              <br />
+                              <div
+                                className="select1_inner mt-3"
+                                // style={{
+                                //   marginTop: "12px",
+                                //   paddingRight: "0",
+                                //   paddingLeft: "0",
+                                //   display: "inline-block",
+                                // }}
                               >
-                                <option selected value="Mr">
-                                  Mr
-                                </option>
-                                <option selected value="Mrs">
-                                  Mrs
-                                </option>
-                                <option selected value="Ms">
-                                  Ms
-                                </option>
-                              </select>
+                                <select
+                                  onChange={(e) => handleInputChange(index, e)}
+                                  name="Gender"
+                                  value={item.Gender}
+                                  className="select2 select select3"
+                                  style={{ width: "100%", outline: "none" }}
+                                >
+                                  <option selected value="">
+                                    Gender
+                                  </option>
+                                  <option value="MALE">Male</option>
+                                  <option value="FEMALE">Female</option>
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="col-md-2 booking-row">
+                            <div className="select1_wrapper">
+                              <label className="" style={{ paddingLeft: "0" }}>
+                                Title
+                              </label>
+                              <br />
+                              <div
+                                className="select1_inner mt-3"
+                                // style={{
+                                //   marginTop: "12px",
+                                //   paddingRight: "0",
+                                //   paddingLeft: "0",
+                                //   display: "inline-block",
+                                // }}
+                              >
+                                <select
+                                  onChange={(e) => handleInputChange(index, e)}
+                                  name="Title"
+                                  value={item.Title}
+                                  className="select2 select select3"
+                                  style={{ width: "100%", outline: "none" }}
+                                >
+                                  <option selected value="">
+                                    Title
+                                  </option>
+                                  {item.PaxType == "ADT" ? (
+                                    <>
+                                      <option value="Mr">Mr</option>
+                                      <option value="Mrs">Mrs</option>
+                                      <option value="Ms">Ms</option>
+                                      <option value="Miss">Miss</option>
+                                    </>
+                                  ) : item.PaxType == "CHD" || item.PaxType == "INF" ? (
+                                    <>
+                                      <option value="Mstr">Mstr</option>
+                                      <option value="Miss">Miss</option>
+                                    </>
+                                  )
+                                  : null}
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="col-md-2 booking-row">
+                            <label className="">First Name</label>
+
+                            <input
+                              autoComplete="off"
+                              required
+                              onChange={(e) => handleInputChange(index, e)}
+                              name="FirstName"
+                              value={item.FirstName}
+                              type="text"
+                              className="form-control"
+                              placeholder="Michael"
+                              spellCheck="false"
+                            />
+                          </div>
+
+                          <div className="col-md-2 booking-row">
+                            <label className="">Last Name</label>
+
+                            <input
+                              autoComplete="off"
+                              required
+                              onChange={(e) => handleInputChange(index, e)}
+                              name="LastName"
+                              value={item.LastName}
+                              type="text"
+                              className="form-control"
+                              placeholder="Michael"
+                              spellCheck="false"
+                            />
+                          </div>
+
+                          <div className="col-md-2">
+                            <label
+                              className=""
+                              style={{ paddingLeft: "0", paddingTop: "2px" }}
+                            >
+                              Date of Birth
+                            </label>
+                            <div
+                              className="mt-4"
+                              // style={{ paddingRight: "0", paddingLeft: "0" }}
+                            >
+                              <DatePicker
+                                clearIcon={null}
+                                // minDate={minMaxDate("birth")}
+                                className="border-none"
+                                value={item.PaxDOB}
+                                onChange={(newDate) =>
+                                  handleInputChangeDate(
+                                    index,
+                                    newDate,
+                                    "PaxDOB"
+                                  )
+                                }
+                                format="y-MM-dd"
+                              ></DatePicker>
                             </div>
                           </div>
                         </div>
-                        <div className="col-md-3 booking-row">
-                          <label className="">FIRST NAME</label>
+                      ))}
+                    </div>
 
-                          <input
-                            autoComplete="off"
-                            required
-                            onChange={(e) => handleInputChange(index , e)}
-                            name="FirstName"
-                            value={item.FirstName}
-                            type="text"
-                            className="form-control"
-                            placeholder="Michael"
-                            spellCheck="false"
+                    <div className="col-md-4">
+                      <div className="card p-3">
+                        <h3 className="p-0">Booking Details</h3>
+                        <hr className="mt-0 mb-2" />
+                        <label>Your Flight</label>
+
+                        <div className="d-flex">
+                          <img
+                            src={
+                              FlightPriceData.airSolutions[0]["journey"][0][
+                                "airSegments"
+                              ][0]["airlineLogoUrl"]
+                            }
+                            width={50}
+                            height={50}
                           />
+                          <div className="ml-3">
+                            <label className="text-primary">
+                              {FlightPriceData.origin} To{" "}
+                              {FlightPriceData.destination}
+                            </label>
+                          </div>
+                        </div>
+                        {FlightPriceData.airSolutions[0]["journey"].map(
+                          (journey, index) => (
+                            <div className="d-flex justify-content-between mt-3">
+                              <div>
+                                <label className="text-primary">Take Off</label>{" "}
+                                <br />
+                                <label className="mb-0">
+                                  {journey.airSegments[0].origin}
+                                </label>{" "}
+                                <br />
+                                <label className="mb-0">
+                                  {journey.airSegments[0].departTime}
+                                </label>{" "}
+                                <br />
+                                <label className="mb-0">
+                                  {journey.airSegments[0].departDate}
+                                </label>{" "}
+                                <br />
+                              </div>
+
+                              <div>
+                                <label className="mr-3 ml-3">
+                                  {journey.airSegments[0].travelDuration}
+                                </label>{" "}
+                                <br />
+                              </div>
+
+                              <div className="text-right">
+                                <label className="text-primary">Landing</label>{" "}
+                                <br />
+                                <label className="mb-0">
+                                  {journey.airSegments[0].destination}
+                                </label>{" "}
+                                <br />
+                                <label className="mb-0">
+                                  {journey.airSegments[0].arrivalTime}
+                                </label>{" "}
+                                <br />
+                                <label className="mb-0">
+                                  {journey.airSegments[0].arrivalDate}
+                                </label>{" "}
+                                <br />
+                              </div>
+                            </div>
+                          )
+                        )}
+                      </div>
+                      <div className="card p-3 mt-4">
+                        <div className="">
+                          <h3 className="p-0">Price Details</h3>
+                          <hr className="mt-0 mb-2" />
                         </div>
 
-                        <div className="col-md-3 booking-row">
-                          <label className="">LAST NAME</label>
+                        <div className="d-flex justify-content-between">
+                          <div>
+                            <label>Airline</label>
+                          </div>
+                          <div>
+                            <label className="text-primary">
+                              {
+                                FlightPriceData.airSolutions[0]["journey"][0][
+                                  "airSegments"
+                                ][0]["arlineName"]
+                              }
+                            </label>
+                          </div>
+                        </div>
+                        <div className="d-flex justify-content-between">
+                          <div>
+                            <label>Class</label>
+                          </div>
+                          <div>
+                            <label className="text-primary">
+                              {
+                                FlightPriceData.airSolutions[0]["journey"][0][
+                                  "airSegments"
+                                ][0]["class"]
+                              }
+                            </label>
+                          </div>
+                        </div>
+                        {FlightPriceData.airSolutions[0].pricingInfos.map(
+                          (price, index) => (
+                            <div className="d-flex justify-content-between">
+                              <div>
+                                <label>
+                                  {price.noOfPax} {price.paxTypeName}
+                                </label>
+                              </div>
+                              <div>
+                                <label className="text-primary">
+                                  £{price.totalPrice}
+                                </label>
+                              </div>
+                            </div>
+                          )
+                        )}
 
-                          <input
-                            autoComplete="off"
-                            required
-                            onChange={onChange}
-                            name="firstName"
-                            type="text"
-                            className="form-control"
-                            placeholder="Michael"
-                            spellCheck="false"
-                          />
+                        <div className="d-flex justify-content-between">
+                          <div>
+                            <label>Flight Booking Charges</label>
+                          </div>
+                          <div>
+                            <label className="text-primary">£5.00</label>
+                          </div>
+                        </div>
+                        <div className="d-flex justify-content-between">
+                          <div>
+                            <label>Atol charges</label>
+                          </div>
+                          <div>
+                            <label className="text-primary">£2.50</label>
+                          </div>
                         </div>
 
-                        <div className="col-md-3">
+                        <div className="d-flex justify-content-between mt-5">
+                          <div>
+                            <label>Total Price</label>
+                            <br />
+                            <label className="mb-0">Incl. Tax</label>
+                          </div>
+                          <div>
+                            <label className="text-primary">
+                              £
+                              {FlightPriceData.airSolutions[0]["totalPrice"] +
+                                5 +
+                                2.5}
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                      <div>
+                        <h3>ACCEPT AND CONFIRM</h3>
+                        <input
+                          required
+                          type="checkbox"
+                          onChange={() => setTerms(!terms)}
+                          name="termsAndConditions"
+                        />{" "}
+                        <b style={{ color: "#464646", paddingLeft: "10px" }}>
+                          I agree to the{" "}
+                          <a href="/TermsAndCondition" target="__blank">
+                            booking conditions
+                          </a>
+                        </b>
+                        <div className="margin-top"></div>
+                        <div className="clearfix"></div>
+                        <div className="input2_wrapper">
                           <label
-                            className=""
-                            style={{ paddingLeft: "0", paddingTop: "10px" }}
+                            className="col-md-6"
+                            style={{
+                              paddingLeft: "0",
+                              paddingTop: "18px",
+                              fontSize: "16px",
+                            }}
                           >
-                            Date of Birth
+                            GRAND TOTAL:
                           </label>
                           <div
-                            className="mt-4"
-                            // style={{ paddingRight: "0", paddingLeft: "0" }}
+                            className="col-md-6"
+                            style={{ paddingRight: "0", paddingLeft: "0" }}
                           >
-                            <DatePicker
-                              clearIcon={null}
-                              minDate={minMaxDate("birth")}
-                              className="border-none"
-                              value={new Date(userInfo["dateOfBirth"])}
-                              onChange={(newDate) =>
-                                handleDateChange("dateOfBirth", newDate)
-                              }
-                              format="y-MM-dd"
-                            ></DatePicker>
+                            <span className="red" style={{ fontSize: "30px" }}>
+                              £
+                              {FlightPriceData.airSolutions[0]["totalPrice"] +
+                                5 +
+                                2.5}
+                            </span>
                           </div>
                         </div>
-                      </div>
-                    ))}
-                  </div>
-
-                  {/* old value */}
-                  <div className="clearfix"></div>
-                  <div className="col-md-4 booking-row">
-                    <h3 className="line">TRAVELLER INFORMATION</h3>
-                    <div className="select1_wrapper">
-                      <label
-                        className="col-md-5"
-                        style={{ paddingLeft: "0", paddingTop: "15px" }}
-                      >
-                        Title
-                      </label>
-                      <div
-                        className="select1_inner col-md-5"
-                        style={{
-                          marginTop: "12px",
-                          paddingRight: "0",
-                          paddingLeft: "0",
-                          width: "20%",
-                          display: "inline-block",
-                        }}
-                      >
-                        <select
-                          onChange={(e) => settitle(e.target.value)}
-                          name="holder"
-                          className="select2 select select3"
-                          style={{ width: "100%", outline: "none" }}
+                        <div className="clearfix"></div>
+                        <div className="margin-top"></div>
+                        <button
+                          type="submit"
+                          to="booking-success.html"
+                          className="btn btn-default btn-cf-submit3"
                         >
-                          <option selected value="Mr">
-                            Mr
-                          </option>
-                          <option selected value="Mrs">
-                            Mrs
-                          </option>
-                          <option selected value="Ms">
-                            Ms
-                          </option>
-                        </select>
+                          BOOKING NOW
+                        </button>
                       </div>
                     </div>
-                    <div className="input2_wrapper">
-                      <label
-                        className="col-md-5"
-                        style={{ paddingLeft: "0", paddingTop: "12px" }}
-                      >
-                        First Name
-                      </label>
-                      <div
-                        className="col-md-7 relative"
-                        style={{ paddingRight: "0", paddingLeft: "0" }}
-                      >
-                        <input
-                          autoComplete="off"
-                          required
-                          onChange={onChange}
-                          name="firstName"
-                          type="text"
-                          className="form-control"
-                          placeholder="Michael"
-                          spellCheck="false"
-                        />
-                      </div>
-                    </div>
-                    <div className="clearfix"></div>
-                    <div className="input2_wrapper">
-                      <label
-                        className="col-md-5"
-                        style={{ paddingLeft: "0", paddingTop: "12px" }}
-                      >
-                        Last Name
-                      </label>
-                      <div
-                        className="col-md-7 relative"
-                        style={{ paddingRight: "0", paddingLeft: "0" }}
-                      >
-                        <input
-                          autoComplete="off"
-                          onChange={onChange}
-                          required
-                          name="lastName"
-                          type="text"
-                          className="form-control"
-                          placeholder="Berkovich"
-                          spellCheck="false"
-                        />
-                      </div>
-                    </div>
-                    <div className="clearfix"></div>
-                    <div className="select1_wrapper  flex items-center">
-                      <label
-                        className="col-md-5"
-                        style={{ paddingLeft: "0", paddingTop: "15px" }}
-                      >
-                        Date of Birth
-                      </label>
-                      <div
-                        className="col-md-7 relative"
-                        style={{ paddingRight: "0", paddingLeft: "0" }}
-                      >
-                        {/* <input autoComplete='off' onChange={onChange} required name="dateOfBirth" type="date" className="form-control" spellCheck="false" /> */}
-                        <DatePicker
-                          clearIcon={null}
-                          minDate={minMaxDate("birth")}
-                          className="border-none"
-                          value={new Date(userInfo["dateOfBirth"])}
-                          onChange={(newDate) =>
-                            handleDateChange("dateOfBirth", newDate)
-                          }
-                          format="y-MM-dd"
-                        ></DatePicker>
-                      </div>
-                    </div>
-                    <div className="clearfix"></div>
-                    <div className="input2_wrapper">
-                      <label
-                        className="col-md-5"
-                        style={{ paddingLeft: "0", paddingTop: "12px" }}
-                      >
-                        Your Email
-                      </label>
-                      <div
-                        className="col-md-7 relative"
-                        style={{ paddingRight: "0", paddingLeft: "0" }}
-                      >
-                        <input
-                          autoComplete="off"
-                          onChange={onChange}
-                          required
-                          name="email"
-                          type="email"
-                          className="form-control"
-                          placeholder="your@email.com"
-                          spellCheck="false"
-                        />
-                      </div>
-                    </div>
-                    <div className="clearfix"></div>
-                    <div className="select1_wrapper">
-                      <label
-                        className="col-md-5"
-                        style={{ paddingLeft: "0", paddingTop: "15px" }}
-                      >
-                        Gender
-                      </label>
-                      <div
-                        className="select1_inner col-md-5"
-                        style={{
-                          marginTop: "12px",
-                          paddingRight: "0",
-                          paddingLeft: "0",
-                          width: "20%",
-                          display: "inline-block",
-                        }}
-                      >
-                        <select
-                          onChange={onChange}
-                          name="gender"
-                          required
-                          className="select2 select select3"
-                          style={{ width: "100%", outline: "none" }}
-                        >
-                          <option selected disabled>
-                            Gender
-                          </option>
-                          <option value="MALE">Male</option>
-                          <option value="FEMALE">Female</option>
-                        </select>
-                      </div>
-                    </div>
-                    {/* <div className="clearfix"></div>
-                    <div className="select1_wrapper">
-                      <label
-                        className="col-md-5"
-                        style={{ paddingLeft: "0", paddingTop: "15px" }}
-                      >
-                        Phone Number
-                      </label>
-                      <div
-                        className="col-md-7 relative"
-                        style={{ paddingRight: "0", paddingLeft: "0" }}
-                      >
-                        <input
-                          autoComplete="off"
-                          onChange={onChange}
-                          placeholder="0311-2396511"
-                          required
-                          name="number"
-                          type="phone"
-                          className="form-control"
-                          spellCheck="false"
-                        />
-                      </div>
-                    </div> */}
-                    <div className="clearfix"></div>
-                    <div className="margin-top"></div>
-                    <h3>PASSPORT INFORMATION</h3>
-                    <div className="input2_wrapper">
-                      <label
-                        className="col-md-5"
-                        style={{ paddingLeft: "0", paddingTop: "12px" }}
-                      >
-                        Birth Place
-                      </label>
-                      <div
-                        className="col-md-7  relative"
-                        style={{ paddingRight: "0", paddingLeft: "0" }}
-                      >
-                        <div className="select1_wrapper">
-                          <div
-                            className="input1_inner"
-                            style={{
-                              border: "none",
-                              boxShadow: "none",
-                              display: "flex",
-                              alignItems: "center",
-                              cursor: "text",
-                            }}
-                          >
-                            <input
-                              autoComplete="off"
-                              required
-                              name="birthPlace"
-                              placeholder="Search city"
-                              onKeyDown={(e) =>
-                                clearOnBackspace(e, "birthPlace")
-                              }
-                              onChange={(e) => setValue(e.target.value)}
-                              type="text"
-                              className="form-control"
-                              value={value || userInfo.birthPlace}
-                              spellCheck="false"
-                            />
-                            {(value || userInfo.birthPlace) && (
-                              <CancelIcon
-                                style={{
-                                  color: "#3BA0A9",
-                                  cursor: "pointer",
-                                  marginRight: "2px",
-                                }}
-                                onClick={() => clearOnCancel(1, "birthPlace")}
-                              />
-                            )}
-                          </div>
-                          {value && (
-                            <Search
-                              chracter={value}
-                              placingOrder="city"
-                              searchChange={searchChange}
-                              name="birthPlace"
-                            />
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                    <div className="clearfix"></div>
-                    <div className="input2_wrapper">
-                      <label
-                        className="col-md-5"
-                        style={{ paddingLeft: "0", paddingTop: "12px" }}
-                      >
-                        Issuance Location
-                      </label>
-                      <div
-                        className="col-md-7  relative"
-                        style={{ paddingRight: "0", paddingLeft: "0" }}
-                      >
-                        <div className="select1_wrapper">
-                          <div
-                            className="input1_inner"
-                            style={{
-                              border: "none",
-                              boxShadow: "none",
-                              display: "flex",
-                              alignItems: "center",
-                              cursor: "text",
-                            }}
-                          >
-                            <input
-                              autoComplete="off"
-                              required
-                              name="birthPlace"
-                              placeholder="Search city"
-                              onKeyDown={(e) =>
-                                clearOnBackspace(e, "issuanceLocation")
-                              }
-                              onChange={(e) => setValue2(e.target.value)}
-                              type="text"
-                              className="form-control"
-                              value={value2 || userInfo.issuanceLocation}
-                              spellCheck="false"
-                            />
-                            {(value2 || userInfo.issuanceLocation) && (
-                              <CancelIcon
-                                style={{
-                                  color: "#3BA0A9",
-                                  cursor: "pointer",
-                                  marginRight: "2px",
-                                }}
-                                onClick={() =>
-                                  clearOnCancel(2, "issuanceLocation")
-                                }
-                              />
-                            )}
-                          </div>
-                          {value2 && (
-                            <Search
-                              chracter={value2}
-                              placingOrder="city"
-                              searchChange={searchChange}
-                              name="issuanceLocation"
-                            />
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                    <div className="clearfix"></div>
-                    <div className="select1_wrapper  flex items-center">
-                      <label
-                        className="col-md-5"
-                        style={{ paddingLeft: "0", paddingTop: "15px" }}
-                      >
-                        Issuance Date
-                      </label>
-                      <div
-                        className="col-md-7 relative"
-                        style={{ paddingRight: "0", paddingLeft: "0" }}
-                      >
-                        <DatePicker
-                          clearIcon={null}
-                          minDate={minMaxDate("issuance")}
-                          className="border-none"
-                          value={new Date(userInfo["issuanceDate"])}
-                          onChange={(newDate) =>
-                            handleDateChange("issuanceDate", newDate)
-                          }
-                          format="y-MM-dd"
-                        ></DatePicker>
-                      </div>
-                    </div>
-                    <div className="select1_wrapper">
-                      <label
-                        className="col-md-5"
-                        style={{ paddingLeft: "0", paddingTop: "15px" }}
-                      >
-                        Passport Number
-                      </label>
-                      <div
-                        className="col-md-7 relative"
-                        style={{ paddingRight: "0", paddingLeft: "0" }}
-                      >
-                        <input
-                          autoComplete="off"
-                          onChange={onChange}
-                          placeholder="00000000"
-                          required
-                          name="passportNumber"
-                          type="phone"
-                          className="form-control"
-                          spellCheck="false"
-                        />
-                      </div>
-                    </div>
-
-                    <div className="clearfix"></div>
-                    <div className="input2_wrapper">
-                      <label
-                        className="col-md-5"
-                        style={{ paddingLeft: "0", paddingTop: "12px" }}
-                      >
-                        Calling Code
-                      </label>
-                      <div
-                        className="col-md-7  relative"
-                        style={{ paddingRight: "0", paddingLeft: "0" }}
-                      >
-                        <div className="select1_wrapper">
-                          <div
-                            className="input1_inner"
-                            style={{
-                              border: "none",
-                              boxShadow: "none",
-                              display: "flex",
-                              alignItems: "center",
-                              cursor: "text",
-                            }}
-                          >
-                            <input
-                              autoComplete="off"
-                              required
-                              placeholder="+92"
-                              name="countryCallingCode"
-                              onKeyDown={(e) =>
-                                clearOnBackspace(e, "countryCallingCode")
-                              }
-                              onChange={(e) => setValue8(e.target.value)}
-                              type="text"
-                              className="form-control"
-                              value={value8 || userInfo.countryCallingCode}
-                              spellCheck="false"
-                            />
-                            {(value8 || userInfo.countryCallingCode) && (
-                              <CancelIcon
-                                style={{
-                                  color: "#3BA0A9",
-                                  cursor: "pointer",
-                                  marginRight: "2px",
-                                }}
-                                onClick={() =>
-                                  clearOnCancel(8, "countryCallingCode")
-                                }
-                              />
-                            )}
-                          </div>
-                          {value8 && (
-                            <Search
-                              chracter={value8}
-                              placingOrder="country"
-                              searchChange={searchChange}
-                              name="countryCallingCode"
-                              countryBool="calling_code"
-                            />
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                    <div className="clearfix"></div>
-                    <div className="select1_wrapper">
-                      <label
-                        className="col-md-5"
-                        style={{ paddingLeft: "0", paddingTop: "15px" }}
-                      >
-                        Phone Number
-                      </label>
-                      <div
-                        className="col-md-7 relative"
-                        style={{ paddingRight: "0", paddingLeft: "0" }}
-                      >
-                        <input
-                          autoComplete="off"
-                          onChange={onChange}
-                          placeholder="0311-2396511"
-                          required
-                          value={userInfo.number}
-                          name="number"
-                          type="phone"
-                          className="form-control"
-                          spellCheck="false"
-                        />
-                      </div>
-                    </div>
-
-                    <div className="clearfix"></div>
-                    <div className="select1_wrapper flex items-center">
-                      <label
-                        className="col-md-5"
-                        style={{ paddingLeft: "0", paddingTop: "15px" }}
-                      >
-                        Expiry Date
-                      </label>
-                      <div
-                        className="col-md-7 relative"
-                        style={{ paddingRight: "0", paddingLeft: "0" }}
-                      >
-                        <DatePicker
-                          clearIcon={null}
-                          minDate={minMaxDate("expiry")}
-                          className="border-none"
-                          value={new Date(userInfo["expiryDate"])}
-                          onChange={(newDate) =>
-                            handleDateChange("expiryDate", newDate)
-                          }
-                          format="y-MM-dd"
-                        ></DatePicker>
-                      </div>
-                    </div>
-                    <div className="clearfix"></div>
-                    <div className="input2_wrapper">
-                      <label
-                        className="col-md-5"
-                        style={{ paddingLeft: "0", paddingTop: "12px" }}
-                      >
-                        Issuance Country
-                      </label>
-                      <div
-                        className="col-md-7  relative"
-                        style={{ paddingRight: "0", paddingLeft: "0" }}
-                      >
-                        <div className="select1_wrapper">
-                          <div
-                            className="input1_inner"
-                            style={{
-                              border: "none",
-                              boxShadow: "none",
-                              display: "flex",
-                              alignItems: "center",
-                              cursor: "text",
-                            }}
-                          >
-                            <input
-                              autoComplete="off"
-                              required
-                              placeholder="Search Country"
-                              name="issuanceCountry"
-                              onKeyDown={(e) =>
-                                clearOnBackspace(e, "issuanceCountry")
-                              }
-                              onChange={(e) => setValue3(e.target.value)}
-                              type="text"
-                              className="form-control"
-                              value={value3 || userInfo.issuanceCountry}
-                              spellCheck="false"
-                            />
-                            {(value3 || userInfo.issuanceCountry) && (
-                              <CancelIcon
-                                style={{
-                                  color: "#3BA0A9",
-                                  cursor: "pointer",
-                                  marginRight: "2px",
-                                }}
-                                onClick={() =>
-                                  clearOnCancel(3, "issuanceCountry")
-                                }
-                              />
-                            )}
-                          </div>
-                          {value3 && (
-                            <Search
-                              chracter={value3}
-                              placingOrder="country"
-                              searchChange={searchChange}
-                              name="issuanceCountry"
-                            />
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                    <div className="clearfix"></div>
-                    <div className="clearfix"></div>
-                    <div className="input2_wrapper">
-                      <label
-                        className="col-md-5"
-                        style={{ paddingLeft: "0", paddingTop: "12px" }}
-                      >
-                        Validity Country
-                      </label>
-                      <div
-                        className="col-md-7  relative"
-                        style={{ paddingRight: "0", paddingLeft: "0" }}
-                      >
-                        <div className="select1_wrapper">
-                          <div
-                            className="input1_inner"
-                            style={{
-                              border: "none",
-                              boxShadow: "none",
-                              display: "flex",
-                              alignItems: "center",
-                              cursor: "text",
-                            }}
-                          >
-                            <input
-                              autoComplete="off"
-                              required
-                              placeholder="Search Country"
-                              name="validityCountry"
-                              onKeyDown={(e) =>
-                                clearOnBackspace(e, "validityCountry")
-                              }
-                              onChange={(e) => setValue4(e.target.value)}
-                              type="text"
-                              className="form-control"
-                              value={value4 || userInfo.validityCountry}
-                              spellCheck="false"
-                            />
-                            {(value4 || userInfo.validityCountry) && (
-                              <CancelIcon
-                                style={{
-                                  color: "#3BA0A9",
-                                  cursor: "pointer",
-                                  marginRight: "2px",
-                                }}
-                                onClick={() =>
-                                  clearOnCancel(4, "validityCountry")
-                                }
-                              />
-                            )}
-                          </div>
-                          {value4 && (
-                            <Search
-                              chracter={value4}
-                              placingOrder="country"
-                              searchChange={searchChange}
-                              name="validityCountry"
-                            />
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                    <div className="clearfix"></div>
-                    <div className="input2_wrapper">
-                      <label
-                        className="col-md-5"
-                        style={{ paddingLeft: "0", paddingTop: "12px" }}
-                      >
-                        Nationality
-                      </label>
-                      <div
-                        className="col-md-7  relative"
-                        style={{ paddingRight: "0", paddingLeft: "0" }}
-                      >
-                        <div className="select1_wrapper">
-                          <div
-                            className="input1_inner"
-                            style={{
-                              border: "none",
-                              boxShadow: "none",
-                              display: "flex",
-                              alignItems: "center",
-                              cursor: "text",
-                            }}
-                          >
-                            <input
-                              autoComplete="off"
-                              required
-                              placeholder="Search Country"
-                              name="nationality"
-                              onKeyDown={(e) =>
-                                clearOnBackspace(e, "nationality")
-                              }
-                              onChange={(e) => setValue5(e.target.value)}
-                              type="text"
-                              className="form-control"
-                              value={value5 || userInfo.nationality}
-                              spellCheck="false"
-                            />
-                            {(value5 || userInfo.nationality) && (
-                              <CancelIcon
-                                style={{
-                                  color: "#3BA0A9",
-                                  cursor: "pointer",
-                                  marginRight: "2px",
-                                }}
-                                onClick={() => clearOnCancel(5, "nationality")}
-                              />
-                            )}
-                          </div>
-                          {value5 && (
-                            <Search
-                              chracter={value5}
-                              placingOrder="country"
-                              searchChange={searchChange}
-                              name="nationality"
-                            />
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                    <div className="clearfix"></div>
-                    <div className="select1_wrapper">
-                      <label
-                        className="col-md-5"
-                        style={{ paddingLeft: "0", paddingTop: "15px" }}
-                      >
-                        Holder
-                      </label>
-                      <div
-                        className="select1_inner col-md-5"
-                        style={{
-                          marginTop: "12px",
-                          paddingRight: "0",
-                          paddingLeft: "0",
-                          width: "20%",
-                          display: "inline-block",
-                        }}
-                      >
-                        <select
-                          onChange={onChange}
-                          name="holder"
-                          className="select2 select select3"
-                          style={{ width: "100%", outline: "none" }}
-                        >
-                          <option selected value="true">
-                            Yes
-                          </option>
-                          <option value="false">No</option>
-                        </select>
-                      </div>
-                    </div>
-                    <div className="clearfix"></div>
-                    <div className="margin-top"></div>
-                    <h3>Billing Details</h3>
-                    <div className="input2_wrapper">
-                      <label
-                        className="col-md-5"
-                        style={{ paddingLeft: "0", paddingTop: "12px" }}
-                      >
-                        Country
-                      </label>
-                      <div
-                        className="col-md-7  relative"
-                        style={{ paddingRight: "0", paddingLeft: "0" }}
-                      >
-                        <div className="select1_wrapper">
-                          <div
-                            className="input1_inner"
-                            style={{
-                              border: "none",
-                              boxShadow: "none",
-                              display: "flex",
-                              alignItems: "center",
-                              cursor: "text",
-                            }}
-                          >
-                            <input
-                              autoComplete="off"
-                              required
-                              placeholder="Search Country"
-                              name="billingCountry"
-                              onKeyDown={(e) =>
-                                clearOnBackspace(e, "billingCountry")
-                              }
-                              onChange={(e) => setValue6(e.target.value)}
-                              type="text"
-                              className="form-control"
-                              value={value6 || userInfo.billingCountry}
-                              spellCheck="false"
-                            />
-                            {(value6 || userInfo.billingCountry) && (
-                              <CancelIcon
-                                style={{
-                                  color: "#3BA0A9",
-                                  cursor: "pointer",
-                                  marginRight: "2px",
-                                }}
-                                onClick={() =>
-                                  clearOnCancel(6, "billingCountry")
-                                }
-                              />
-                            )}
-                          </div>
-                          {value6 && (
-                            <Search
-                              chracter={value6}
-                              placingOrder="country"
-                              searchChange={searchChange}
-                              name="billingCountry"
-                              countryBool="name"
-                            />
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                    <div className="clearfix"></div>
-                    <div className="input2_wrapper">
-                      <label
-                        className="col-md-5"
-                        style={{ paddingLeft: "0", paddingTop: "12px" }}
-                      >
-                        City
-                      </label>
-                      <div
-                        className="col-md-7  relative"
-                        style={{ paddingRight: "0", paddingLeft: "0" }}
-                      >
-                        <div className="select1_wrapper">
-                          <div
-                            className="input1_inner"
-                            style={{
-                              border: "none",
-                              boxShadow: "none",
-                              display: "flex",
-                              alignItems: "center",
-                              cursor: "text",
-                            }}
-                          >
-                            <input
-                              autoComplete="off"
-                              required
-                              placeholder="Search City"
-                              name="billingCity"
-                              onKeyDown={(e) =>
-                                clearOnBackspace(e, "billingCity")
-                              }
-                              onChange={(e) => setValue7(e.target.value)}
-                              type="text"
-                              className="form-control"
-                              value={value7 || userInfo.billingCity}
-                              spellCheck="false"
-                            />
-                            {(value7 || userInfo.billingCity) && (
-                              <CancelIcon
-                                style={{
-                                  color: "#3BA0A9",
-                                  cursor: "pointer",
-                                  marginRight: "2px",
-                                }}
-                                onClick={() => clearOnCancel(7, "billingCity")}
-                              />
-                            )}
-                          </div>
-                          {value7 && (
-                            <Search
-                              chracter={value7}
-                              placingOrder="city"
-                              searchChange={searchChange}
-                              name="billingCity"
-                            />
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                    <div className="clearfix"></div>
-                    <div className="input2_wrapper">
-                      <label
-                        className="col-md-5"
-                        style={{ paddingLeft: "0", paddingTop: "12px" }}
-                      >
-                        Address
-                      </label>
-                      <div
-                        className="col-md-7 relative"
-                        style={{ paddingRight: "0", paddingLeft: "0" }}
-                      >
-                        <input
-                          autoComplete="off"
-                          onChange={onChange}
-                          name="address"
-                          required
-                          type="text"
-                          className="form-control"
-                          placeholder="5c3/5"
-                          spellCheck="false"
-                        />
-                      </div>
-                    </div>
-                    <div className="clearfix"></div>
-                  </div>
-                  <div className="col-md-4"></div>
-                  <div className="col-md-4 booking-row">
-                    <h3 className="line">FLIGHTS SUMMARY</h3>
-                    <div className="input2_wrapper">
-                      <label
-                        className="col-md-6"
-                        style={{ paddingLeft: "0", paddingTop: "12px" }}
-                      >
-                        Flying from:
-                      </label>
-                      <div
-                        className="col-md-6"
-                        style={{ paddingRight: "0", paddingLeft: "0" }}
-                      >
-                        <span className="red">{FlightPriceData.origin}</span>
-                        {/* <br />{findCity(departCity)} ({departCity}) */}
-                      </div>
-                    </div>
-                    <div className="clearfix"></div>
-                    <div className="input2_wrapper">
-                      <label
-                        className="col-md-6"
-                        style={{ paddingLeft: "0", paddingTop: "12px" }}
-                      >
-                        To:
-                      </label>
-                      <div
-                        className="col-md-6"
-                        style={{ paddingRight: "0", paddingLeft: "0" }}
-                      >
-                        <span className="red">
-                          {FlightPriceData.destination}
-                        </span>
-                        {/* <br />{findCity(arriveCity)} ({arriveCity}) */}
-                        {/* <span className="red">{findCity(arriveCity)}</span>
-                                                <br />{findCity(arriveCity)} ({arriveCity}) */}
-                      </div>
-                    </div>
-                    <div className="clearfix"></div>
-                    <div className="input2_wrapper">
-                      <label
-                        className="col-md-6"
-                        style={{ paddingLeft: "0", paddingTop: "12px" }}
-                      >
-                        Departing:
-                      </label>
-                      <div
-                        className="col-md-6"
-                        style={{ paddingRight: "0", paddingLeft: "0" }}
-                      >
-                        <span className="red">At</span>
-                        <ul>
-                          <li>{FlightPriceData.departDate}</li>
-                        </ul>
-                      </div>
-                    </div>
-                    <div className="clearfix"></div>
-                    <div className="input2_wrapper">
-                      <label
-                        className="col-md-6"
-                        style={{ paddingLeft: "0", paddingTop: "12px" }}
-                      >
-                        Returning:
-                      </label>
-                      <div
-                        className="col-md-6"
-                        style={{ paddingRight: "0", paddingLeft: "0" }}
-                      >
-                        <span className="red">At</span>
-                        <ul>
-                          <li>{FlightPriceData.returnDate}</li>
-                        </ul>
-                      </div>
-                    </div>
-                    <div className="clearfix"></div>
-                    <div className="margin-top"></div>
-                    <h3>CHARGES</h3>
-                    <div className="input2_wrapper">
-                      <label
-                        className="col-md-6"
-                        style={{ paddingLeft: "0", paddingTop: "12px" }}
-                      >
-                        Base Price:
-                      </label>
-                      <div
-                        className="col-md-6"
-                        style={{ paddingRight: "0", paddingLeft: "0" }}
-                      >
-                        <span className="red">
-                          £{FlightPriceData.airSolutions[0]["strBasePrice"]}
-                        </span>
-                      </div>
-                    </div>
-                    <div className="clearfix"></div>
-                    <div className="input2_wrapper">
-                      <label
-                        className="col-md-6"
-                        style={{ paddingLeft: "0", paddingTop: "12px" }}
-                      >
-                        Taxes
-                      </label>
-                      <div
-                        className="col-md-6"
-                        style={{ paddingRight: "0", paddingLeft: "0" }}
-                      >
-                        <span className="red">
-                          £{FlightPriceData.airSolutions[0]["strTax"]}
-                        </span>
-                      </div>
-                    </div>
-                    <div className="clearfix"></div>
-                    <div className="input2_wrapper">
-                      <label
-                        className="col-md-6"
-                        style={{ paddingLeft: "0", paddingTop: "12px" }}
-                      >
-                        Flight Booking Charges
-                      </label>
-                      <div
-                        className="col-md-6"
-                        style={{ paddingRight: "0", paddingLeft: "0" }}
-                      >
-                        <span className="red">£5.00</span>
-                      </div>
-                    </div>
-                    <div className="clearfix"></div>
-                    <div className="input2_wrapper">
-                      <label
-                        className="col-md-6"
-                        style={{ paddingLeft: "0", paddingTop: "12px" }}
-                      >
-                        Atol Charges
-                      </label>
-                      <div
-                        className="col-md-6"
-                        style={{ paddingRight: "0", paddingLeft: "0" }}
-                      >
-                        <span className="red">£2.50</span>
-                      </div>
-                    </div>
-                    <div className="clearfix"></div>
-                    <div className="input2_wrapper">
-                      <label
-                        className="col-md-6"
-                        style={{ paddingLeft: "0", paddingTop: "12px" }}
-                      >
-                        TOTAL
-                      </label>
-                      <div
-                        className="col-md-6"
-                        style={{ paddingRight: "0", paddingLeft: "0" }}
-                      >
-                        <span className="red">
-                          £
-                          {FlightPriceData.airSolutions[0]["totalPrice"] +
-                            5 +
-                            2.5}
-                        </span>
-                      </div>
-                    </div>
-                    <div className="clearfix"></div>
-                    <div
-                      className="margin-top"
-                      style={{ marginTop: "40px" }}
-                    ></div>
-                    <div className="border-3px"></div>
-                    <div className="clearfix"></div>
-                    <div className="margin-top"></div>
-                    <h3>ACCEPT AND CONFIRM</h3>
-                    <input
-                      required
-                      type="checkbox"
-                      onChange={() => setTerms(!terms)}
-                      name="termsAndConditions"
-                    />{" "}
-                    <b style={{ color: "#464646", paddingLeft: "10px" }}>
-                      I agree to the{" "}
-                      <a href="/TermsAndCondition" target="__blank">
-                        booking conditions
-                      </a>
-                    </b>
-                    <div className="margin-top"></div>
-                    <div className="clearfix"></div>
-                    <div className="input2_wrapper">
-                      <label
-                        className="col-md-6"
-                        style={{
-                          paddingLeft: "0",
-                          paddingTop: "18px",
-                          fontSize: "16px",
-                        }}
-                      >
-                        GRAND TOTAL:
-                      </label>
-                      <div
-                        className="col-md-6"
-                        style={{ paddingRight: "0", paddingLeft: "0" }}
-                      >
-                        <span className="red" style={{ fontSize: "30px" }}>
-                          £
-                          {FlightPriceData.airSolutions[0]["totalPrice"] +
-                            5 +
-                            2.5}
-                        </span>
-                      </div>
-                    </div>
-                    <div className="clearfix"></div>
-                    <div className="margin-top"></div>
-                    <button
-                      type="submit"
-                      to="booking-success.html"
-                      className="btn btn-default btn-cf-submit3"
-                    >
-                      BOOKING NOW
-                    </button>
                   </div>
                 </form>
               </div>

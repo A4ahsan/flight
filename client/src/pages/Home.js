@@ -155,7 +155,7 @@ function Home() {
     LastName: "",
     PaxType: "ADT",
     Gender: "",
-    PaxDOB: "",
+    PaxDOB: new Date(),
     IsLeadName: true,
   }]);
   const [passengerInput, setPassengerInput] = useState(false);
@@ -203,7 +203,7 @@ function Home() {
         LastName: "",
         PaxType: "ADT",
         Gender: "",
-        PaxDOB: "",
+        PaxDOB: new Date(),
       });
     }
     for (var i = 0; i < rest.NoOfChildPax; i++) {
@@ -214,7 +214,7 @@ function Home() {
         LastName: "",
         PaxType: "CHD",
         Gender: "",
-        PaxDOB: "",
+        PaxDOB: new Date(),
       });
     }
     for (var i = 0; i < rest.NoOfInfantPax; i++) {
@@ -225,7 +225,7 @@ function Home() {
         LastName: "",
         PaxType: "INF",
         Gender: "",
-        PaxDOB: "",
+        PaxDOB: new Date(),
       });
     }
 
