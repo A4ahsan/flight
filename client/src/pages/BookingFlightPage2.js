@@ -324,7 +324,7 @@ function BookingFlightPage2() {
         <TopBarOne />
         <TopBarTwo />
         <div id="content">
-          <div className="container">
+          <div className="container-fluid">
             <div className="row">
               <div className="col-sm-12">
                 <form autoComplete="off" action="" onSubmit={book}>
@@ -433,7 +433,7 @@ function BookingFlightPage2() {
 
                       {Pax.map((item, index) => (
                         <div className="row mt-5">
-                          <div className="col-md-2">
+                          <div className="col-md-1">
                             <label className="mt-4">
                               {item.PaxType == "ADT" && item.IsLeadName
                                 ? "Lead Passenger"
@@ -471,13 +471,13 @@ function BookingFlightPage2() {
                                   <option selected value="">
                                     Gender
                                   </option>
-                                  <option value="MALE">Male</option>
-                                  <option value="FEMALE">Female</option>
+                                  <option value="Male">Male</option>
+                                  <option value="Female">Female</option>
                                 </select>
                               </div>
                             </div>
                           </div>
-                          <div className="col-md-2 booking-row">
+                          <div className="col-md-1 booking-row">
                             <div className="select1_wrapper">
                               <label className="" style={{ paddingLeft: "0" }}>
                                 Title
@@ -537,6 +537,22 @@ function BookingFlightPage2() {
                           </div>
 
                           <div className="col-md-2 booking-row">
+                            <label className="">Middle Name <span style={{fontSize: 10 , position: 'absolute'}}>(optional)</span></label>
+
+                            <input
+                              autoComplete="off"
+                              required
+                              onChange={(e) => handleInputChange(index, e)}
+                              name="MiddelName"
+                              value={item.MiddelName}
+                              type="text"
+                              className="form-control"
+                              placeholder="Michael"
+                              spellCheck="false"
+                            />
+                          </div>
+
+                          <div className="col-md-2 booking-row">
                             <label className="">Last Name</label>
 
                             <input
@@ -566,6 +582,7 @@ function BookingFlightPage2() {
                               <DatePicker
                                 clearIcon={null}
                                 // minDate={minMaxDate("birth")}
+                                minDate={new Date("01-01-1922")}
                                 className="border-none"
                                 value={item.PaxDOB}
                                 onChange={(newDate) =>

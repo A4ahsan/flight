@@ -150,11 +150,12 @@ function Home() {
     total: 0
   });
   const [passengerArray, setpassengerArray] = useState([{
-    Title: "",
+    Title: "Mr",
     FirstName: "",
+    MiddelName: "",
     LastName: "",
     PaxType: "ADT",
-    Gender: "",
+    Gender: "Male",
     PaxDOB: new Date(),
     IsLeadName: true,
   }]);
@@ -198,33 +199,36 @@ function Home() {
     for (var i = 1; i < rest.NoOfAdultPax; i++) {
       debugger;
       passengerArray.push({
-        Title: "",
+        Title: "Mr",
         FirstName: "",
+        MiddelName: "",
         LastName: "",
         PaxType: "ADT",
-        Gender: "",
+        Gender: "Male",
         PaxDOB: new Date(),
       });
     }
     for (var i = 0; i < rest.NoOfChildPax; i++) {
       debugger;
       passengerArray.push({
-        Title: "",
+        Title: "Mstr",
         FirstName: "",
+        MiddelName: "",
         LastName: "",
         PaxType: "CHD",
-        Gender: "",
+        Gender: "Male",
         PaxDOB: new Date(),
       });
     }
     for (var i = 0; i < rest.NoOfInfantPax; i++) {
       debugger;
       passengerArray.push({
-        Title: "",
+        Title: "Mstr",
         FirstName: "",
+        MiddelName: "",
         LastName: "",
         PaxType: "INF",
-        Gender: "",
+        Gender: "Male",
         PaxDOB: new Date(),
       });
     }
