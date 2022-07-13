@@ -390,7 +390,7 @@ const LandingPageRevamp = () => {
             <div className="row">
               <div className="col-md-6">
                 <div className="txtwrp">
-                  <h4 className="wow fadeInDown">Axen Holidays</h4>
+                  {/* <h4 className="wow fadeInDown">Axen Holidays</h4> */}
                   <h1 className="wow fadeInDown">
                     Let's Fly! Explore the beauty of the world.
                   </h1>
@@ -483,7 +483,7 @@ const LandingPageRevamp = () => {
                         </div>
                       </div>
 
-                      <div className="col-lg-6">
+                      {/* <div className="col-lg-6">
                         <div className="form-group">
                           <input
                             type="text"
@@ -495,9 +495,9 @@ const LandingPageRevamp = () => {
                             required
                           />
                         </div>
-                      </div>
+                      </div> */}
 
-                      <div className="col-lg-12">
+                      {/* <div className="col-lg-12">
                         <div className="form-group">
                           <input
                             type="text"
@@ -509,7 +509,7 @@ const LandingPageRevamp = () => {
                             required
                           />
                         </div>
-                      </div>
+                      </div> */}
                       <div className="col-lg-12 col-md-12">
                         <div className="form-group">
                           <textarea
@@ -1293,7 +1293,7 @@ const LandingPageRevamp = () => {
                 <div className="row">
                   <div className="col-md-6">
                     <div className="mainimg">
-                      <img src="images/tower.png" />
+                      <img src="images/lp1.png" />
                     </div>
                   </div>
                   <div className="col-md-6 my-auto">
@@ -1355,7 +1355,7 @@ const LandingPageRevamp = () => {
                   </div>
                   <div className="col-md-6">
                     <div className="mainimg">
-                      <img src="images/tower.png" />
+                      <img src="images/lp2.png" />
                     </div>
                   </div>
                 </div>
@@ -1623,7 +1623,7 @@ const LandingPageRevamp = () => {
                 <div className="row">
                   <div className="col-md-6">
                     <div className="mainimg">
-                      <img src="images/tower.png" />
+                      <img src="images/lp3.png" />
                     </div>
                   </div>
                   <div className="col-md-6 my-auto">
@@ -1710,7 +1710,7 @@ const LandingPageRevamp = () => {
                       </div>
                     </div>
 
-                    <div className="col-lg-6">
+                    {/* <div className="col-lg-6">
                       <div className="form-group">
                         <input
                           type="text"
@@ -1722,9 +1722,9 @@ const LandingPageRevamp = () => {
                           required
                         />
                       </div>
-                    </div>
+                    </div> */}
 
-                    <div className="col-lg-12">
+                    {/* <div className="col-lg-12">
                       <div className="form-group">
                         <input
                           type="text"
@@ -1736,7 +1736,7 @@ const LandingPageRevamp = () => {
                           required
                         />
                       </div>
-                    </div>
+                    </div> */}
                     <div className="col-lg-12 col-md-12">
                       <div className="form-group">
                         <textarea
@@ -1763,7 +1763,7 @@ const LandingPageRevamp = () => {
                 <figure className="mfig">
                   <img
                     className="lazy loaded"
-                    src="images/tower.png"
+                    src="images/lp4.png"
                     data-src="images/tower.png"
                     alt=""
                     data-was-processed="true"

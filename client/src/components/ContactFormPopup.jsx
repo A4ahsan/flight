@@ -94,7 +94,7 @@ const ContactFormPopup = () => {
               </div>
             </div>
 
-            <div className="col-lg-6">
+            {/* <div className="col-lg-6">
               <div className="form-group">
                 <input
                   type="text"
@@ -106,9 +106,9 @@ const ContactFormPopup = () => {
                   required
                 />
               </div>
-            </div>
+            </div> */}
 
-            <div className="col-lg-12">
+            {/* <div className="col-lg-12">
               <div className="form-group">
                 <input
                   type="text"
@@ -120,7 +120,7 @@ const ContactFormPopup = () => {
                   required
                 />
               </div>
-            </div>
+            </div> */}
             <div className="col-lg-12 col-md-12">
               <div className="form-group">
                 <textarea
