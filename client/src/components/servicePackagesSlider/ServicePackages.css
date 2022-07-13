@@ -1,0 +1,42 @@
+.service-package-slider {
+  position: relative;
+  width: auto;
+  height: 350px;
+  background-position: center !important;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+  border-radius: 8px;
+}
+.service-package-slider.slide-1 {
+  background: url("../../../public/images/service1.jpg");
+}
+.service-package-slider.slide-2 {
+  background: url("../../../public/images/service2.jpg");
+}
+.service-package-slider.slide-3 {
+  background: url("../../../public/images/service3.jpg");
+}
+.service-package-slider.slide-4 {
+  background: url("../../../public/images/service4.jpg");
+}
+.service-main-title {
+  color: #fff;
+  font-size: 36px;
+  text-align: center;
+  top: 35%;
+}
+.service-btn {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  border-radius: 0;
+}
+
+/*media-queries*/
+@media (min-width: 0px) and (max-width: 769px) {
+  .service-main-title {
+    font-size: 24px;
+    top: 25%;
+  }
+}

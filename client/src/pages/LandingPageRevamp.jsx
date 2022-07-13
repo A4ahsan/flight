@@ -1,42 +1,39 @@
 import React, { useEffect, useState, useRef } from "react";
-import "react-date-range/dist/styles.css";
-import "react-date-range/dist/theme/default.css";
+import Covid from "../components/Covid";
+import Footer from "../components/Footer";
 import TopBarOne from "../components/TopBarOne";
 import TopBarTwo from "../components/TopBarTwo";
-import Footer from "../components/Footer";
-import { Link, useNavigate } from "react-router-dom";
+import { ImAirplane } from "react-icons/im";
+import { FaHotel } from "react-icons/fa";
 import styled from "styled-components";
-import Carousel from "react-material-ui-carousel";
-import HotelSlider from "../carousel/HotelSlider";
-import { DateRange } from "react-date-range";
+import Fade from "react-reveal/Fade";
+import axios from "axios";
+import { auth, getBaseUrl } from "../components/Utilities";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useAlert } from "react-alert";
+import { setRefreshs } from "../redux/refreshSlice";
 import { format } from "date-fns";
 import Search from "../components/Search";
 import CancelIcon from "@material-ui/icons/Cancel";
-import axios from "axios";
-import Loading from "../components/Loading";
-import Covid from "../components/Covid";
-import Fade from "react-reveal/Fade";
-import Flip from "react-reveal/Flip";
-import Zoom from "react-reveal/Zoom";
-import { ImAirplane } from "react-icons/im";
-import { FaHotel } from "react-icons/fa";
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
-import { setAlert, resetAlert } from "../redux/alertSlice";
-import { useDispatch } from "react-redux";
+import { DateRange } from "react-date-range";
 import PassengersFiled from "../components/PassengersField";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import { useAlert } from "react-alert";
-import { setRefreshs } from "../redux/refreshSlice";
-import { auth, getBaseUrl } from "../components/Utilities";
+import MenuItem from "@mui/material/MenuItem";
+import SubFooter from "../components/SubFooter";
+import ServicePackages from "../components/servicePackagesSlider/ServicePackages";
+import ContactFormPopup from "../components/ContactFormPopup";
+import Loading from "../components/Loading";
 
-function Flights() {
+const LandingPageRevamp = () => {
   const alert = useAlert();
 
   const dispatch = useDispatch();
   const [header, setHeader] = useState("flight");
+  const [showModal, setShowModal] = useState(false);
+  
   const flightClick = () => {
     setHeader("flight");
   };
@@ -151,13 +148,12 @@ function Flights() {
   });
   const [passengerArray, setpassengerArray] = useState([
     {
-      Title: "Mr",
+      Title: "",
       FirstName: "",
-      MiddelName: "",
       LastName: "",
       PaxType: "ADT",
-      Gender: "Male",
-      PaxDOB: new Date(),
+      Gender: "",
+      PaxDOB: "",
       IsLeadName: true,
     },
   ]);
@@ -201,37 +197,34 @@ function Flights() {
     for (var i = 1; i < rest.NoOfAdultPax; i++) {
       debugger;
       passengerArray.push({
-        Title: "Mr",
+        Title: "",
         FirstName: "",
-        MiddelName: "",
         LastName: "",
         PaxType: "ADT",
-        Gender: "Male",
-        PaxDOB: new Date(),
+        Gender: "",
+        PaxDOB: "",
       });
     }
     for (var i = 0; i < rest.NoOfChildPax; i++) {
       debugger;
       passengerArray.push({
-        Title: "Mstr",
+        Title: "",
         FirstName: "",
-        MiddelName: "",
         LastName: "",
         PaxType: "CHD",
-        Gender: "Male",
-        PaxDOB: new Date(),
+        Gender: "",
+        PaxDOB: "",
       });
     }
     for (var i = 0; i < rest.NoOfInfantPax; i++) {
       debugger;
       passengerArray.push({
-        Title: "Mstr",
+        Title: "",
         FirstName: "",
-        MiddelName: "",
         LastName: "",
         PaxType: "INF",
-        Gender: "Male",
-        PaxDOB: new Date(),
+        Gender: "",
+        PaxDOB: "",
       });
     }
 
@@ -294,41 +287,6 @@ function Flights() {
       alert.error("input fields can not be empty.");
     }
   };
-  // const searchFlight = async (e) => {
-  //   e.preventDefault();
-  //   if (valueFromSearch && valueFromSearch2 && date[0].endDate) {
-  //     let finalData = {
-  //       originLocationCode: valueFromSearch.split("-")[0],
-  //       destinationLocationCode: valueFromSearch2.split("-")[0],
-  //       departureDate: format(date[0].startDate, "yyyy/MM/dd")
-  //         .split("/")
-  //         .join("-"),
-  //       returnDate: format(date[0].endDate, "yyyy/MM/dd").split("/").join("-"),
-  //       ...rest,
-  //       ...cabin2,
-  //     };
-  //     console.log("Final Parameter" , finalData);
-  //     setIsLoading(true);
-  //     try {
-  //       const res = await axios.post(
-  //         "api/flight/date?search=true&first=0&last=9",
-  //         finalData
-  //       );
-  //       setIsLoading(false);
-  //       dispatch(setRefreshs("false"));
-  //       navigate("/search-flights", {
-  //         state: { flightOffers: res.data, details: finalData },
-  //       });
-  //     } catch (err) {
-  //       setError(err);
-  //       setIsLoading(false);
-  //       alert.error("No flight found with these destinations or Dates.");
-  //     }
-  //   } else {
-  //     alert.error("input fields can not be empty.");
-  //   }
-  // };
-
   // search for Hotels
   const searchHotels = async (e) => {
     e.preventDefault();
@@ -355,7 +313,6 @@ function Flights() {
       alert.error("input fields can not be empty.");
     }
   };
-
   // onBlur components method
   const searchOneRef = useRef();
   const searchTwoRef = useRef();
@@ -410,84 +367,167 @@ function Flights() {
 
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
+  // popup logic
+  useEffect(() => {
+    const popupTime = setTimeout(() => {
+      // After 3 seconds set the show value to false
+      setShowModal(true);
+    }, 20000);
 
+    return () => {
+      clearTimeout(popupTime);
+    };
+  }, []);
   return (
     <>
       <div>
-        <div id="main">
-          <Covid />
-          <TopBarOne />
-          <TopBarTwo />
-          <div id="slider_wrapper">
-            <div className="container">
-              <div id="slider_inner">
-                <div className="">
-                  <div id="slider">
-                    <div className="">
-                      <div className="carousel-box">
-                        <div className="inner">
-                          <Fade>
-                            <Carousel
-                              IndicatorIcon=""
-                              navButtonsAlwaysInvisible="true"
-                              animation="slide"
-                              autoPlay="true"
-                              timeout={500}
-                              cycleNavigation="true"
-                            >
-                              <div className="slider">
-                                <div className="slider_inner">
-                                  <div className="txt1">
-                                    <span>Welcome To </span>
-                                  </div>
-                                  <div className="txt2">
-                                    <span>AXEN HOLIDAYS</span>
-                                  </div>
-                                  <div className="txt3">
-                                    <span>
-                                      Explore a universe filled with limitless
-                                      possibilities.
-                                    </span>
-                                  </div>
-                                </div>
-                              </div>
+        <Covid />
+        <TopBarOne />
+        <TopBarTwo />
+        {showModal && <ContactFormPopup />}
+        <section className="landing-page-banner-section home-bnerwrp">
+          <div className="container">
+            <div className="row">
+              <div className="col-md-6">
+                <div className="txtwrp">
+                  <h4 className="wow fadeInDown">Axen Holidays</h4>
+                  <h1 className="wow fadeInDown">
+                    Let's Fly! Explore the beauty of the world.
+                  </h1>
+                  <p className="wow fadeInDown">
+                    You're welcome to Axen Holidays. Let us assist you in
+                    beginning your search for online hotel booking and travel
+                    offers to see the world. We have you wrapped whether you're
+                    planning a fun-filled business trip or a romantic weekend
+                    break with your significant other or family.
+                  </p>
+                  <ul>
+                    <li>Cheap Tickets</li>
+                    <li>Online Hotels</li>
+                    <li>Domestic FlightsFlightsFlights</li>
+                    <li>International Flights</li>
+                  </ul>
+                </div>
+                <div className="imgmain">
+                  <ul className="wow fadeInDown">
+                    <li>
+                      <img src="images/google.png" alt="google-b" />
+                    </li>
+                    <li>
+                      <img src="images/trust.png" alt="trust-b" />
+                    </li>
+                  </ul>
+                </div>
+                <div className="btnwrp">
+                  <a
+                    className="btn-1"
+                    href="javascript:void(Tawk_API.toggle())"
+                  >
+                    Chat Now
+                  </a>
+                </div>
+              </div>
+              <div className="col-md-6">
+                <div className="mainfrm">
+                  <div className="form-wrap">
+                    <div className="uper-head">
+                      <h1>Let’s Get Started Exclusive Offer</h1>
+                      <img className="imgform" src="images/widget2.webp" />
+                    </div>
 
-                              <div className="slider">
-                                <div className="slider_inner">
-                                  <div className="txt1">
-                                    <span>7 - Day Tour</span>
-                                  </div>
-                                  <div className="txt2">
-                                    <span>AMAZING CARIBBEAN</span>
-                                  </div>
-                                  <div className="txt3">
-                                    <span>
-                                      With us, you may take in the breathtaking
-                                      beauty of the Caribbean islands.
-                                    </span>
-                                  </div>
-                                </div>
-                              </div>
-
-                              <div className="slider">
-                                <div className="slider_inner">
-                                  <div className="txt1">
-                                    <span>5 Days In</span>
-                                  </div>
-                                  <div className="txt2">
-                                    <span>PARIS (Capital Of World)</span>
-                                  </div>
-                                  <div className="txt3">
-                                    <span>
-                                      Join us in discovering the wonders of
-                                      Paris!
-                                    </span>
-                                  </div>
-                                </div>
-                              </div>
-                            </Carousel>
-                          </Fade>
+                    <div className="row">
+                      <div className="col-md-12 ">
+                        <h2 className="form-wrap-heading text-start font-bold">
+                          Let's Connect
+                        </h2>
+                      </div>
+                      <div className="col-lg-6">
+                        <div className="form-group">
+                          <input
+                            type="text"
+                            name="name"
+                            placeholder="Name"
+                            className="form-control-for-banner"
+                            // value={contact.name}
+                            // onChange={handleChange}
+                            required
+                          />
                         </div>
+                      </div>
+
+                      <div className="col-lg-6">
+                        <div className="form-group">
+                          <input
+                            type="email"
+                            name="email"
+                            placeholder="Email address"
+                            className="form-control-for-banner"
+                            // value={contact.name}
+                            // onChange={handleChange}
+                            required
+                          />
+                        </div>
+                      </div>
+
+                      <div className="col-lg-6">
+                        <div className="form-group">
+                          <input
+                            type="text"
+                            name="phone"
+                            placeholder="Phone Number"
+                            className="form-control-for-banner"
+                            // value={contact.name}
+                            // onChange={handleChange}
+                            required
+                          />
+                        </div>
+                      </div>
+
+                      <div className="col-lg-6">
+                        <div className="form-group">
+                          <input
+                            type="text"
+                            name="about"
+                            placeholder="How did you hear about us?"
+                            className="form-control-for-banner"
+                            // value={contact.name}
+                            // onChange={handleChange}
+                            required
+                          />
+                        </div>
+                      </div>
+
+                      <div className="col-lg-12">
+                        <div className="form-group">
+                          <input
+                            type="text"
+                            name="reason"
+                            placeholder="Reason for contacting"
+                            className="form-control-for-banner"
+                            // value={contact.name}
+                            // onChange={handleChange}
+                            required
+                          />
+                        </div>
+                      </div>
+                      <div className="col-lg-12 col-md-12">
+                        <div className="form-group">
+                          <textarea
+                            name="text"
+                            cols="20"
+                            rows="4"
+                            placeholder="Comments"
+                            className="form-control"
+                            // value={contact.text}
+                            // onChange={handleChange}
+                            required
+                          />
+                        </div>
+                      </div>
+                      <div className="col-lg-12 col-sm-12">
+                        <button type="submit" className="btn btn-lg sendBtn">
+                          Send Message
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -495,7 +535,9 @@ function Flights() {
               </div>
             </div>
           </div>
-          <div id="front_tabs">
+        </section>
+        <section>
+          <div className="home-search-flights-section">
             <div className="container">
               <div className="tabs_wrapper tabs1_wrapper">
                 <div className="tabs tabs1">
@@ -507,7 +549,7 @@ function Flights() {
                           Flights
                         </li>
                       </Fade>
-                      {/* <Fade delay={100} top>
+                      <Fade delay={100} top>
                         <li onClick={hotelClick} className="hotels">
                           <FaHotel style={{ marginRight: "5px" }} />
                           Hotels
@@ -518,7 +560,7 @@ function Flights() {
                           <DirectionsCarIcon style={{ marginRight: "5px" }} />
                           Cars
                         </li>
-                      </Fade> */}
+                      </Fade>
                     </UL>
                   </div>
                   <Fade delay={300} right>
@@ -1188,453 +1230,578 @@ function Flights() {
               </div>
             </div>
           </div>
-
-          {/* <div className={`landing-page-area-content`}>
-            <div className="container">
-              <div className="row">
-                <div className="col-md-5">
-                  <img src="images/lp-1.jpg" />
-                </div>
-                <div className="col-md-7">
-                  <h3>Purchase low-cost plane tickets.</h3>
-                  <p>
-                    Are you looking for the finest travel and vacation deals?
-                    You've arrived at the right location. We used our travel
-                    expertise to bring you a wide range of Axen Holidays offers
-                    from our airline partners. Compare all of our flight deals
-                    to find the best deal for your upcoming trip.
-                  </p>
-                 
+        </section>
+        <section className="clintwrp">
+          <div className="container">
+            <div className="row">
+              <div className="col-md-12">
+                <div className="imgwrp">
+                  <div className="txtwrp">
+                    <p>
+                      We rated <strong>4.7</strong> out of <strong>5</strong>{" "}
+                      <span>
+                        <i className="fa fa-star"></i>
+                        <i className="fa fa-star"></i>
+                        <i className="fa fa-star"></i>
+                        <i className="fa fa-star"></i>
+                        <i className="fa fa-star"></i>
+                      </span>{" "}
+                      served <strong>1200+</strong> satisfied customers.{" "}
+                    </p>
+                  </div>
+                  <div className="counterwrp">
+                    <ul>
+                      <li>
+                        <div className="mainwrp">
+                          <span className="count">100</span>
+                          <span>+</span>
+                          <h4>Hotel</h4>
+                        </div>
+                      </li>
+                      <li>
+                        <div className="mainwrp">
+                          <span className="count">500</span>
+                          <span>+</span>
+                          <h4>Flights</h4>
+                        </div>
+                      </li>
+                      <li>
+                        <div className="mainwrp">
+                          <span className="count">100</span>
+                          <span>+</span>
+                          <h4>Cars</h4>
+                        </div>
+                      </li>
+                      <li>
+                        <div className="mainwrp">
+                          <span className="count">100</span>
+                          <span>+</span>
+                          <h4>Satisfied Customer</h4>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-
-          <div className={`landing-page-area-content`}>
-            <div className="container">
-              <div className="row flex-row-reverse">
-                <div className="col-md-5">
-                  <img src="images/lp-1.jpg" />
-                </div>
-                <div className="col-md-7">
-                  <h3>Be adaptable.</h3>
-                  <p>
-                    We'll show you additional domestic flight offers and cheap
-                    international flights if your travel dates are flexible. To
-                    put it another way, you'll have a greater chance of getting
-                    those ultra-cheap aircraft tickets you've been hunting for.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className={`landing-page-area-content`}>
-            <div className="container">
-              <div className="row">
-                <div className="col-md-5">
-                  <img src="images/lp-1.jpg" />
-                </div>
-                <div className="col-md-7">
-                  <h3>Find alternative airports.</h3>
-                  <p>
-                    We'll show you a comprehensive list of flight tickets for
-                    your route once you've input your departure point and
-                    destination. Don't forget to look into flights to
-                    neighboring alternate airports; you might be able to find a
-                    better deal.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className={`landing-page-area-content`}>
-            <div className="container">
-              <div className="row">
-                <div className="col-md-5">
-                  <img src="images/lp-1.jpg" />
-                </div>
-                <div className="col-md-7">
-                  <h3>Date-based search</h3>
-                  <p>
-                    Don't panic if you can't adjust your travel dates. Simply
-                    type in your preferred trip dates to view a list of flight
-                    discounts from our partners.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div> */}
-          
-          <div id="why1">
-            <div className="container">
-              <Fade delay={100} top>
-                <h2>WHY WE ARE THE BEST</h2>
-              </Fade>
-              <Fade left>
-                <div className="title1 ">
-                  We supply you with cheap flights and other traveling options
-                  that match your needs if it's a family holiday trip, a
-                  personal journey, going abroad for higher education, a
-                  charitable mission, or a routine flight that takes you to some
-                  other part of the world.
-                </div>
-              </Fade>
-              <br />
-              <div className="row">
-                <Fade delay={150} left>
-                  <div className="col-sm-3">
-                    <div className="thumb2">
-                      <div className="thumbnail clearfix">
-                        <Link to="/search-flights">
-                          <figure className="">
-                            <img
-                              src="images/why1.png"
-                              alt=""
-                              className="img1 img-responsive"
-                            />
-                            <img
-                              src="images/why1_hover.png"
-                              alt=""
-                              className="img2 img-responsive"
-                            />
-                            {/* <img src="images/why1.png" alt="" className="img1 img-responsive" />
-                                                        <img src="images/why1_hover.png" alt="" className="img2 img-responsive" /> */}
-                          </figure>
-                          <div className="caption">
-                            <div className="txt1">Amazing Travel</div>
-                            <div className="txt2">
-                              Are you looking for the finest travel and vacation
-                              deals? You've arrived at the right location. We
-                              used our travel expertise to bring you a wide
-                              range of Axen Holidays offers from our airline
-                              partners. Compare all of our flight deals to find
-                              the best deal for your upcoming trip.
-                            </div>
-                          </div>
-                        </Link>
-                      </div>
-                    </div>
-                  </div>
-                </Fade>
-                <Fade bottom>
-                  <div className="col-sm-3">
-                    <div className="thumb2">
-                      <div className="thumbnail clearfix">
-                        <Link to="/search-flights">
-                          <figure className="">
-                            <img
-                              src="images/why2.png"
-                              alt=""
-                              className="img1 img-responsive"
-                            />
-                            <img
-                              src="images/why2_hover.png"
-                              alt=""
-                              className="img2 img-responsive"
-                            />
-                          </figure>
-                          <div className="caption">
-                            <div className="txt1">Be adaptable</div>
-                            <div className="txt2">
-                              We'll show you additional domestic flight offers
-                              and cheap international flights if your travel
-                              dates are flexible. To put it another way, you'll
-                              have a greater chance of getting those ultra-cheap
-                              aircraft tickets you've been hunting for.
-                            </div>
-                          </div>
-                        </Link>
-                      </div>
-                    </div>
-                  </div>
-                </Fade>
-                <Fade top>
-                  <div className="col-sm-3">
-                    <div className="thumb2 ">
-                      <div className="thumbnail clearfix">
-                        <Link to="search-flights">
-                          <figure className="">
-                            <img
-                              src="images/why3.png"
-                              alt=""
-                              className="img1 img-responsive"
-                            />
-                            <img
-                              src="images/why3_hover.png"
-                              alt=""
-                              className="img2 img-responsive"
-                            />
-                          </figure>
-                          <div className="caption">
-                            <div className="txt1">
-                              Find alternative airports
-                            </div>
-                            <div className="txt2">
-                              We'll show you a comprehensive list of flight
-                              tickets for your route once you've input your
-                              departure point and destination. Don't forget to
-                              look into flights to neighboring alternate
-                              airports; you might be able to find a better deal.
-                            </div>
-                          </div>
-                        </Link>
-                      </div>
-                    </div>
-                  </div>
-                </Fade>
-                <Fade delay={150} right>
-                  <div className="col-sm-3">
-                    <div className="thumb2">
-                      <div className="thumbnail clearfix">
-                        <Link to="/search-flights">
-                          <figure className="">
-                            <img
-                              src="images/why4.png"
-                              alt=""
-                              className="img1 img-responsive"
-                            />
-                            <img
-                              src="images/why4_hover.png"
-                              alt=""
-                              className="img2 img-responsive"
-                            />
-                          </figure>
-                          <div className="caption">
-                            <div className="txt1">Date-based search</div>
-                            <div className="txt2">
-                              Don't panic if you can't adjust your travel dates.
-                              Simply type in your preferred trip dates to view a
-                              list of flight discounts from our partners.
-                            </div>
-                          </div>
-                        </Link>
-                      </div>
-                    </div>
-                  </div>
-                </Fade>
-              </div>
-            </div>
-          </div>
-
-          {/* <div id="parallax1" className="parallax">
-            <div className="bg1 parallax-bg"></div>
-            <div className="overlay"></div>
-            <div className="parallax-content">
-              <div className="container">
+        </section>
+        <section className="subservicewrp">
+          <div className="container">
+            <div className="row">
+              <div className="col-md-12">
                 <div className="row">
-                  <div className="col-sm-10 ">
-                    <Fade duration={500} top>
-                      <div className="txt1">Caucasus Vacation Packages</div>
-                    </Fade>
-                    <Fade delay={300} left>
-                      <div className="txt2">
-                        Lorem ipsum dolor sit amet, consectetuer adipiscing
-                        elit, sed diam nonummy nibh euismod tincidunt ut laoreet
-                        dolore magna aliquam erat volutpat. Ut wisi enim ad
-                        minim veniam, quis nostrud exerci tation ullamcorper.
-                      </div>
-                    </Fade>
-                    <Fade delay={200} duration={2000} bottom>
-                      <div className="txt3">
-                        From: Khazbegi (Goergia) <strong>£159.00</strong>
-                        <span>person</span>
-                      </div>
-                    </Fade>
-                  </div>
-                  <Fade right>
-                    <div className="col-sm-2">
-                      <Link to="/search-flights" className="btn-default btn0">
-                        Details
-                      </Link>
+                  <div className="col-md-6">
+                    <div className="mainimg">
+                      <img src="images/tower.png" />
                     </div>
-                  </Fade>
+                  </div>
+                  <div className="col-md-6 my-auto">
+                    <div className="txtdiv">
+                      <h2 className="main-heading">
+                        HOW CAN AXEN HOLIDAYS ASSIST YOU IN FINDING CHEAP
+                        FLIGHTS AND HOTEL ROOMS?
+                      </h2>
+                      <p className="main-pera">
+                        {" "}
+                        We are adept at traveling on a budget. To present you
+                        with the greatest options for inexpensive plane tickets
+                        and inexpensive hotels to book online, wherever your
+                        destination may be, we collaborate with a wide range of
+                        airlines and travel service providers.
+                      </p>
+                      <p className="main-pera">
+                        {" "}
+                        Search conveniently by travel date or, if you're
+                        flexible, we may assist you in locating the most
+                        affordable time to travel.
+                      </p>
+                    </div>
+                    <div className="btnwrp book-now-btn">
+                      <a className="btn-1" href="/contact">
+                        Book Now
+                      </a>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-          </div> */}
-
-          {/* <div id="popular_cruises1">
-            <div className="container">
-              <Fade delay={400} right>
-                <h2>POPULAR LOCATIONS</h2>
-              </Fade>
-              <Fade left>
-                <div className="title1">
-                  Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed
-                  diam nonummy nibh euismod <br />
-                  tincidunt ut laoreet dolore magna aliquam erat volutpat.
+          </div>
+        </section>
+        <section className="subservicewrp second-section">
+          <div className="container">
+            <div className="row">
+              <div className="col-md-12">
+                <div className="row">
+                  <div className="col-md-6 my-auto">
+                    <div className="txtdiv">
+                      <h2 className="main-heading-two">
+                        CAN I ALSO GET DISCOUNTS ON HOTELS AND CAR RENTALS?
+                      </h2>
+                      <p className="main-pera-two">
+                        Axen Holidays, a leading provider of travel deals,
+                        offers a wide selection of airfare specials from
+                        airports across the United States to locations around
+                        the globe, in addition to exclusive hotel discounts,
+                        inexpensive rental car deals, vacation packages, travel
+                        advice, and more.
+                      </p>
+                    </div>
+                    <div className="btnwrp book-now-btn">
+                      <a className="btn-1" href="/contact">
+                        Book Now
+                      </a>
+                    </div>
+                  </div>
+                  <div className="col-md-6">
+                    <div className="mainimg">
+                      <img src="images/tower.png" />
+                    </div>
+                  </div>
                 </div>
-              </Fade>
-              <br />
-              <br />
-              <Zoom>
-                <div id="popular_wrapper" className="">
-                  <div id="popular_inner">
-                    <div className="">
-                      <div id="popular">
-                        <div className="">
-                          <div className="carousel-box">
-                            <div className="inner">
-                              
-                              <div
-                                className="check"
-                                style={{ display: "flex" }}
-                              >
-                                <HotelSlider />
-                                <HotelSlider />
-                                <HotelSlider />
-                                <HotelSlider />
-                                <HotelSlider />
-                                <HotelSlider />
-                                <HotelSlider />
-                                <HotelSlider />
-                              </div>
-
-                              
+              </div>
+            </div>
+          </div>
+        </section>
+        <section className="pkagwerp">
+          <div className="container">
+            <div className="row">
+              <div className="col-md-12">
+                <div className="txtwrp">
+                  <h2 className="main-heading wow fadeInDown">
+                    Affordable Flight Deals Within Your Budget
+                  </h2>
+                </div>
+                <div className="navwrp"></div>
+              </div>
+            </div>
+            <ServicePackages />
+            {/* <div className="navwrp">
+            <ul className="tabbing-links">
+              <li data-targetit="tabs-digital">Deals</li>
+              <li data-targetit="tabs-seo">SEO</li>
+              <li data-targetit="tabs-smm">SMM</li>
+              <li className="current" data-targetit="tabs-ppc">
+                PPC
+              </li>
+            </ul>
+          </div>
+          <ul>
+            <li className="tabs current ser-port tabs-ppc wbport">
+              <div>
+                <div className="row">
+                  <div className="col-md-4">
+                    <div className="pakge-box">
+                      <div className="pkge-name">
+                        <h4>Weekend Gateway</h4>
+                        <h2>
+                          $350.00 <span>$800.00</span>
+                        </h2>
+                      </div>
+                      <div className="detailwrp">
+                        <ul className="list-scroll mCustomScrollbar _mCS_20">
+                          <div
+                            id="mCSB_20"
+                            className="mCustomScrollBox mCS-light-1 mCSB_vertical mCSB_inside"
+                            tabindex="0"
+                          >
+                            <div
+                              id="mCSB_20_container"
+                              className="mCSB_container"
+                              dir="ltr"
+                            >
+                              <li className="headings">
+                                Monthly Advertising Budget
+                              </li>
+                              <li>Upto $1000</li>
+                              <li className="headings">Campaign Planning</li>
+                              <li> Business Understanding</li>
+                              <li>Establish Business Goals</li>
+                              <li> Accounts Set-up</li>
+                              <li> Analytics Set-up &amp; Linking</li>
+                              <li> Budget Planning</li>
+                              <li> Deciding Campaign Types</li>
                             </div>
                           </div>
-                        </div>
+                        </ul>
+                      </div>
+                      <div className="btnwrp">
+                        <a
+                          className="btn-1"
+                          href="javascript:void(Tawk_API.toggle())"
+                        >
+                          Chat Now
+                        </a>
+                      </div>
+                      <div className="actions">
+                        <a href="tel:+18006476410">
+                          {" "}
+                          <span>
+                            <small>Share your idea?</small>0208 138 3891
+                          </span>
+                        </a>
+                        <a
+                          className="chatt"
+                          href="javascript:void(Tawk_API.toggle())"
+                        >
+                          <span className="cht_clr">
+                            <small>Want to discuss?</small> Live Chat Now
+                          </span>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-md-4">
+                    <div className="pakge-box">
+                      <div className="pkge-name">
+                        <h4>Long Haul Flights</h4>
+                        <h2>
+                          $380.00 <span>$800.00</span>
+                        </h2>
+                      </div>
+                      <div className="detailwrp">
+                        <ul className="list-scroll mCustomScrollbar _mCS_20">
+                          <div
+                            id="mCSB_20"
+                            className="mCustomScrollBox mCS-light-1 mCSB_vertical mCSB_inside"
+                            tabindex="0"
+                          >
+                            <div
+                              id="mCSB_20_container"
+                              className="mCSB_container"
+                              dir="ltr"
+                            >
+                              <li className="headings">
+                                Monthly Advertising Budget
+                              </li>
+                              <li>Upto $1000</li>
+                              <li className="headings">Campaign Planning</li>
+                              <li> Business Understanding</li>
+                              <li>Establish Business Goals</li>
+                              <li> Accounts Set-up</li>
+                              <li> Analytics Set-up &amp; Linking</li>
+                              <li> Budget Planning</li>
+                              <li> Deciding Campaign Types</li>
+                            </div>
+                          </div>
+                        </ul>
+                      </div>
+                      <div className="btnwrp">
+                        <a
+                          className="btn-1"
+                          href="javascript:void(Tawk_API.toggle())"
+                        >
+                          Chat Now
+                        </a>
+                      </div>
+                      <div className="actions">
+                        <a href="tel:+18006476410">
+                          {" "}
+                          <span>
+                            <small>Share your idea?</small>0208 138 3891
+                          </span>
+                        </a>
+                        <a
+                          className="chatt"
+                          href="javascript:void(Tawk_API.toggle())"
+                        >
+                          <span className="cht_clr">
+                            <small>Want to discuss?</small> Live Chat Now
+                          </span>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-md-4">
+                    <div className="pakge-box">
+                      <div className="pkge-name">
+                        <h4>Last Minute</h4>
+                        <h2>
+                          $327.00 <span>$800.00</span>
+                        </h2>
+                      </div>
+                      <div className="detailwrp">
+                        <ul className="list-scroll mCustomScrollbar _mCS_20">
+                          <div
+                            id="mCSB_20"
+                            className="mCustomScrollBox mCS-light-1 mCSB_vertical mCSB_inside"
+                            tabindex="0"
+                          >
+                            <div
+                              id="mCSB_20_container"
+                              className="mCSB_container"
+                              dir="ltr"
+                            >
+                              <li className="headings">
+                                Monthly Advertising Budget
+                              </li>
+                              <li>Upto $1000</li>
+                              <li className="headings">Campaign Planning</li>
+                              <li> Business Understanding</li>
+                              <li>Establish Business Goals</li>
+                              <li> Accounts Set-up</li>
+                              <li> Analytics Set-up &amp; Linking</li>
+                              <li> Budget Planning</li>
+                              <li> Deciding Campaign Types</li>
+                            </div>
+                          </div>
+                        </ul>
+                      </div>
+                      <div className="btnwrp">
+                        <a
+                          className="btn-1"
+                          href="javascript:void(Tawk_API.toggle())"
+                        >
+                          Chat Now
+                        </a>
+                      </div>
+                      <div className="actions">
+                        <a href="tel:+18006476410">
+                          {" "}
+                          <span>
+                            <small>Share your idea?</small>0208 138 3891
+                          </span>
+                        </a>
+                        <a
+                          className="chatt"
+                          href="javascript:void(Tawk_API.toggle())"
+                        >
+                          <span className="cht_clr">
+                            <small>Want to discuss?</small> Live Chat Now
+                          </span>
+                        </a>
                       </div>
                     </div>
                   </div>
                 </div>
-              </Zoom>
+              </div>{" "}
+            </li>
+          </ul> */}
+          </div>
+        </section>
+        <section className="offerwrp">
+          <div className="container">
+            <div className="row">
+              <div className="col-md-4">
+                <div className="offertxt">
+                  <h3>Give us a call </h3>
+                  <p>
+                    Get in touch with our 24/7 available representatives now!
+                  </p>
+                </div>
+              </div>
+              <div className="col-md-4 chat-with-us">
+                <div className="offerimg">
+                  <img src="images/50percent.png" />
+                </div>
+                <div className="offer-chat">
+                  <h3>
+                    CHAT <br /> WITH US TO AVAIL <br /> OFF
+                  </h3>
+                </div>
+              </div>
+              <div className="col-md-4 my-auto">
+                <div className="btnwrp">
+                  <a
+                    className="btn-2"
+                    href="javascript:void(Tawk_API.toggle())"
+                  >
+                    Chat Now
+                  </a>
+                  <a className="btn-1" href="/contact">
+                    Contact us
+                  </a>
+                </div>
+              </div>
             </div>
-          </div>  */}
+          </div>
+        </section>
+        <section className="subservicewrp">
+          <div className="container">
+            <div className="row">
+              <div className="col-md-12">
+                <div className="row">
+                  <div className="col-md-6">
+                    <div className="mainimg">
+                      <img src="images/tower.png" />
+                    </div>
+                  </div>
+                  <div className="col-md-6 my-auto">
+                    <div className="txtdiv">
+                      <h2 className="main-heading">GET READY</h2>
+                      <p className="main-pera">
+                        If you want to travel the world, you should first make
+                        sure you have sturdy luggage and the necessary
+                        documents, including a passport and possibly visas. You
+                        should also determine how much vacation time you'll need
+                        but don't forget to learn about the flight information
+                        and online hotel booking so that we can offer you the
+                        best assistance.
+                      </p>
+                    </div>
+                    <div className="btnwrp book-now-btn">
+                      <a className="btn-1" href="/contact">
+                        Book Now
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section className="belowform home-form">
+          <div className="container">
+            <div className="row">
+              <div className="col-lg-6 inner-content text-left">
+                <div className="form-box-main clearfix">
+                  <h2 className="main-heading">We love to hear from you</h2>
+                  <p className="main-pera">
+                    Heads up! We require that you sign up for webdesignsprime
+                    services and packages. We make all your dreams come true in
+                    a successful project.
+                  </p>
 
-          <div id="happy1">
-            <div className="container">
-              <div className="row">
-                <div className="col-sm-12 col-md-6 col-md-push-6">
-                  <div className="content">
-                    <Fade delay={400} top>
-                      <div className="txt1">HAPPY CUSTOMERS</div>
-                    </Fade>
-                    <Fade delay={300} right>
-                      <div className="txt2">
-                        Axen Holidays, is one of the UK's premier private travel
-                        businesses.
-                      </div>
-                    </Fade>
-                    <Fade right cascade>
-                      <div className="txt3">
-                        <p>
-                          I looked online and discovered Axen Holidays had
-                          really inexpensive costs. I placed my reservation, and
-                          the agent phoned me to finalize all essential data and
-                          complete the procedure. I'd want to express my
-                          gratitude to JANE, who was quite helpful in assisting
-                          me with the required booking. Jane, thank you so much.
-                        </p>
-                        {/* <p>
-                          Lorem ipsum dolor sit amet, consectetuer adipiscing
-                          elit, sed diam nonummy nibh euisod tincidunt ut
-                          laoreet dolore magna aliquam erat volutpat. Ut wisi
-                          enim ad minim veniam, quis nostrud exerci tation
-                          ullamcorper suscipit.
-                        </p> */}
-                      </div>
-                    </Fade>
-                    <Fade delay={50} bottom>
-                      <div className="distance1">
-                        <div className="txt">Flights</div>
-                        <div className="bg">
-                          <div className="animated-distance">
-                            <span></span>
-                          </div>
-                        </div>
-                      </div>
-                    </Fade>
-                    <Fade delay={300} bottom>
-                      <div className="distance1 ">
-                        <div className="txt">Hotels</div>
-                        <div className="bg">
-                          <div className="animated-distance">
-                            <span></span>
-                          </div>
-                        </div>
-                      </div>
-                    </Fade>
-                    <Fade duration={2000} delay={500} bottom>
-                      <div className="distance1">
-                        <div className="txt">Cars</div>
-                        <div className="bg">
-                          <div className="animated-distance">
-                            <span></span>
-                          </div>
-                        </div>
-                      </div>
-                    </Fade>
-                  </div>
-                </div>
-                <Fade left big duration={2500}>
-                  <div className="col-sm-12 col-md-6 col-md-pull-6">
-                    <img
-                      src="images/people.png"
-                      alt=""
-                      className="img1 img-responsive"
-                    />
-                  </div>
-                </Fade>
-              </div>
-            </div>
-          </div>
-          <div id="partners">
-            <div className="container">
-              <div className="row flex ">
-                <Flip delay={150}>
-                  <div className="col-sm-12 col-md-12 col-xs-12 col-lg-4">
-                    <div className="thumb1">
-                      <div className="thumbnail clearfix">
-                        <Link to="#">
-                          <figure style={{ textAlign: "center" }}>
-                            <img
-                              style={{ width: "20rem" }}
-                              src="images/ATOL.png"
-                              alt=""
-                              className="img1 img-responsive "
-                            />
-                            <img
-                              src="images/ATOL.png"
-                              alt=""
-                              className="img2 img-responsive"
-                            />
-                          </figure>
-                        </Link>
+                  <div className="row">
+                    <div className="col-md-12 ">
+                      <h2 className="text-start font-bold">
+                        Send us your query
+                      </h2>
+                    </div>
+                    <div className="col-lg-6">
+                      <div className="form-group">
+                        <input
+                          type="text"
+                          name="name"
+                          placeholder="Name"
+                          className="form-control-for-banner"
+                          // value={contact.name}
+                          // onChange={handleChange}
+                          required
+                        />
                       </div>
                     </div>
+
+                    <div className="col-lg-6">
+                      <div className="form-group">
+                        <input
+                          type="email"
+                          name="email"
+                          placeholder="Email address"
+                          className="form-control-for-banner"
+                          // value={contact.name}
+                          // onChange={handleChange}
+                          required
+                        />
+                      </div>
+                    </div>
+
+                    <div className="col-lg-6">
+                      <div className="form-group">
+                        <input
+                          type="text"
+                          name="phone"
+                          placeholder="Phone Number"
+                          className="form-control-for-banner"
+                          // value={contact.name}
+                          // onChange={handleChange}
+                          required
+                        />
+                      </div>
+                    </div>
+
+                    <div className="col-lg-6">
+                      <div className="form-group">
+                        <input
+                          type="text"
+                          name="about"
+                          placeholder="How did you hear about us?"
+                          className="form-control-for-banner"
+                          // value={contact.name}
+                          // onChange={handleChange}
+                          required
+                        />
+                      </div>
+                    </div>
+
+                    <div className="col-lg-12">
+                      <div className="form-group">
+                        <input
+                          type="text"
+                          name="reason"
+                          placeholder="Reason for contacting"
+                          className="form-control-for-banner"
+                          // value={contact.name}
+                          // onChange={handleChange}
+                          required
+                        />
+                      </div>
+                    </div>
+                    <div className="col-lg-12 col-md-12">
+                      <div className="form-group">
+                        <textarea
+                          name="text"
+                          cols="20"
+                          rows="4"
+                          placeholder="Comments"
+                          className="form-control"
+                          // value={contact.text}
+                          // onChange={handleChange}
+                          required
+                        />
+                      </div>
+                    </div>
+                    <div className="col-lg-12 col-sm-12">
+                      <button type="submit" className="btn btn-lg sendBtn">
+                        Send Message
+                      </button>
+                    </div>
                   </div>
-                </Flip>
-                <div className="col-sm-12 col-md-12 col-xs-12 col-lg-8">
-                  <h2>ATOL</h2>
-                  <p>
-                    We act as an agent for all ATOL holders. Please ask for
-                    further information when you make your booking query.
-                  </p>
-                  <p>
-                    All the flights advertised on the website originated from
-                    the UK are proctected by ATOL scheme. You will be provided
-                    your ATOL certificate onceyour booking is fully paid
-                  </p>
-                  <p>
-                    Please see our Terms & Conditions for further information
-                    about ATOL protection{" "}
-                    <Link to="/TermsAndCondition"> here </Link>
-                  </p>
                 </div>
+              </div>
+              <div className="col-lg-6 align-self-center">
+                <figure className="mfig">
+                  <img
+                    className="lazy loaded"
+                    src="images/tower.png"
+                    data-src="images/tower.png"
+                    alt=""
+                    data-was-processed="true"
+                  />
+                </figure>
               </div>
             </div>
           </div>
+        </section>
+        <div className="social-stick-icons_wrapper">
+          <ul className="social-stick-icons clearfix">
+            <li className="nav1">
+              <a
+                target="__blank"
+                href="https://www.facebook.com/AXENholidays/"
+              ></a>
+            </li>
+            <li className="nav3">
+              <Link to="#"></Link>
+            </li>
+            <li className="nav5">
+              <a target="__blank" href="https://twitter.com/axenholidays"></a>
+            </li>
+            <li className="nav6">
+              <a
+                target="__blank"
+                href="https://www.instagram.com/axenholidays/"
+              ></a>
+            </li>
+          </ul>
         </div>
+        <SubFooter />
         <Footer />
       </div>
       {isLoading && <Loading />}
     </>
   );
-}
-
+};
 const UL = styled.ul`
   display: flex;
   margin: 0;
@@ -1665,5 +1832,4 @@ const UL = styled.ul`
     color: #00a99d;
   }
 `;
-
-export default Flights;
+export default LandingPageRevamp;
