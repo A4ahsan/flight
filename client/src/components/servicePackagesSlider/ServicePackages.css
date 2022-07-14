@@ -8,16 +8,16 @@
   border-radius: 8px;
 }
 .service-package-slider.slide-1 {
-  background: url("../../../public/images/service1.jpg");
+  background: url("../../../public/images/AM.jpeg");
 }
 .service-package-slider.slide-2 {
-  background: url("../../../public/images/service2.jpg");
+  background: url("../../../public/images/AU.jpeg");
 }
 .service-package-slider.slide-3 {
-  background: url("../../../public/images/service3.jpg");
+  background: url("../../../public/images/NZ.jpeg");
 }
 .service-package-slider.slide-4 {
-  background: url("../../../public/images/service4.jpg");
+  background: url("../../../public/images/SA.jpeg");
 }
 .service-main-title {
   color: #fff;

@@ -52,7 +52,7 @@ const ContactFormPopup = () => {
                 Let’s Get Started Exclusive Offer
               </h2>
             </div>
-            <div className="col-lg-6">
+            <div className="col-lg-12">
               <div className="form-group">
                 <input
                   type="text"
@@ -66,7 +66,7 @@ const ContactFormPopup = () => {
               </div>
             </div>
 
-            <div className="col-lg-6">
+            <div className="col-lg-12">
               <div className="form-group">
                 <input
                   type="email"
@@ -80,7 +80,7 @@ const ContactFormPopup = () => {
               </div>
             </div>
 
-            <div className="col-lg-6">
+            <div className="col-lg-12">
               <div className="form-group">
                 <input
                   type="text"

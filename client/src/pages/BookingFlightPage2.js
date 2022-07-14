@@ -18,7 +18,7 @@ function BookingFlightPage2() {
   const alert = useAlert();
   const dispatch = useDispatch();
   const { state } = useLocation();
-  const { FlightPriceData, passengersArray } = state;
+  const { FlightPriceData, passengersArray , TripType } = state;
   const DATA = [];
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
@@ -216,7 +216,7 @@ function BookingFlightPage2() {
     const finalData = {
       Token: FlightPriceData.token,
       Key: FlightPriceData.airSolutions[0]["key"],
-      TripType: "RT",
+      TripType: TripType,
       AccountCode: "BS8106",
       CompanyCode: "BS8106",
       WebsiteName: "axenholidays.com",

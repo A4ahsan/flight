@@ -31,6 +31,8 @@ import Select from "@mui/material/Select";
 import { useAlert } from "react-alert";
 import { setRefreshs } from "../redux/refreshSlice";
 import { auth, getBaseUrl } from "../components/Utilities";
+import DatePicker from "react-date-picker";
+// import "react-datepicker/dist/react-datepicker.css";
 
 function Home() {
   const alert = useAlert();
@@ -46,6 +48,9 @@ function Home() {
   const carClick = () => {
     setHeader("car");
   };
+
+  const [oneWayDate, setoneWayDate] = useState(new Date());
+  const [tripType, settripType] = useState("RT");
   useEffect(() => {
     setValue("");
     setValue2("");
@@ -147,18 +152,20 @@ function Home() {
     NoOfChildPax: 0,
     NoOfInfantPax: 0,
     NoOfYouthPax: 0,
-    total: 0
+    total: 0,
   });
-  const [passengerArray, setpassengerArray] = useState([{
-    Title: "Mr",
-    FirstName: "",
-    MiddelName: "",
-    LastName: "",
-    PaxType: "ADT",
-    Gender: "Male",
-    PaxDOB: new Date(),
-    IsLeadName: true,
-  }]);
+  const [passengerArray, setpassengerArray] = useState([
+    {
+      Title: "Mr",
+      FirstName: "",
+      MiddelName: "",
+      LastName: "",
+      PaxType: "ADT",
+      Gender: "Male",
+      PaxDOB: new Date(),
+      IsLeadName: true,
+    },
+  ]);
   const [passengerInput, setPassengerInput] = useState(false);
   const showPassengerInput = () => {
     setPassengerInput(!passengerInput);
@@ -173,10 +180,10 @@ function Home() {
       NoOfChildPax: two,
       NoOfInfantPax: three,
       NoOfYouthPax: 0,
-      total: four
+      total: four,
     });
   };
-  console.log("Passernger ARRAY" , passengerArray);
+  console.log("Passernger ARRAY", passengerArray);
   const { total, ...rest } = passenger;
   const totalPassengers = Object.values(rest).reduce((a, b) => a + b);
 
@@ -233,9 +240,14 @@ function Home() {
       });
     }
 
-    if (valueFromSearch && valueFromSearch2 && date[0].endDate) {
+    if (
+      valueFromSearch &&
+      valueFromSearch2 &&
+      date[0].endDate &&
+      tripType == "RT"
+    ) {
       let finalData = {
-        TripType: "RT",
+        TripType: tripType,
         Origin: valueFromSearch.split("-")[0],
         Destination: valueFromSearch2.split("-")[0],
         AirlineCode: "",
@@ -244,8 +256,8 @@ function Home() {
           .join("-"),
         ArrivalDate: format(date[0].endDate, "yyyy/MM/dd").split("/").join("-"),
         Class: cabin,
-        IsFlexibleDate: "false",
-        IsDirectFlight: "false",
+        IsFlexibleDate: "true",
+        IsDirectFlight: "true",
         ...rest,
         CompanyCode: "BS8106",
         WebsiteName: "axenholidays.com",
@@ -258,10 +270,13 @@ function Home() {
           `${getBaseUrl()}BSFlight/flightsearch`,
           finalData,
           { auth },
-          {headers : {
-            'Access-Control-Allow-Origin' : '*',
-  'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS',
-          }},
+          {
+            headers: {
+              "Access-Control-Allow-Origin": "*",
+              "Access-Control-Allow-Methods":
+                "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+            },
+          }
         );
         debugger;
         if (res.data.result.airSolutions.length >= 0) {
@@ -269,7 +284,66 @@ function Home() {
           debugger;
           dispatch(setRefreshs("false"));
           navigate("/search-flights", {
-            state: { flightOffers: res.data, details: finalData , passengersArray: passengerArray },
+            state: {
+              flightOffers: res.data,
+              details: finalData,
+              passengersArray: passengerArray,
+            },
+          });
+        } else if (res.data.result.apiFault.errorCode != "112") {
+          debugger;
+          setIsLoading(false);
+          alert.error("No Flight Found");
+        }
+      } catch (err) {
+        setError(err);
+        setIsLoading(false);
+        alert.error("No flight found with these destinations or Dates.");
+      }
+    } else if (valueFromSearch && valueFromSearch2 && tripType == "OW") {
+      let finalData = {
+        TripType: tripType,
+        Origin: valueFromSearch.split("-")[0],
+        Destination: valueFromSearch2.split("-")[0],
+        AirlineCode: "",
+        DepartDate: format(oneWayDate, "yyyy/MM/dd")
+          .split("/")
+          .join("-"),
+        // ArrivalDate: format(date[0].endDate, "yyyy/MM/dd").split("/").join("-"),
+        Class: cabin,
+        IsFlexibleDate: "true",
+        IsDirectFlight: "true",
+        ...rest,
+        CompanyCode: "BS8106",
+        WebsiteName: "axenholidays.com",
+        // ApplicationAccessMode: "TEST",
+      };
+      console.log("Final Parameter", finalData);
+      setIsLoading(true);
+      try {
+        const res = await axios.post(
+          `${getBaseUrl()}BSFlight/flightsearch`,
+          finalData,
+          { auth },
+          {
+            headers: {
+              "Access-Control-Allow-Origin": "*",
+              "Access-Control-Allow-Methods":
+                "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+            },
+          }
+        );
+        debugger;
+        if (res.data.result.airSolutions.length >= 0) {
+          setIsLoading(false);
+          debugger;
+          dispatch(setRefreshs("false"));
+          navigate("/search-flights", {
+            state: {
+              flightOffers: res.data,
+              details: finalData,
+              passengersArray: passengerArray,
+            },
           });
         } else if (res.data.result.apiFault.errorCode != "112") {
           debugger;
@@ -402,6 +476,10 @@ function Home() {
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
 
+  console.log("Dates", format(oneWayDate, "yyyy/MM/dd")
+  .split("/")
+  .join("-"));
+
   return (
     <>
       <div>
@@ -522,6 +600,16 @@ function Home() {
                             className="form1"
                           >
                             <div className="row">
+                              <div class="tripTypeSelect">
+                                <select
+                                  class=""
+                                  id=""
+                                  onChange={(e) => settripType(e.target.value)}
+                                >
+                                  <option value={"RT"}>Return</option>
+                                  <option value={"OW"}>One-way</option>
+                                </select>
+                              </div>
                               <div className="col-sm-4 col-md-2">
                                 <div
                                   ref={searchOneRef}
@@ -549,7 +637,7 @@ function Home() {
                                       style={{
                                         width: "100%",
                                         outline: "none",
-                                        border: "none",  
+                                        border: "none",
                                       }}
                                     />
                                     {(value || valueFromSearch) && (
@@ -618,91 +706,122 @@ function Home() {
                                   )}
                                 </div>
                               </div>
-                              <div ref={dateRef} className="col-sm-4 col-md-2">
-                                <div className="input1_wrapper">
-                                  <label style={{ fontFamily: "sans-serif" }}>
-                                    Departing:
-                                  </label>
+                              {tripType == "RT" ? (
+                                <>
                                   <div
-                                    className="input1_inner"
-                                    style={{ cursor: "pointer" }}
-                                    onClick={() =>
-                                      showDatePicker === "depart"
-                                        ? setShowDatePicker("false")
-                                        : setShowDatePicker("depart")
-                                    }
+                                    ref={dateRef}
+                                    className="col-sm-4 col-md-2"
                                   >
-                                    <input
-                                      required
-                                      readOnly
-                                      style={{
-                                        caretColor: "transparent",
-                                        cursor: "pointer",
-                                      }}
-                                      type="text"
-                                      value={
-                                        date[0].startDate
-                                          ? format(
-                                              date[0].startDate,
-                                              "MM/dd/yyyy"
-                                            )
-                                          : ""
-                                      }
-                                      className="input datepicker"
-                                      placeholder="mm/dd/yyyy"
+                                    <div className="input1_wrapper">
+                                      <label
+                                        style={{ fontFamily: "sans-serif" }}
+                                      >
+                                        Departing:
+                                      </label>
+                                      <div
+                                        className="input1_inner"
+                                        style={{ cursor: "pointer" }}
+                                        onClick={() =>
+                                          showDatePicker === "depart"
+                                            ? setShowDatePicker("false")
+                                            : setShowDatePicker("depart")
+                                        }
+                                      >
+                                        <input
+                                          required
+                                          readOnly
+                                          style={{
+                                            caretColor: "transparent",
+                                            cursor: "pointer",
+                                          }}
+                                          type="text"
+                                          value={
+                                            date[0].startDate
+                                              ? format(
+                                                  date[0].startDate,
+                                                  "MM/dd/yyyy"
+                                                )
+                                              : ""
+                                          }
+                                          className="input datepicker"
+                                          placeholder="mm/dd/yyyy"
+                                        />
+                                      </div>
+                                      {showDatePicker !== "false" && (
+                                        <DateRange
+                                          onChange={(item) =>
+                                            setDate([item.selection])
+                                          }
+                                          startDatePlaceholder="dd/mm/yyyy"
+                                          endDatePlaceholder="dd/mm/yyyy"
+                                          ranges={date}
+                                          className={showDatePicker}
+                                          minDate={threeDaysLater}
+                                          maxDate={threeMonthsLater}
+                                        />
+                                      )}
+                                    </div>
+                                  </div>
+                                  <div
+                                    ref={dateRef2}
+                                    className="col-sm-4 col-md-2"
+                                  >
+                                    <div className="input1_wrapper">
+                                      <label
+                                        style={{ fontFamily: "sans-serif" }}
+                                      >
+                                        Returning:
+                                      </label>
+                                      <div
+                                        className="input1_inner"
+                                        style={{ cursor: "pointer" }}
+                                        onClick={() =>
+                                          showDatePicker === "return"
+                                            ? setShowDatePicker("false")
+                                            : setShowDatePicker("return")
+                                        }
+                                      >
+                                        <input
+                                          required
+                                          readOnly
+                                          style={{
+                                            caretColor: "transparent",
+                                            cursor: "pointer",
+                                          }}
+                                          type="text"
+                                          value={
+                                            date[0].endDate
+                                              ? format(
+                                                  date[0].endDate,
+                                                  "MM/dd/yyyy"
+                                                )
+                                              : ""
+                                          }
+                                          className="input datepicker"
+                                          placeholder="mm/dd/yyyy"
+                                        />
+                                      </div>
+                                    </div>
+                                  </div>
+                                </>
+                              ) : (
+                                <div
+                                  ref={dateRef}
+                                  className="col-sm-4 col-md-2"
+                                >
+                                  <div className="input1_wrapper">
+                                    <label style={{ fontFamily: "sans-serif" }}>
+                                      Departing:
+                                    </label>
+                                    <DatePicker
+                                      minDate={new Date()}
+                                      value={oneWayDate}
+                                      onChange={(dates) => setoneWayDate(dates)}
+                                      className="oneWayDate"
                                     />
                                   </div>
-                                  {showDatePicker !== "false" && (
-                                    <DateRange
-                                      onChange={(item) =>
-                                        setDate([item.selection])
-                                      }
-                                      startDatePlaceholder="dd/mm/yyyy"
-                                      endDatePlaceholder="dd/mm/yyyy"
-                                      ranges={date}
-                                      className={showDatePicker}
-                                      minDate={threeDaysLater}
-                                      maxDate={threeMonthsLater}
-                                    />
-                                  )}
                                 </div>
-                              </div>
-                              <div ref={dateRef2} className="col-sm-4 col-md-2">
-                                <div className="input1_wrapper">
-                                  <label style={{ fontFamily: "sans-serif" }}>
-                                    Returning:
-                                  </label>
-                                  <div
-                                    className="input1_inner"
-                                    style={{ cursor: "pointer" }}
-                                    onClick={() =>
-                                      showDatePicker === "return"
-                                        ? setShowDatePicker("false")
-                                        : setShowDatePicker("return")
-                                    }
-                                  >
-                                    <input
-                                      required
-                                      readOnly
-                                      style={{
-                                        caretColor: "transparent",
-                                        cursor: "pointer",
-                                      }}
-                                      type="text"
-                                      value={
-                                        date[0].endDate
-                                          ? format(
-                                              date[0].endDate,
-                                              "MM/dd/yyyy"
-                                            )
-                                          : ""
-                                      }
-                                      className="input datepicker"
-                                      placeholder="mm/dd/yyyy"
-                                    />
-                                  </div>
-                                </div>
-                              </div>
+                              )}
                               <div
                                 ref={passengerRef}
                                 className="col-sm-4 col-md-1"
@@ -1502,8 +1621,6 @@ function Home() {
           <div id="partners">
             <div className="container">
               <div className="row flex ">
-               
-
                 <Flip delay={150}>
                   <div className="col-sm-12 col-md-12 col-xs-12 col-lg-4">
                     <div className="thumb1">
@@ -1511,13 +1628,12 @@ function Home() {
                         <Link to="#">
                           <figure style={{ textAlign: "center" }}>
                             <img
-                              style={{width:"20rem"}}
+                              style={{ width: "20rem" }}
                               src="images/ATOL.png"
                               alt=""
                               className="img1 img-responsive "
                             />
                             <img
-                              
                               src="images/ATOL.png"
                               alt=""
                               className="img2 img-responsive"
@@ -1529,12 +1645,22 @@ function Home() {
                   </div>
                 </Flip>
                 <div className="col-sm-12 col-md-12 col-xs-12 col-lg-8">
-                    <h2>ATOL</h2>
-                    <p>We act as an agent for all ATOL holders. Please ask for further information when you make your booking query.</p>
-                    <p>All the flights advertised on the website originated from the UK are proctected by ATOL scheme. You will be provided your ATOL certificate onceyour booking is fully paid</p>
-                    <p>Please see our Terms & Conditions for further information about ATOL protection <Link to="/TermsAndCondition"> here </Link></p>
-                  </div>
-
+                  <h2>ATOL</h2>
+                  <p>
+                    We act as an agent for all ATOL holders. Please ask for
+                    further information when you make your booking query.
+                  </p>
+                  <p>
+                    All the flights advertised on the website originated from
+                    the UK are proctected by ATOL scheme. You will be provided
+                    your ATOL certificate onceyour booking is fully paid
+                  </p>
+                  <p>
+                    Please see our Terms & Conditions for further information
+                    about ATOL protection{" "}
+                    <Link to="/TermsAndCondition"> here </Link>
+                  </p>
+                </div>
               </div>
             </div>
           </div>

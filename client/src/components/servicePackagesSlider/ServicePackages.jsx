@@ -32,7 +32,7 @@ const ServicePackages = () => {
         <a className="service-btn btn-1">Flights From $130</a>
       </div>
       <div className="service-package-slider slide-3">
-        <h2 className="service-main-title">South America</h2>
+        <h2 className="service-main-title">New Zealand</h2>
         <a className="service-btn btn-1">Flights From $140</a>
       </div>
       <div className="service-package-slider slide-4">

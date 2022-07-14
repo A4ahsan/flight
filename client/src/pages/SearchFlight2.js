@@ -27,47 +27,99 @@ const SearchFlight2 = (props) => {
 
   const hitFlightPriceAPI = async (data) => {
     setIsLoading(true);
-    debugger;
-    let finalData = {
-      Key: data.key,
-      TripType: "RT",
-      AccountCode: "Btres",
-      InboundKey: data.journey[1]["optionInfos"][0]["optionKey"],
-      OutBoundKey: data.journey[0]["optionInfos"][0]["optionKey"],
-      CompanyCode: "BS8106",
-      WebsiteName: "axenholidays.com",
-      ApplicationAccessMode: "TEST",
-      token: state.flightOffers.result.token,
-      supp: data.supp,
-      IsFlexibleDate: 0,
-      OptionKeyList: [
-        data.journey[0]["optionInfos"][0]["optionKey"],
-        data.journey[1]["optionInfos"][0]["optionKey"],
-      ],
-      NoOfAdultPax: state.details.NoOfAdultPax,
-      NoOfChildPax: state.details.NoOfChildPax,
-      NoOfYouthPax: state.details.NoOfYouthPax,
-      NoOfInfantPax: state.details.NoOfInfantPax,
-    };
-    const res = await axios.post(
-      `${getBaseUrl()}BSFlight/flightprice`,
-      finalData,
-      { auth }
-    );
-    if (res.data.result.airSolutions.length >= 0) {
+    if (state.details.TripType == "RT") {
       debugger;
-      setIsLoading(false);
-      navigate("/flight-checkout2", {
-        state: { flightAllData: data, FlightPriceData: res.data.result, passengersArray: state.passengersArray },
-      });
+      let finalData = {
+        Key: data.key,
+        TripType: state.details.TripType,
+        AccountCode: "Btres",
+        InboundKey: data.journey[1]["optionInfos"][0]["optionKey"],
+        OutBoundKey: data.journey[0]["optionInfos"][0]["optionKey"],
+        CompanyCode: "BS8106",
+        WebsiteName: "axenholidays.com",
+        ApplicationAccessMode: "TEST",
+        token: state.flightOffers.result.token,
+        supp: data.supp,
+        IsFlexibleDate: 0,
+        OptionKeyList: [
+          data.journey[0]["optionInfos"][0]["optionKey"],
+          data.journey[1]["optionInfos"][0]["optionKey"],
+        ],
+        NoOfAdultPax: state.details.NoOfAdultPax,
+        NoOfChildPax: state.details.NoOfChildPax,
+        NoOfYouthPax: state.details.NoOfYouthPax,
+        NoOfInfantPax: state.details.NoOfInfantPax,
+      };
+      const res = await axios.post(
+        `${getBaseUrl()}BSFlight/flightprice`,
+        finalData,
+        { auth }
+      );
+      if (res.data.result.airSolutions.length >= 0) {
+        debugger;
+        setIsLoading(false);
+        navigate("/flight-checkout2", {
+          state: {
+            flightAllData: data,
+            FlightPriceData: res.data.result,
+            passengersArray: state.passengersArray,
+            TripType: state.details.TripType
+          },
+        });
+      } else {
+        debugger;
+        setIsLoading(false);
+        alert.error("No Price Found");
+      }
+      console.log("Final Data for Price", finalData);
+      console.log("Flight Price Response", res.data);
     } else {
       debugger;
-      setIsLoading(false);
-      alert.error("No Price Found");
+      let finalData = {
+        Key: data.key,
+        TripType: state.details.TripType,
+        AccountCode: "Btres",
+        InboundKey: data.journey[0]["optionInfos"][0]["optionKey"],
+        OutBoundKey: data.journey[0]["optionInfos"][0]["optionKey"],
+        CompanyCode: "BS8106",
+        WebsiteName: "axenholidays.com",
+        ApplicationAccessMode: "TEST",
+        token: state.flightOffers.result.token,
+        supp: data.supp,
+        IsFlexibleDate: 0,
+        OptionKeyList: [
+          data.journey[0]["optionInfos"][0]["optionKey"],
+          data.journey[0]["optionInfos"][0]["optionKey"],
+        ],
+        NoOfAdultPax: state.details.NoOfAdultPax,
+        NoOfChildPax: state.details.NoOfChildPax,
+        NoOfYouthPax: state.details.NoOfYouthPax,
+        NoOfInfantPax: state.details.NoOfInfantPax,
+      };
+      const res = await axios.post(
+        `${getBaseUrl()}BSFlight/flightprice`,
+        finalData,
+        { auth }
+      );
+      if (res.data.result.airSolutions.length >= 0) {
+        debugger;
+        setIsLoading(false);
+        navigate("/flight-checkout2", {
+          state: {
+            flightAllData: data,
+            FlightPriceData: res.data.result,
+            passengersArray: state.passengersArray,
+            TripType: state.details.TripType
+          },
+        });
+      } else {
+        debugger;
+        setIsLoading(false);
+        alert.error("No Price Found");
+      }
+      console.log("Final Data for Price", finalData);
+      console.log("Flight Price Response", res.data);
     }
-
-    console.log("Final Data for Price", finalData);
-    console.log("Flight Price Response", res.data);
   };
 
   const sortByPrice = (action) => {

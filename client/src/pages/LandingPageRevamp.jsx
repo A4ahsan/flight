@@ -390,7 +390,7 @@ const LandingPageRevamp = () => {
             <div className="row">
               <div className="col-md-6">
                 <div className="txtwrp">
-                  {/* <h4 className="wow fadeInDown">Axen Holidays</h4> */}
+                  <h4 className="wow fadeInDown">Axen Holidays</h4>
                   <h1 className="wow fadeInDown">
                     Let's Fly! Explore the beauty of the world.
                   </h1>
@@ -402,9 +402,9 @@ const LandingPageRevamp = () => {
                     break with your significant other or family.
                   </p>
                   <ul>
-                    <li>Cheap Tickets</li>
+                    <li>Cheap Tickets</li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <li>Online Hotels</li>
-                    <li>Domestic FlightsFlightsFlights</li>
+                    <li>Domestic Flights</li>
                     <li>International Flights</li>
                   </ul>
                 </div>
@@ -432,7 +432,7 @@ const LandingPageRevamp = () => {
                   <div className="form-wrap">
                     <div className="uper-head">
                       <h1>Let’s Get Started Exclusive Offer</h1>
-                      <img className="imgform" src="images/widget2.webp" />
+                      {/* <img className="imgform" src="images/widget2.webp" /> */}
                     </div>
 
                     <div className="row">
@@ -441,7 +441,7 @@ const LandingPageRevamp = () => {
                           Let's Connect
                         </h2>
                       </div>
-                      <div className="col-lg-6">
+                      <div className="col-lg-12">
                         <div className="form-group">
                           <input
                             type="text"
@@ -455,7 +455,7 @@ const LandingPageRevamp = () => {
                         </div>
                       </div>
 
-                      <div className="col-lg-6">
+                      <div className="col-lg-12">
                         <div className="form-group">
                           <input
                             type="email"
@@ -469,7 +469,7 @@ const LandingPageRevamp = () => {
                         </div>
                       </div>
 
-                      <div className="col-lg-6">
+                      <div className="col-lg-12">
                         <div className="form-group">
                           <input
                             type="text"
@@ -1237,7 +1237,7 @@ const LandingPageRevamp = () => {
               <div className="col-md-12">
                 <div className="imgwrp">
                   <div className="txtwrp">
-                    <p>
+                    {/* <p>
                       We rated <strong>4.7</strong> out of <strong>5</strong>{" "}
                       <span>
                         <i className="fa fa-star"></i>
@@ -1247,7 +1247,7 @@ const LandingPageRevamp = () => {
                         <i className="fa fa-star"></i>
                       </span>{" "}
                       served <strong>1200+</strong> satisfied customers.{" "}
-                    </p>
+                    </p> */}
                   </div>
                   <div className="counterwrp">
                     <ul>
@@ -1668,7 +1668,7 @@ const LandingPageRevamp = () => {
                         Send us your query
                       </h2>
                     </div>
-                    <div className="col-lg-6">
+                    <div className="col-lg-12">
                       <div className="form-group">
                         <input
                           type="text"
@@ -1682,7 +1682,7 @@ const LandingPageRevamp = () => {
                       </div>
                     </div>
 
-                    <div className="col-lg-6">
+                    <div className="col-lg-12">
                       <div className="form-group">
                         <input
                           type="email"
@@ -1696,7 +1696,7 @@ const LandingPageRevamp = () => {
                       </div>
                     </div>
 
-                    <div className="col-lg-6">
+                    <div className="col-lg-12">
                       <div className="form-group">
                         <input
                           type="text"
