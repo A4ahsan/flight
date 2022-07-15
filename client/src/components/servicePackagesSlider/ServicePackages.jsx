@@ -39,6 +39,14 @@ const ServicePackages = () => {
         <h2 className="service-main-title">Africa</h2>
         <a className="service-btn btn-1">Flights From $150</a>
       </div>
+      <div className="service-package-slider slide-5">
+        <h2 className="service-main-title">South America</h2>
+        <a className="service-btn btn-1">Flights From $160</a>
+      </div>
+      <div className="service-package-slider slide-6">
+        <h2 className="service-main-title">Middle East</h2>
+        <a className="service-btn btn-1">Flights From $170</a>
+      </div>
     </Carousel>
   );
 };

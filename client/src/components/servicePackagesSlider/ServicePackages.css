@@ -19,6 +19,12 @@
 .service-package-slider.slide-4 {
   background: url("../../../public/images/SA.jpeg");
 }
+.service-package-slider.slide-5 {
+  background: url("../../../public/images/America.jpg");
+}
+.service-package-slider.slide-6 {
+  background: url("../../../public/images/East.jpg");
+}
 .service-main-title {
   color: #fff;
   font-size: 36px;

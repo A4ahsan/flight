@@ -33,7 +33,7 @@ const LandingPageRevamp = () => {
   const dispatch = useDispatch();
   const [header, setHeader] = useState("flight");
   const [showModal, setShowModal] = useState(false);
-  
+
   const flightClick = () => {
     setHeader("flight");
   };
@@ -1582,7 +1582,7 @@ const LandingPageRevamp = () => {
         <section className="offerwrp">
           <div className="container">
             <div className="row">
-              <div className="col-md-4">
+              <div className="col-md-4 mt-5">
                 <div className="offertxt">
                   <h3>Give us a call </h3>
                   <p>
@@ -1591,13 +1591,9 @@ const LandingPageRevamp = () => {
                 </div>
               </div>
               <div className="col-md-4 chat-with-us">
-                <div className="offerimg">
-                  <img src="images/50percent.png" />
-                </div>
+               
                 <div className="offer-chat">
-                  <h3>
-                    CHAT <br /> WITH US TO AVAIL <br /> OFF
-                  </h3>
+                  <img src="images/lp3.png" />
                 </div>
               </div>
               <div className="col-md-4 my-auto">
@@ -1623,7 +1619,7 @@ const LandingPageRevamp = () => {
                 <div className="row">
                   <div className="col-md-6">
                     <div className="mainimg">
-                      <img src="images/lp3.png" />
+                      <img src="images/bag.png" />
                     </div>
                   </div>
                   <div className="col-md-6 my-auto">
