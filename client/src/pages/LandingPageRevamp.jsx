@@ -26,9 +26,11 @@ import SubFooter from "../components/SubFooter";
 import ServicePackages from "../components/servicePackagesSlider/ServicePackages";
 import ContactFormPopup from "../components/ContactFormPopup";
 import Loading from "../components/Loading";
+import emailjs from "@emailjs/browser";
 
 const LandingPageRevamp = () => {
   const alert = useAlert();
+  const form = useRef();
 
   const dispatch = useDispatch();
   const [header, setHeader] = useState("flight");
@@ -378,6 +380,32 @@ const LandingPageRevamp = () => {
       clearTimeout(popupTime);
     };
   }, []);
+
+  const sendEmail = (e) => {
+    e.preventDefault();
+
+    emailjs
+      .sendForm(
+        "service_uepq9pe",
+        "template_m95pg1i",
+        form.current,
+        "jagkm2nxPlXA7MyNA"
+      )
+      .then(
+        (result) => {
+          debugger;
+          console.log(result.text);
+          alert.success("Message Submitted Successfully");
+          setTimeout(() => {
+            window.location.reload();
+          }, 3000);
+        },
+        (error) => {
+          alert.error(error.text);
+          console.log(error.text);
+        }
+      );
+  };
   return (
     <>
       <div>
@@ -434,56 +462,56 @@ const LandingPageRevamp = () => {
                       <h1>Let’s Get Started Exclusive Offer</h1>
                       {/* <img className="imgform" src="images/widget2.webp" /> */}
                     </div>
-
-                    <div className="row">
-                      <div className="col-md-12 ">
-                        <h2 className="form-wrap-heading text-start font-bold">
-                          Let's Connect
-                        </h2>
-                      </div>
-                      <div className="col-lg-12">
-                        <div className="form-group">
-                          <input
-                            type="text"
-                            name="name"
-                            placeholder="Name"
-                            className="form-control-for-banner"
-                            // value={contact.name}
-                            // onChange={handleChange}
-                            required
-                          />
+                    <form ref={form} onSubmit={sendEmail}>
+                      <div className="row">
+                        <div className="col-md-12 ">
+                          <h2 className="form-wrap-heading text-start font-bold">
+                            Let's Connect
+                          </h2>
                         </div>
-                      </div>
-
-                      <div className="col-lg-12">
-                        <div className="form-group">
-                          <input
-                            type="email"
-                            name="email"
-                            placeholder="Email address"
-                            className="form-control-for-banner"
-                            // value={contact.name}
-                            // onChange={handleChange}
-                            required
-                          />
+                        <div className="col-lg-12">
+                          <div className="form-group">
+                            <input
+                              type="text"
+                              name="name"
+                              placeholder="Name"
+                              className="form-control-for-banner"
+                              // value={contact.name}
+                              // onChange={handleChange}
+                              required
+                            />
+                          </div>
                         </div>
-                      </div>
 
-                      <div className="col-lg-12">
-                        <div className="form-group">
-                          <input
-                            type="text"
-                            name="phone"
-                            placeholder="Phone Number"
-                            className="form-control-for-banner"
-                            // value={contact.name}
-                            // onChange={handleChange}
-                            required
-                          />
+                        <div className="col-lg-12">
+                          <div className="form-group">
+                            <input
+                              type="email"
+                              name="email"
+                              placeholder="Email address"
+                              className="form-control-for-banner"
+                              // value={contact.name}
+                              // onChange={handleChange}
+                              required
+                            />
+                          </div>
                         </div>
-                      </div>
 
-                      {/* <div className="col-lg-6">
+                        <div className="col-lg-12">
+                          <div className="form-group">
+                            <input
+                              type="text"
+                              name="number"
+                              placeholder="Phone Number"
+                              className="form-control-for-banner"
+                              // value={contact.name}
+                              // onChange={handleChange}
+                              required
+                            />
+                          </div>
+                        </div>
+
+                        {/* <div className="col-lg-6">
                         <div className="form-group">
                           <input
                             type="text"
@@ -497,7 +525,7 @@ const LandingPageRevamp = () => {
                         </div>
                       </div> */}
 
-                      {/* <div className="col-lg-12">
+                        {/* <div className="col-lg-12">
                         <div className="form-group">
                           <input
                             type="text"
@@ -510,26 +538,27 @@ const LandingPageRevamp = () => {
                           />
                         </div>
                       </div> */}
-                      <div className="col-lg-12 col-md-12">
-                        <div className="form-group">
-                          <textarea
-                            name="text"
-                            cols="20"
-                            rows="4"
-                            placeholder="Comments"
-                            className="form-control"
-                            // value={contact.text}
-                            // onChange={handleChange}
-                            required
-                          />
+                        <div className="col-lg-12 col-md-12">
+                          <div className="form-group">
+                            <textarea
+                              name="comments"
+                              cols="20"
+                              rows="4"
+                              placeholder="Comments"
+                              className="form-control"
+                              // value={contact.text}
+                              // onChange={handleChange}
+                              required
+                            />
+                          </div>
+                        </div>
+                        <div className="col-lg-12 col-sm-12">
+                          <button type="submit" className="btn btn-lg sendBtn">
+                            Send Message
+                          </button>
                         </div>
                       </div>
-                      <div className="col-lg-12 col-sm-12">
-                        <button type="submit" className="btn btn-lg sendBtn">
-                          Send Message
-                        </button>
-                      </div>
-                    </div>
+                    </form>
                   </div>
                 </div>
               </div>
@@ -1591,7 +1620,6 @@ const LandingPageRevamp = () => {
                 </div>
               </div>
               <div className="col-md-4 chat-with-us">
-               
                 <div className="offer-chat">
                   <img src="images/lp3.png" />
                 </div>
@@ -1658,55 +1686,56 @@ const LandingPageRevamp = () => {
                     a successful project.
                   </p>
 
-                  <div className="row">
-                    <div className="col-md-12 ">
-                      <h2 className="text-start font-bold">
-                        Send us your query
-                      </h2>
-                    </div>
-                    <div className="col-lg-12">
-                      <div className="form-group">
-                        <input
-                          type="text"
-                          name="name"
-                          placeholder="Name"
-                          className="form-control-for-banner"
-                          // value={contact.name}
-                          // onChange={handleChange}
-                          required
-                        />
+                  <form ref={form} onSubmit={sendEmail}>
+                    <div className="row">
+                      <div className="col-md-12 ">
+                        <h2 className="text-start font-bold">
+                          Send us your query
+                        </h2>
                       </div>
-                    </div>
-
-                    <div className="col-lg-12">
-                      <div className="form-group">
-                        <input
-                          type="email"
-                          name="email"
-                          placeholder="Email address"
-                          className="form-control-for-banner"
-                          // value={contact.name}
-                          // onChange={handleChange}
-                          required
-                        />
+                      <div className="col-lg-12">
+                        <div className="form-group">
+                          <input
+                            type="text"
+                            name="name"
+                            placeholder="Name"
+                            className="form-control-for-banner"
+                            // value={contact.name}
+                            // onChange={handleChange}
+                            required
+                          />
+                        </div>
                       </div>
-                    </div>
 
-                    <div className="col-lg-12">
-                      <div className="form-group">
-                        <input
-                          type="text"
-                          name="phone"
-                          placeholder="Phone Number"
-                          className="form-control-for-banner"
-                          // value={contact.name}
-                          // onChange={handleChange}
-                          required
-                        />
+                      <div className="col-lg-12">
+                        <div className="form-group">
+                          <input
+                            type="email"
+                            name="email"
+                            placeholder="Email address"
+                            className="form-control-for-banner"
+                            // value={contact.name}
+                            // onChange={handleChange}
+                            required
+                          />
+                        </div>
                       </div>
-                    </div>
 
-                    {/* <div className="col-lg-6">
+                      <div className="col-lg-12">
+                        <div className="form-group">
+                          <input
+                            type="text"
+                            name="number"
+                            placeholder="Phone Number"
+                            className="form-control-for-banner"
+                            // value={contact.name}
+                            // onChange={handleChange}
+                            required
+                          />
+                        </div>
+                      </div>
+
+                      {/* <div className="col-lg-6">
                       <div className="form-group">
                         <input
                           type="text"
@@ -1720,7 +1749,7 @@ const LandingPageRevamp = () => {
                       </div>
                     </div> */}
 
-                    {/* <div className="col-lg-12">
+                      {/* <div className="col-lg-12">
                       <div className="form-group">
                         <input
                           type="text"
@@ -1733,26 +1762,27 @@ const LandingPageRevamp = () => {
                         />
                       </div>
                     </div> */}
-                    <div className="col-lg-12 col-md-12">
-                      <div className="form-group">
-                        <textarea
-                          name="text"
-                          cols="20"
-                          rows="4"
-                          placeholder="Comments"
-                          className="form-control"
-                          // value={contact.text}
-                          // onChange={handleChange}
-                          required
-                        />
+                      <div className="col-lg-12 col-md-12">
+                        <div className="form-group">
+                          <textarea
+                            name="comments"
+                            cols="20"
+                            rows="4"
+                            placeholder="comments"
+                            className="form-control"
+                            // value={contact.text}
+                            // onChange={handleChange}
+                            required
+                          />
+                        </div>
+                      </div>
+                      <div className="col-lg-12 col-sm-12">
+                        <button type="submit" className="btn btn-lg sendBtn">
+                          Send Message
+                        </button>
                       </div>
                     </div>
-                    <div className="col-lg-12 col-sm-12">
-                      <button type="submit" className="btn btn-lg sendBtn">
-                        Send Message
-                      </button>
-                    </div>
-                  </div>
+                  </form>
                 </div>
               </div>
               <div className="col-lg-6 align-self-center">
@@ -1777,9 +1807,9 @@ const LandingPageRevamp = () => {
                 href="https://www.facebook.com/AXENholidays/"
               ></a>
             </li>
-            <li className="nav3">
+            {/* <li className="nav3">
               <Link to="#"></Link>
-            </li>
+            </li> */}
             <li className="nav5">
               <a target="__blank" href="https://twitter.com/axenholidays"></a>
             </li>
