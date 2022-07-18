@@ -31,6 +31,7 @@ import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
+import DatePicker from "react-date-picker";
 
 const style = (theme) => ({
   position: "absolute",
@@ -51,6 +52,8 @@ const style = (theme) => ({
 const LandingPageRevamp = () => {
   const alert = useAlert();
   const form = useRef();
+  const [oneWayDate, setoneWayDate] = useState(new Date());
+  const [tripType, settripType] = useState("RT");
 
   const dispatch = useDispatch();
   const [header, setHeader] = useState("flight");
@@ -220,40 +223,48 @@ const LandingPageRevamp = () => {
     for (var i = 1; i < rest.NoOfAdultPax; i++) {
       debugger;
       passengerArray.push({
-        Title: "",
+        Title: "Mr",
         FirstName: "",
+        MiddelName: "",
         LastName: "",
         PaxType: "ADT",
-        Gender: "",
-        PaxDOB: "",
+        Gender: "Male",
+        PaxDOB: new Date(),
       });
     }
     for (var i = 0; i < rest.NoOfChildPax; i++) {
       debugger;
       passengerArray.push({
-        Title: "",
+        Title: "Mstr",
         FirstName: "",
+        MiddelName: "",
         LastName: "",
         PaxType: "CHD",
-        Gender: "",
-        PaxDOB: "",
+        Gender: "Male",
+        PaxDOB: new Date(),
       });
     }
     for (var i = 0; i < rest.NoOfInfantPax; i++) {
       debugger;
       passengerArray.push({
-        Title: "",
+        Title: "Mstr",
         FirstName: "",
+        MiddelName: "",
         LastName: "",
         PaxType: "INF",
-        Gender: "",
-        PaxDOB: "",
+        Gender: "Male",
+        PaxDOB: new Date(),
       });
     }
 
-    if (valueFromSearch && valueFromSearch2 && date[0].endDate) {
+    if (
+      valueFromSearch &&
+      valueFromSearch2 &&
+      date[0].endDate &&
+      tripType == "RT"
+    ) {
       let finalData = {
-        TripType: "RT",
+        TripType: tripType,
         Origin: valueFromSearch.split("-")[0],
         Destination: valueFromSearch2.split("-")[0],
         AirlineCode: "",
@@ -262,8 +273,61 @@ const LandingPageRevamp = () => {
           .join("-"),
         ArrivalDate: format(date[0].endDate, "yyyy/MM/dd").split("/").join("-"),
         Class: cabin,
-        IsFlexibleDate: "false",
-        IsDirectFlight: "false",
+        IsFlexibleDate: "true",
+        IsDirectFlight: "true",
+        ...rest,
+        CompanyCode: "BS8106",
+        WebsiteName: "axenholidays.com",
+        // ApplicationAccessMode: "TEST",
+      };
+      console.log("Final Parameter", finalData);
+      setIsLoading(true);
+      try {
+        const res = await axios.post(
+          `${getBaseUrl()}BSFlight/flightsearch`,
+          finalData,
+          { auth },
+          {
+            headers: {
+              "Access-Control-Allow-Origin": "*",
+              "Access-Control-Allow-Methods":
+                "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+            },
+          }
+        );
+        debugger;
+        if (res.data.result.airSolutions.length >= 0) {
+          setIsLoading(false);
+          debugger;
+          dispatch(setRefreshs("false"));
+          navigate("/search-flights", {
+            state: {
+              flightOffers: res.data,
+              details: finalData,
+              passengersArray: passengerArray,
+            },
+          });
+        } else if (res.data.result.apiFault.errorCode != "112") {
+          debugger;
+          setIsLoading(false);
+          alert.error("No Flight Found");
+        }
+      } catch (err) {
+        setError(err);
+        setIsLoading(false);
+        alert.error("No flight found with these destinations or Dates.");
+      }
+    } else if (valueFromSearch && valueFromSearch2 && tripType == "OW") {
+      let finalData = {
+        TripType: tripType,
+        Origin: valueFromSearch.split("-")[0],
+        Destination: valueFromSearch2.split("-")[0],
+        AirlineCode: "",
+        DepartDate: format(oneWayDate, "yyyy/MM/dd").split("/").join("-"),
+        // ArrivalDate: format(date[0].endDate, "yyyy/MM/dd").split("/").join("-"),
+        Class: cabin,
+        IsFlexibleDate: "true",
+        IsDirectFlight: "true",
         ...rest,
         CompanyCode: "BS8106",
         WebsiteName: "axenholidays.com",
@@ -431,7 +495,7 @@ const LandingPageRevamp = () => {
   const doReload = () => {
     setdoneModal(false);
     window.location.reload();
-  }
+  };
   return (
     <>
       <div>
@@ -592,7 +656,7 @@ const LandingPageRevamp = () => {
           </div>
         </section>
         <section>
-          <div className="home-search-flights-section">
+          <div id="">
             <div className="container">
               <div className="tabs_wrapper tabs1_wrapper">
                 <div className="tabs tabs1">
@@ -628,6 +692,16 @@ const LandingPageRevamp = () => {
                             className="form1"
                           >
                             <div className="row">
+                              <div class="tripTypeSelect">
+                                <select
+                                  class=""
+                                  id=""
+                                  onChange={(e) => settripType(e.target.value)}
+                                >
+                                  <option value={"RT"}>Return</option>
+                                  <option value={"OW"}>One-way</option>
+                                </select>
+                              </div>
                               <div className="col-sm-4 col-md-2">
                                 <div
                                   ref={searchOneRef}
@@ -724,91 +798,122 @@ const LandingPageRevamp = () => {
                                   )}
                                 </div>
                               </div>
-                              <div ref={dateRef} className="col-sm-4 col-md-2">
-                                <div className="input1_wrapper">
-                                  <label style={{ fontFamily: "sans-serif" }}>
-                                    Departing:
-                                  </label>
+                              {tripType == "RT" ? (
+                                <>
                                   <div
-                                    className="input1_inner"
-                                    style={{ cursor: "pointer" }}
-                                    onClick={() =>
-                                      showDatePicker === "depart"
-                                        ? setShowDatePicker("false")
-                                        : setShowDatePicker("depart")
-                                    }
+                                    ref={dateRef}
+                                    className="col-sm-4 col-md-2"
                                   >
-                                    <input
-                                      required
-                                      readOnly
-                                      style={{
-                                        caretColor: "transparent",
-                                        cursor: "pointer",
-                                      }}
-                                      type="text"
-                                      value={
-                                        date[0].startDate
-                                          ? format(
-                                              date[0].startDate,
-                                              "MM/dd/yyyy"
-                                            )
-                                          : ""
-                                      }
-                                      className="input datepicker"
-                                      placeholder="mm/dd/yyyy"
+                                    <div className="input1_wrapper">
+                                      <label
+                                        style={{ fontFamily: "sans-serif" }}
+                                      >
+                                        Departing:
+                                      </label>
+                                      <div
+                                        className="input1_inner"
+                                        style={{ cursor: "pointer" }}
+                                        onClick={() =>
+                                          showDatePicker === "depart"
+                                            ? setShowDatePicker("false")
+                                            : setShowDatePicker("depart")
+                                        }
+                                      >
+                                        <input
+                                          required
+                                          readOnly
+                                          style={{
+                                            caretColor: "transparent",
+                                            cursor: "pointer",
+                                          }}
+                                          type="text"
+                                          value={
+                                            date[0].startDate
+                                              ? format(
+                                                  date[0].startDate,
+                                                  "MM/dd/yyyy"
+                                                )
+                                              : ""
+                                          }
+                                          className="input datepicker"
+                                          placeholder="mm/dd/yyyy"
+                                        />
+                                      </div>
+                                      {showDatePicker !== "false" && (
+                                        <DateRange
+                                          onChange={(item) =>
+                                            setDate([item.selection])
+                                          }
+                                          startDatePlaceholder="dd/mm/yyyy"
+                                          endDatePlaceholder="dd/mm/yyyy"
+                                          ranges={date}
+                                          className={showDatePicker}
+                                          minDate={threeDaysLater}
+                                          maxDate={threeMonthsLater}
+                                        />
+                                      )}
+                                    </div>
+                                  </div>
+                                  <div
+                                    ref={dateRef2}
+                                    className="col-sm-4 col-md-2"
+                                  >
+                                    <div className="input1_wrapper">
+                                      <label
+                                        style={{ fontFamily: "sans-serif" }}
+                                      >
+                                        Returning:
+                                      </label>
+                                      <div
+                                        className="input1_inner"
+                                        style={{ cursor: "pointer" }}
+                                        onClick={() =>
+                                          showDatePicker === "return"
+                                            ? setShowDatePicker("false")
+                                            : setShowDatePicker("return")
+                                        }
+                                      >
+                                        <input
+                                          required
+                                          readOnly
+                                          style={{
+                                            caretColor: "transparent",
+                                            cursor: "pointer",
+                                          }}
+                                          type="text"
+                                          value={
+                                            date[0].endDate
+                                              ? format(
+                                                  date[0].endDate,
+                                                  "MM/dd/yyyy"
+                                                )
+                                              : ""
+                                          }
+                                          className="input datepicker"
+                                          placeholder="mm/dd/yyyy"
+                                        />
+                                      </div>
+                                    </div>
+                                  </div>
+                                </>
+                              ) : (
+                                <div
+                                  ref={dateRef}
+                                  className="col-sm-4 col-md-2"
+                                >
+                                  <div className="input1_wrapper">
+                                    <label style={{ fontFamily: "sans-serif" }}>
+                                      Departing:
+                                    </label>
+                                    <DatePicker
+                                      minDate={new Date()}
+                                      value={oneWayDate}
+                                      onChange={(dates) => setoneWayDate(dates)}
+                                      className="oneWayDate"
                                     />
                                   </div>
-                                  {showDatePicker !== "false" && (
-                                    <DateRange
-                                      onChange={(item) =>
-                                        setDate([item.selection])
-                                      }
-                                      startDatePlaceholder="dd/mm/yyyy"
-                                      endDatePlaceholder="dd/mm/yyyy"
-                                      ranges={date}
-                                      className={showDatePicker}
-                                      minDate={threeDaysLater}
-                                      maxDate={threeMonthsLater}
-                                    />
-                                  )}
                                 </div>
-                              </div>
-                              <div ref={dateRef2} className="col-sm-4 col-md-2">
-                                <div className="input1_wrapper">
-                                  <label style={{ fontFamily: "sans-serif" }}>
-                                    Returning:
-                                  </label>
-                                  <div
-                                    className="input1_inner"
-                                    style={{ cursor: "pointer" }}
-                                    onClick={() =>
-                                      showDatePicker === "return"
-                                        ? setShowDatePicker("false")
-                                        : setShowDatePicker("return")
-                                    }
-                                  >
-                                    <input
-                                      required
-                                      readOnly
-                                      style={{
-                                        caretColor: "transparent",
-                                        cursor: "pointer",
-                                      }}
-                                      type="text"
-                                      value={
-                                        date[0].endDate
-                                          ? format(
-                                              date[0].endDate,
-                                              "MM/dd/yyyy"
-                                            )
-                                          : ""
-                                      }
-                                      className="input datepicker"
-                                      placeholder="mm/dd/yyyy"
-                                    />
-                                  </div>
-                                </div>
-                              </div>
+                              )}
                               <div
                                 ref={passengerRef}
                                 className="col-sm-4 col-md-1"
@@ -1705,11 +1810,13 @@ const LandingPageRevamp = () => {
             <div className="row">
               <div className="col-lg-6 inner-content text-left">
                 <div className="form-box-main clearfix">
-                  <h2 className="main-heading">We love to hear from you</h2>
+                  <h2 className="main-heading">
+                    Please feel free to contact us.
+                  </h2>
                   <p className="main-pera">
-                    Heads up! We require that you sign up for webdesignsprime
-                    services and packages. We make all your dreams come true in
-                    a successful project.
+                    Be attentive! We expect you to sign up for the best travel
+                    arrangements and services available. We strive to make each
+                    step of your journey an unforgettable one.
                   </p>
 
                   <form ref={form} onSubmit={sendEmail}>
@@ -1879,9 +1986,9 @@ const LandingPageRevamp = () => {
               <h5 style={{ fontSize: 20 }} className="text-center">
                 Feel free to call us
               </h5>
-              <div className="phone2">
+              {/* <div className="phone2">
                 <a href="tel:+02081383891">0208-138-3891</a>
-              </div>
+              </div> */}
               <div className="phone2">
                 <a href="tel:+02081383893">0208-138-3893</a>
               </div>

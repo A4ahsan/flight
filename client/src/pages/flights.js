@@ -31,12 +31,15 @@ import Select from "@mui/material/Select";
 import { useAlert } from "react-alert";
 import { setRefreshs } from "../redux/refreshSlice";
 import { auth, getBaseUrl } from "../components/Utilities";
+import DatePicker from "react-date-picker";
 
 function Flights() {
   const alert = useAlert();
 
   const dispatch = useDispatch();
   const [header, setHeader] = useState("flight");
+  const [oneWayDate, setoneWayDate] = useState(new Date());
+  const [tripType, settripType] = useState("RT");
   const flightClick = () => {
     setHeader("flight");
   };
@@ -194,6 +197,7 @@ function Flights() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
   let navigate = useNavigate();
+
   //  search for Flights
   const searchFlight = async (e) => {
     e.preventDefault();
@@ -235,9 +239,14 @@ function Flights() {
       });
     }
 
-    if (valueFromSearch && valueFromSearch2 && date[0].endDate) {
+    if (
+      valueFromSearch &&
+      valueFromSearch2 &&
+      date[0].endDate &&
+      tripType == "RT"
+    ) {
       let finalData = {
-        TripType: "RT",
+        TripType: tripType,
         Origin: valueFromSearch.split("-")[0],
         Destination: valueFromSearch2.split("-")[0],
         AirlineCode: "",
@@ -246,8 +255,61 @@ function Flights() {
           .join("-"),
         ArrivalDate: format(date[0].endDate, "yyyy/MM/dd").split("/").join("-"),
         Class: cabin,
-        IsFlexibleDate: "false",
-        IsDirectFlight: "false",
+        IsFlexibleDate: "true",
+        IsDirectFlight: "true",
+        ...rest,
+        CompanyCode: "BS8106",
+        WebsiteName: "axenholidays.com",
+        // ApplicationAccessMode: "TEST",
+      };
+      console.log("Final Parameter", finalData);
+      setIsLoading(true);
+      try {
+        const res = await axios.post(
+          `${getBaseUrl()}BSFlight/flightsearch`,
+          finalData,
+          { auth },
+          {
+            headers: {
+              "Access-Control-Allow-Origin": "*",
+              "Access-Control-Allow-Methods":
+                "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+            },
+          }
+        );
+        debugger;
+        if (res.data.result.airSolutions.length >= 0) {
+          setIsLoading(false);
+          debugger;
+          dispatch(setRefreshs("false"));
+          navigate("/search-flights", {
+            state: {
+              flightOffers: res.data,
+              details: finalData,
+              passengersArray: passengerArray,
+            },
+          });
+        } else if (res.data.result.apiFault.errorCode != "112") {
+          debugger;
+          setIsLoading(false);
+          alert.error("No Flight Found");
+        }
+      } catch (err) {
+        setError(err);
+        setIsLoading(false);
+        alert.error("No flight found with these destinations or Dates.");
+      }
+    } else if (valueFromSearch && valueFromSearch2 && tripType == "OW") {
+      let finalData = {
+        TripType: tripType,
+        Origin: valueFromSearch.split("-")[0],
+        Destination: valueFromSearch2.split("-")[0],
+        AirlineCode: "",
+        DepartDate: format(oneWayDate, "yyyy/MM/dd").split("/").join("-"),
+        // ArrivalDate: format(date[0].endDate, "yyyy/MM/dd").split("/").join("-"),
+        Class: cabin,
+        IsFlexibleDate: "true",
+        IsDirectFlight: "true",
         ...rest,
         CompanyCode: "BS8106",
         WebsiteName: "axenholidays.com",
@@ -507,7 +569,7 @@ function Flights() {
                           Flights
                         </li>
                       </Fade>
-                      {/* <Fade delay={100} top>
+                      <Fade delay={100} top>
                         <li onClick={hotelClick} className="hotels">
                           <FaHotel style={{ marginRight: "5px" }} />
                           Hotels
@@ -518,7 +580,7 @@ function Flights() {
                           <DirectionsCarIcon style={{ marginRight: "5px" }} />
                           Cars
                         </li>
-                      </Fade> */}
+                      </Fade>
                     </UL>
                   </div>
                   <Fade delay={300} right>
@@ -531,6 +593,16 @@ function Flights() {
                             className="form1"
                           >
                             <div className="row">
+                              <div class="tripTypeSelect">
+                                <select
+                                  class=""
+                                  id=""
+                                  onChange={(e) => settripType(e.target.value)}
+                                >
+                                  <option value={"RT"}>Return</option>
+                                  <option value={"OW"}>One-way</option>
+                                </select>
+                              </div>
                               <div className="col-sm-4 col-md-2">
                                 <div
                                   ref={searchOneRef}
@@ -627,91 +699,122 @@ function Flights() {
                                   )}
                                 </div>
                               </div>
-                              <div ref={dateRef} className="col-sm-4 col-md-2">
-                                <div className="input1_wrapper">
-                                  <label style={{ fontFamily: "sans-serif" }}>
-                                    Departing:
-                                  </label>
+                              {tripType == "RT" ? (
+                                <>
                                   <div
-                                    className="input1_inner"
-                                    style={{ cursor: "pointer" }}
-                                    onClick={() =>
-                                      showDatePicker === "depart"
-                                        ? setShowDatePicker("false")
-                                        : setShowDatePicker("depart")
-                                    }
+                                    ref={dateRef}
+                                    className="col-sm-4 col-md-2"
                                   >
-                                    <input
-                                      required
-                                      readOnly
-                                      style={{
-                                        caretColor: "transparent",
-                                        cursor: "pointer",
-                                      }}
-                                      type="text"
-                                      value={
-                                        date[0].startDate
-                                          ? format(
-                                              date[0].startDate,
-                                              "MM/dd/yyyy"
-                                            )
-                                          : ""
-                                      }
-                                      className="input datepicker"
-                                      placeholder="mm/dd/yyyy"
+                                    <div className="input1_wrapper">
+                                      <label
+                                        style={{ fontFamily: "sans-serif" }}
+                                      >
+                                        Departing:
+                                      </label>
+                                      <div
+                                        className="input1_inner"
+                                        style={{ cursor: "pointer" }}
+                                        onClick={() =>
+                                          showDatePicker === "depart"
+                                            ? setShowDatePicker("false")
+                                            : setShowDatePicker("depart")
+                                        }
+                                      >
+                                        <input
+                                          required
+                                          readOnly
+                                          style={{
+                                            caretColor: "transparent",
+                                            cursor: "pointer",
+                                          }}
+                                          type="text"
+                                          value={
+                                            date[0].startDate
+                                              ? format(
+                                                  date[0].startDate,
+                                                  "MM/dd/yyyy"
+                                                )
+                                              : ""
+                                          }
+                                          className="input datepicker"
+                                          placeholder="mm/dd/yyyy"
+                                        />
+                                      </div>
+                                      {showDatePicker !== "false" && (
+                                        <DateRange
+                                          onChange={(item) =>
+                                            setDate([item.selection])
+                                          }
+                                          startDatePlaceholder="dd/mm/yyyy"
+                                          endDatePlaceholder="dd/mm/yyyy"
+                                          ranges={date}
+                                          className={showDatePicker}
+                                          minDate={threeDaysLater}
+                                          maxDate={threeMonthsLater}
+                                        />
+                                      )}
+                                    </div>
+                                  </div>
+                                  <div
+                                    ref={dateRef2}
+                                    className="col-sm-4 col-md-2"
+                                  >
+                                    <div className="input1_wrapper">
+                                      <label
+                                        style={{ fontFamily: "sans-serif" }}
+                                      >
+                                        Returning:
+                                      </label>
+                                      <div
+                                        className="input1_inner"
+                                        style={{ cursor: "pointer" }}
+                                        onClick={() =>
+                                          showDatePicker === "return"
+                                            ? setShowDatePicker("false")
+                                            : setShowDatePicker("return")
+                                        }
+                                      >
+                                        <input
+                                          required
+                                          readOnly
+                                          style={{
+                                            caretColor: "transparent",
+                                            cursor: "pointer",
+                                          }}
+                                          type="text"
+                                          value={
+                                            date[0].endDate
+                                              ? format(
+                                                  date[0].endDate,
+                                                  "MM/dd/yyyy"
+                                                )
+                                              : ""
+                                          }
+                                          className="input datepicker"
+                                          placeholder="mm/dd/yyyy"
+                                        />
+                                      </div>
+                                    </div>
+                                  </div>
+                                </>
+                              ) : (
+                                <div
+                                  ref={dateRef}
+                                  className="col-sm-4 col-md-2"
+                                >
+                                  <div className="input1_wrapper">
+                                    <label style={{ fontFamily: "sans-serif" }}>
+                                      Departing:
+                                    </label>
+                                    <DatePicker
+                                      minDate={new Date()}
+                                      value={oneWayDate}
+                                      onChange={(dates) => setoneWayDate(dates)}
+                                      className="oneWayDate"
                                     />
                                   </div>
-                                  {showDatePicker !== "false" && (
-                                    <DateRange
-                                      onChange={(item) =>
-                                        setDate([item.selection])
-                                      }
-                                      startDatePlaceholder="dd/mm/yyyy"
-                                      endDatePlaceholder="dd/mm/yyyy"
-                                      ranges={date}
-                                      className={showDatePicker}
-                                      minDate={threeDaysLater}
-                                      maxDate={threeMonthsLater}
-                                    />
-                                  )}
                                 </div>
-                              </div>
-                              <div ref={dateRef2} className="col-sm-4 col-md-2">
-                                <div className="input1_wrapper">
-                                  <label style={{ fontFamily: "sans-serif" }}>
-                                    Returning:
-                                  </label>
-                                  <div
-                                    className="input1_inner"
-                                    style={{ cursor: "pointer" }}
-                                    onClick={() =>
-                                      showDatePicker === "return"
-                                        ? setShowDatePicker("false")
-                                        : setShowDatePicker("return")
-                                    }
-                                  >
-                                    <input
-                                      required
-                                      readOnly
-                                      style={{
-                                        caretColor: "transparent",
-                                        cursor: "pointer",
-                                      }}
-                                      type="text"
-                                      value={
-                                        date[0].endDate
-                                          ? format(
-                                              date[0].endDate,
-                                              "MM/dd/yyyy"
-                                            )
-                                          : ""
-                                      }
-                                      className="input datepicker"
-                                      placeholder="mm/dd/yyyy"
-                                    />
-                                  </div>
-                                </div>
-                              </div>
+                              )}
                               <div
                                 ref={passengerRef}
                                 className="col-sm-4 col-md-1"
@@ -1266,7 +1369,7 @@ function Flights() {
               </div>
             </div>
           </div> */}
-          
+
           <div id="why1">
             <div className="container">
               <Fade delay={100} top>

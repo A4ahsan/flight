@@ -210,9 +210,9 @@ const doReload = () => {
             <h5 style={{ fontSize: 20 }} className="text-center">
               Feel free to call us
             </h5>
-            <div className="phone2">
+            {/* <div className="phone2">
               <a href="tel:+02081383891">0208-138-3891</a>
-            </div>
+            </div> */}
             <div className="phone2">
               <a href="tel:+02081383893">0208-138-3893</a>
             </div>

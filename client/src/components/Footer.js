@@ -151,7 +151,7 @@ function Footer() {
             <Link to="/TermsAndCondition">Term's & Condition</Link>{" "}
             <span>|</span> <Link to="/about">About Us</Link> <span>|</span>{" "}
             <Link to={"/faq"}>FAQ</Link> <span>|</span>{" "}
-            <Link to={"/booking"}>Landing Page</Link> <span>|</span>{" "}
+            {/* <Link to={"/booking"}>Landing Page</Link> <span>|</span>{" "} */}
             <Link to="/contact">Contact Support</Link>
           </div>
           <div className="right_side">
