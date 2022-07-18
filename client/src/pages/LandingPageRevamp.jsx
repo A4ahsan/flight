@@ -4,7 +4,7 @@ import Footer from "../components/Footer";
 import TopBarOne from "../components/TopBarOne";
 import TopBarTwo from "../components/TopBarTwo";
 import { ImAirplane } from "react-icons/im";
-import { FaHotel } from "react-icons/fa";
+import { FaHotel, FaCheckCircle } from "react-icons/fa";
 import styled from "styled-components";
 import Fade from "react-reveal/Fade";
 import axios from "axios";
@@ -27,6 +27,26 @@ import ServicePackages from "../components/servicePackagesSlider/ServicePackages
 import ContactFormPopup from "../components/ContactFormPopup";
 import Loading from "../components/Loading";
 import emailjs from "@emailjs/browser";
+import Modal from "@mui/material/Modal";
+import Box from "@mui/material/Box";
+import IconButton from "@material-ui/core/IconButton";
+import CloseIcon from "@material-ui/icons/Close";
+
+const style = (theme) => ({
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: "auto",
+  bgcolor: "background.paper",
+  boxShadow: 24,
+  borderRadius: "10px",
+  padding: "20px",
+  // background: "#00a99d",
+  [theme.breakpoints.down(750)]: {
+    width: "300px",
+  },
+});
 
 const LandingPageRevamp = () => {
   const alert = useAlert();
@@ -35,6 +55,7 @@ const LandingPageRevamp = () => {
   const dispatch = useDispatch();
   const [header, setHeader] = useState("flight");
   const [showModal, setShowModal] = useState(false);
+  const [doneModal, setdoneModal] = useState(false);
 
   const flightClick = () => {
     setHeader("flight");
@@ -394,11 +415,12 @@ const LandingPageRevamp = () => {
       .then(
         (result) => {
           debugger;
+          setdoneModal(true);
           console.log(result.text);
-          alert.success("Message Submitted Successfully");
-          setTimeout(() => {
-            window.location.reload();
-          }, 3000);
+          // alert.success("Message Submitted Successfully");
+          // setTimeout(() => {
+          //   window.location.reload();
+          // }, 3000);
         },
         (error) => {
           alert.error(error.text);
@@ -406,6 +428,10 @@ const LandingPageRevamp = () => {
         }
       );
   };
+  const doReload = () => {
+    setdoneModal(false);
+    window.location.reload();
+  }
   return (
     <>
       <div>
@@ -1396,11 +1422,11 @@ const LandingPageRevamp = () => {
           <div className="container">
             <div className="row">
               <div className="col-md-12">
-                <div className="txtwrp">
+                {/* <div className="txtwrp">
                   <h2 className="main-heading wow fadeInDown">
                     Affordable Flight Deals Within Your Budget
                   </h2>
-                </div>
+                </div> */}
                 <div className="navwrp"></div>
               </div>
             </div>
@@ -1823,6 +1849,45 @@ const LandingPageRevamp = () => {
         </div>
         <SubFooter />
         <Footer />
+
+        <Modal
+          open={doneModal}
+          onClose={() => doReload()}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={style}>
+            <Box
+              sx={{
+                display: "flex",
+                alignItem: "center",
+                justifyContent: "flex-end",
+              }}
+              onClick={() => doReload()}
+            >
+              <IconButton>
+                <CloseIcon />
+              </IconButton>
+            </Box>
+            <div className="text-center">
+              <div className="d-flex justify-content-center">
+                <FaCheckCircle style={{ fontSize: 50, color: "#00a99d" }} />
+              </div>
+              <h3 className="text-center" style={{ color: "#00a99d" }}>
+                Thank you for contacting us our team will contact you soon
+              </h3>
+              <h5 style={{ fontSize: 20 }} className="text-center">
+                Feel free to call us
+              </h5>
+              <div className="phone2">
+                <a href="tel:+02081383891">0208-138-3891</a>
+              </div>
+              <div className="phone2">
+                <a href="tel:+02081383893">0208-138-3893</a>
+              </div>
+            </div>
+          </Box>
+        </Modal>
       </div>
       {isLoading && <Loading />}
     </>
@@ -1833,7 +1898,7 @@ const UL = styled.ul`
   margin: 0;
   padding: 0;
   li {
-    padding: 12px 25px;
+    padding: 12px 20px;
     cursor: pointer;
     display: flex;
     align-items: center;
