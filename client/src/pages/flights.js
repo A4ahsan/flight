@@ -309,7 +309,7 @@ function Flights() {
         // ArrivalDate: format(date[0].endDate, "yyyy/MM/dd").split("/").join("-"),
         Class: cabin,
         IsFlexibleDate: "true",
-        IsDirectFlight: "true",
+        IsDirectFlight: "false",
         ...rest,
         CompanyCode: "BS8106",
         WebsiteName: "axenholidays.com",

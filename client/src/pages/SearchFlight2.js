@@ -25,6 +25,8 @@ const SearchFlight2 = (props) => {
   const [byPrice, setbyPrice] = useState("LtoH");
   const [byName, setbyName] = useState("ZtoA");
 
+  const [clickedId, setclickedId] = useState(null);
+
   const hitFlightPriceAPI = async (data) => {
     setIsLoading(true);
     if (state.details.TripType == "RT") {
@@ -63,7 +65,7 @@ const SearchFlight2 = (props) => {
             flightAllData: data,
             FlightPriceData: res.data.result,
             passengersArray: state.passengersArray,
-            TripType: state.details.TripType
+            TripType: state.details.TripType,
           },
         });
       } else {
@@ -109,7 +111,7 @@ const SearchFlight2 = (props) => {
             flightAllData: data,
             FlightPriceData: res.data.result,
             passengersArray: state.passengersArray,
-            TripType: state.details.TripType
+            TripType: state.details.TripType,
           },
         });
       } else {
@@ -229,154 +231,325 @@ const SearchFlight2 = (props) => {
               className="row mt-20"
               style={{ boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px" }}
             >
-              <div className="col-md-10">
-                {item.journey.map((journeyData) => (
-                  <>
-                    <div className="rounded-lg d-flex justify-content-between airlineBottom">
-                      <div
-                        className="airlineDiv"
-                        style={{ textAlign: "center" }}
-                      >
-                        <img
-                          width={50}
-                          height={50}
-                          src={
-                            journeyData.optionInfos[0]["airSegmentInfos"][0][
-                              "airlineLogoUrl"
-                            ]
-                          }
-                        />
-                        <label>
-                          {
-                            journeyData.optionInfos[0]["airSegmentInfos"][0][
-                              "arlineName"
-                            ]
-                          }
-                        </label>
-                        <p>
-                          {
-                            journeyData.optionInfos[0]["airSegmentInfos"][0][
-                              "ticketCarrier"
-                            ]
-                          }
-                          {
-                            journeyData.optionInfos[0]["airSegmentInfos"][0][
-                              "flightNumber"
-                            ]
-                          }
-                        </p>
-                      </div>
+              {clickedId !== index ? (
+                <>
+                  <div className="col-md-10">
+                    {item.journey.map((journeyData) => (
+                      <>
+                        <div className="rounded-lg d-flex justify-content-between airlineBottom">
+                          <div
+                            className="airlineDiv"
+                            style={{ textAlign: "center" }}
+                          >
+                            <img
+                              width={50}
+                              height={50}
+                              src={
+                                journeyData.optionInfos[0][
+                                  "airSegmentInfos"
+                                ][0]["airlineLogoUrl"]
+                              }
+                            />
+                            <label>
+                              {
+                                journeyData.optionInfos[0][
+                                  "airSegmentInfos"
+                                ][0]["arlineName"]
+                              }
+                            </label>
+                            <p>
+                              {
+                                journeyData.optionInfos[0][
+                                  "airSegmentInfos"
+                                ][0]["ticketCarrier"]
+                              }
+                              {
+                                journeyData.optionInfos[0][
+                                  "airSegmentInfos"
+                                ][0]["flightNumber"]
+                              }
+                            </p>
+                          </div>
 
-                      <div>
-                        <label className="countryCode">
-                          {journeyData.origin}
-                        </label>{" "}
-                        <br />
-                        <label className="airportName">
-                          {
-                            journeyData.optionInfos[0]["airSegmentInfos"][0][
-                              "originAirportName"
-                            ]
-                          }
-                        </label>{" "}
-                        <br />
-                        <label className="airportName">
-                          {
-                            journeyData.optionInfos[0]["airSegmentInfos"][0][
-                              "departDate"
-                            ]
-                          }
-                        </label>
-                      </div>
+                          <div className="">
+                            <label className="countryCode">
+                              {journeyData.origin}
+                            </label>{" "}
+                            <br />
+                            <label className="airportName">
+                              {
+                                journeyData.optionInfos[0][
+                                  "airSegmentInfos"
+                                ][0]["originAirportName"]
+                              }
+                            </label>{" "}
+                            <br />
+                            <label className="airportName">
+                              {
+                                journeyData.optionInfos[0][
+                                  "airSegmentInfos"
+                                ][0]["departDate"]
+                              }
+                            </label>
+                          </div>
 
-                      <div className="d-flex justify-content-between">
-                        <div className="centerBoxDates">
-                          <label>Departure</label> <br />
-                          <label>
-                            {
-                              journeyData.optionInfos[0]["airSegmentInfos"][0][
-                                "departTime"
-                              ]
-                            }
-                          </label>
+                          <div className="d-flex justify-content-center">
+                            <div className="centerBoxDates">
+                              <label>Departure</label> <br />
+                              <label>
+                                {
+                                  journeyData.optionInfos[0][
+                                    "airSegmentInfos"
+                                  ][0]["departTime"]
+                                }
+                              </label>
+                            </div>
+                            <div>
+                              <ImAirplane className="ml-5 mr-5" /> <br />
+                              <label className="text-muted">
+                                {journeyData.stop !== 0
+                                  ? `${journeyData.stop} Stops(s)`
+                                  : "Direct"}
+                              </label>
+                            </div>
+                            <div
+                              className="centerBoxDates"
+                              style={{ textAlign: "right" }}
+                            >
+                              <label>Arrival</label> <br />
+                              <label>
+                                {
+                                  journeyData.optionInfos[0][
+                                    "airSegmentInfos"
+                                  ][0]["arrivalTime"]
+                                }
+                              </label>
+                            </div>
+                          </div>
+
+                          <div className="" style={{ textAlign: "right" }}>
+                            <label className="countryCode">
+                              {journeyData.destination}
+                            </label>{" "}
+                            <br />
+                            <label className="airportName">
+                              {
+                                journeyData.optionInfos[0][
+                                  "airSegmentInfos"
+                                ][0]["destinationAirportName"]
+                              }
+                            </label>{" "}
+                            <br />
+                            <label className="airportName">
+                              {
+                                journeyData.optionInfos[0][
+                                  "airSegmentInfos"
+                                ][0]["arrivalDate"]
+                              }
+                            </label>
+                          </div>
+
+                          <div className="luggageInfo d-none d-sm-block">
+                            <label className="text-success">
+                              {
+                                journeyData.optionInfos[0][
+                                  "airSegmentInfos"
+                                ][0]["baggageInfo"]["allowance"]
+                              }
+                            </label>{" "}
+                            <br />
+                            <label>
+                              {
+                                journeyData.optionInfos[0][
+                                  "totalFlightDuration"
+                                ]
+                              }
+                            </label>
+                            {/* <label>27 Jan</label> */}
+                          </div>
                         </div>
-                        <ImAirplane className="ml-5 mr-5" />
                         <div
-                          className="centerBoxDates"
-                          style={{ textAlign: "right" }}
+                          className="luggageInfo d-md-none"
+                          style={{ textAlign: "center" }}
                         >
-                          <label>Arrival</label> <br />
                           <label>
+                            {" "}
                             {
                               journeyData.optionInfos[0]["airSegmentInfos"][0][
-                                "arrivalTime"
-                              ]
+                                "baggageInfo"
+                              ]["allowance"]
                             }
                           </label>
+                          <label className="ml-5">
+                            {journeyData.optionInfos[0]["totalFlightDuration"]}
+                          </label>
+                          {/* <label>27 Jan</label> */}
                         </div>
-                      </div>
-
-                      <div className="" style={{ textAlign: "right" }}>
-                        <label className="countryCode">
-                          {journeyData.destination}
-                        </label>{" "}
-                        <br />
-                        <label className="airportName">
-                          {
-                            journeyData.optionInfos[0]["airSegmentInfos"][0][
-                              "destinationAirportName"
-                            ]
-                          }
-                        </label>{" "}
-                        <br />
-                        <label className="airportName">
-                          {
-                            journeyData.optionInfos[0]["airSegmentInfos"][0][
-                              "arrivalDate"
-                            ]
-                          }
-                        </label>
-                      </div>
-
-                      <div className="luggageInfo d-none d-sm-block">
-                        <label>1 Piece</label> <br />
-                        <label>
-                          {journeyData.optionInfos[0]["totalFlightDuration"]}
-                        </label>
-                        {/* <label>27 Jan</label> */}
-                      </div>
-                    </div>
-                    <div
-                      className="luggageInfo d-md-none"
-                      style={{ textAlign: "center" }}
-                    >
-                      <label>1 Piece</label>
-                      <label className="ml-5">
-                        {journeyData.optionInfos[0]["totalFlightDuration"]}
-                      </label>
-                      {/* <label>27 Jan</label> */}
-                    </div>
-                  </>
-                ))}
-              </div>
-
-              <div
-                className="col-md-2"
-                style={{ boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px" }}
-              >
-                <div className="rounded-lg">
-                  <div className="priceSection">
-                    <label>£ {item.totalPrice}</label>
-                    <p>Tax & Fees Included</p>
-                    <button
-                      onClick={() => hitFlightPriceAPI(item)}
-                      className="btn btn-primary"
-                    >
-                      Book Online
-                    </button>
+                      </>
+                    ))}
                   </div>
-                </div>
-              </div>
+
+                  <div
+                    className="col-md-2"
+                    style={{ boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px" }}
+                  >
+                    <div className="rounded-lg">
+                      <div className="priceSection">
+                        <label>£ {item.totalPrice}</label>
+                        <p>Tax & Fees Included</p>
+                        <button
+                          onClick={() => hitFlightPriceAPI(item)}
+                          className="btn btn-primary"
+                        >
+                          Book Online
+                        </button>
+                        {/* <br />
+                        <button
+                          onClick={() =>
+                            setclickedId((prevValue) =>
+                              prevValue == index ? null : index
+                            )
+                          }
+                          className="btn btn-success"
+                        >
+                          See Details
+                        </button> */}
+                      </div>
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="col-md-10">
+                    {item.journey.map((journeyData) =>
+                      journeyData.optionInfos[0].airSegmentInfos.map(
+                        (item2, index) => (
+                          <>
+                            <div className="rounded-lg d-flex justify-content-between airlineBottom">
+                              <div
+                                className="airlineDiv"
+                                style={{ textAlign: "center" }}
+                              >
+                                <img
+                                  width={50}
+                                  height={50}
+                                  src={item2.airlineLogoUrl}
+                                />
+                                <label>{item2.arlineName}</label>
+                                <p>
+                                  {item2.ticketCarrier}
+                                  {item2.flightNumber}
+                                </p>
+                              </div>
+
+                              <div>
+                                <label className="countryCode">
+                                  {item2.origin}
+                                </label>{" "}
+                                <br />
+                                <label className="airportName">
+                                  {item2.originAirportName}
+                                </label>{" "}
+                                <br />
+                                <label className="airportName">
+                                  {item2.departDate}
+                                </label>
+                              </div>
+
+                              <div className="d-flex justify-content-between">
+                                <div className="centerBoxDates">
+                                  <label>Departure</label> <br />
+                                  <label>{item2.departTime}</label>
+                                </div>
+                                <div>
+                                  <ImAirplane className="ml-5 mr-5" /> <br />
+                                  {/* <label className="text-muted">
+                                  {journeyData.stop !== 0
+                                    ? `${journeyData.stop} Stops(s)`
+                                    : "Direct"}
+                                </label> */}
+                                </div>
+                                <div
+                                  className="centerBoxDates"
+                                  style={{ textAlign: "right" }}
+                                >
+                                  <label>Arrival</label> <br />
+                                  <label>{item2.arrivalTime}</label>
+                                </div>
+                              </div>
+
+                              <div className="" style={{ textAlign: "right" }}>
+                                <label className="countryCode">
+                                  {item2.destination}
+                                </label>{" "}
+                                <br />
+                                <label className="airportName">
+                                  {item2.destinationAirportName}
+                                </label>{" "}
+                                <br />
+                                <label className="airportName">
+                                  {item2.arrivalDate}
+                                </label>
+                              </div>
+
+                              <div className="luggageInfo d-none d-sm-block">
+                                <label className="text-success">
+                                  {item2.baggageInfo["allowance"]}
+                                </label>{" "}
+                                <br />
+                                <label>{item2.travelDuration}</label>
+                                {/* <label>27 Jan</label> */}
+                              </div>
+                            </div>
+                            {/* <div
+                            className="luggageInfo d-md-none"
+                            style={{ textAlign: "center" }}
+                          >
+                            <label>1 Piece</label>
+                            <label className="ml-5">
+                              {
+                                journeyData.optionInfos[0][
+                                  "totalFlightDuration"
+                                ]
+                              }
+                            </label>
+                          </div> */}
+                          </>
+                        )
+                      )
+                    )}
+                  </div>
+
+                  <div
+                    className="col-md-2"
+                    style={{ boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px" }}
+                  >
+                    <div className="rounded-lg">
+                      <div className="priceSection">
+                        <label>£ {item.totalPrice}</label>
+                        <p>Tax & Fees Included</p>
+                        <button
+                          onClick={() => hitFlightPriceAPI(item)}
+                          className="btn btn-primary"
+                        >
+                          Book Online
+                        </button>
+                        <br />
+                        <button
+                          onClick={() =>
+                            setclickedId((prevValue) =>
+                              prevValue == index ? null : index
+                            )
+                          }
+                          className="btn btn-success"
+                        >
+                          Hide Details
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </>
+              )}
             </div>
           ))}
         </div>

@@ -32,6 +32,7 @@ import Box from "@mui/material/Box";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import DatePicker from "react-date-picker";
+import ContactFormHeader from "./ContactFormHeader";
 
 const style = (theme) => ({
   position: "absolute",
@@ -274,7 +275,7 @@ const LandingPageRevamp = () => {
         ArrivalDate: format(date[0].endDate, "yyyy/MM/dd").split("/").join("-"),
         Class: cabin,
         IsFlexibleDate: "true",
-        IsDirectFlight: "true",
+        IsDirectFlight: "false",
         ...rest,
         CompanyCode: "BS8106",
         WebsiteName: "axenholidays.com",
@@ -545,113 +546,7 @@ const LandingPageRevamp = () => {
                   </a>
                 </div>
               </div>
-              <div className="col-md-6">
-                <div className="mainfrm">
-                  <div className="form-wrap">
-                    <div className="uper-head">
-                      <h1>Let’s Get Started Exclusive Offer</h1>
-                      {/* <img className="imgform" src="images/widget2.webp" /> */}
-                    </div>
-                    <form ref={form} onSubmit={sendEmail}>
-                      <div className="row">
-                        <div className="col-md-12 ">
-                          <h2 className="form-wrap-heading text-start font-bold">
-                            Let's Connect
-                          </h2>
-                        </div>
-                        <div className="col-lg-12">
-                          <div className="form-group">
-                            <input
-                              type="text"
-                              name="name"
-                              placeholder="Name"
-                              className="form-control-for-banner"
-                              // value={contact.name}
-                              // onChange={handleChange}
-                              required
-                            />
-                          </div>
-                        </div>
-
-                        <div className="col-lg-12">
-                          <div className="form-group">
-                            <input
-                              type="email"
-                              name="email"
-                              placeholder="Email address"
-                              className="form-control-for-banner"
-                              // value={contact.name}
-                              // onChange={handleChange}
-                              required
-                            />
-                          </div>
-                        </div>
-
-                        <div className="col-lg-12">
-                          <div className="form-group">
-                            <input
-                              type="text"
-                              name="number"
-                              placeholder="Phone Number"
-                              className="form-control-for-banner"
-                              // value={contact.name}
-                              // onChange={handleChange}
-                              required
-                            />
-                          </div>
-                        </div>
-
-                        {/* <div className="col-lg-6">
-                        <div className="form-group">
-                          <input
-                            type="text"
-                            name="about"
-                            placeholder="How did you hear about us?"
-                            className="form-control-for-banner"
-                            // value={contact.name}
-                            // onChange={handleChange}
-                            required
-                          />
-                        </div>
-                      </div> */}
-
-                        {/* <div className="col-lg-12">
-                        <div className="form-group">
-                          <input
-                            type="text"
-                            name="reason"
-                            placeholder="Reason for contacting"
-                            className="form-control-for-banner"
-                            // value={contact.name}
-                            // onChange={handleChange}
-                            required
-                          />
-                        </div>
-                      </div> */}
-                        <div className="col-lg-12 col-md-12">
-                          <div className="form-group">
-                            <textarea
-                              name="comments"
-                              cols="20"
-                              rows="4"
-                              placeholder="Comments"
-                              className="form-control"
-                              // value={contact.text}
-                              // onChange={handleChange}
-                              required
-                            />
-                          </div>
-                        </div>
-                        <div className="col-lg-12 col-sm-12">
-                          <button type="submit" className="btn btn-lg sendBtn">
-                            Send Message
-                          </button>
-                        </div>
-                      </div>
-                    </form>
-                  </div>
-                </div>
-              </div>
+              <ContactFormHeader />
             </div>
           </div>
         </section>
