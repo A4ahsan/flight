@@ -226,13 +226,13 @@ const SearchFlight2 = (props) => {
           </div>
 
           {airSolutions.map((item, index) => (
-            <div
-              key={index}
-              className="row mt-20"
-              style={{ boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px" }}
-            >
+            <div className="">
               {clickedId !== index ? (
-                <>
+                <div
+                  key={index}
+                  className="row mt-20"
+                  style={{ boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px" }}
+                >
                   <div className="col-md-10">
                     {item.journey.map((journeyData) => (
                       <>
@@ -403,7 +403,8 @@ const SearchFlight2 = (props) => {
                         >
                           Book Online
                         </button>
-                        {/* <br />
+                        <br />
+                        <br />
                         <button
                           onClick={() =>
                             setclickedId((prevValue) =>
@@ -412,14 +413,21 @@ const SearchFlight2 = (props) => {
                           }
                           className="btn btn-success"
                         >
-                          See Details
-                        </button> */}
+                          Flight Details
+                        </button>
                       </div>
                     </div>
                   </div>
-                </>
+                </div>
               ) : (
-                <>
+                <div
+                  key={index}
+                  className="row mt-20"
+                  style={{
+                    boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
+                    background: "#f7fcff",
+                  }}
+                >
                   <div className="col-md-10">
                     {item.journey.map((journeyData) =>
                       journeyData.optionInfos[0].airSegmentInfos.map(
@@ -463,11 +471,9 @@ const SearchFlight2 = (props) => {
                                 </div>
                                 <div>
                                   <ImAirplane className="ml-5 mr-5" /> <br />
-                                  {/* <label className="text-muted">
-                                  {journeyData.stop !== 0
-                                    ? `${journeyData.stop} Stops(s)`
-                                    : "Direct"}
-                                </label> */}
+                                  <label className="text-muted">
+                                    {item2.cabinClass}
+                                  </label>
                                 </div>
                                 <div
                                   className="centerBoxDates"
@@ -501,19 +507,15 @@ const SearchFlight2 = (props) => {
                                 {/* <label>27 Jan</label> */}
                               </div>
                             </div>
-                            {/* <div
-                            className="luggageInfo d-md-none"
-                            style={{ textAlign: "center" }}
-                          >
-                            <label>1 Piece</label>
-                            <label className="ml-5">
-                              {
-                                journeyData.optionInfos[0][
-                                  "totalFlightDuration"
-                                ]
-                              }
-                            </label>
-                          </div> */}
+                            <div
+                              className="luggageInfo d-md-none"
+                              style={{ textAlign: "center" }}
+                            >
+                              <label>{item2.baggageInfo["allowance"]}</label>
+                              <label className="ml-5">
+                                {item2.travelDuration}
+                              </label>
+                            </div>
                           </>
                         )
                       )
@@ -535,6 +537,7 @@ const SearchFlight2 = (props) => {
                           Book Online
                         </button>
                         <br />
+                        <br />
                         <button
                           onClick={() =>
                             setclickedId((prevValue) =>
@@ -548,7 +551,7 @@ const SearchFlight2 = (props) => {
                       </div>
                     </div>
                   </div>
-                </>
+                </div>
               )}
             </div>
           ))}

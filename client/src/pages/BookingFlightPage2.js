@@ -18,7 +18,7 @@ function BookingFlightPage2() {
   const alert = useAlert();
   const dispatch = useDispatch();
   const { state } = useLocation();
-  const { FlightPriceData, passengersArray , TripType } = state;
+  const { FlightPriceData, passengersArray, TripType } = state;
   const DATA = [];
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
@@ -330,7 +330,7 @@ function BookingFlightPage2() {
                 <form autoComplete="off" action="" onSubmit={book}>
                   <h3 className="text-center hch2">
                     {FlightPriceData.origin} To {FlightPriceData.destination}{" "}
-                    (Round-trip)
+                    {TripType == "RT" ? "(Round-trip)" : "(One Way)"}
                   </h3>
                   {/* <div className="clearfix"></div>
                   <p className="address text-center">
@@ -509,13 +509,13 @@ function BookingFlightPage2() {
                                       <option value="Ms">Ms</option>
                                       <option value="Miss">Miss</option>
                                     </>
-                                  ) : item.PaxType == "CHD" || item.PaxType == "INF" ? (
+                                  ) : item.PaxType == "CHD" ||
+                                    item.PaxType == "INF" ? (
                                     <>
                                       <option value="Mstr">Mstr</option>
                                       <option value="Miss">Miss</option>
                                     </>
-                                  )
-                                  : null}
+                                  ) : null}
                                 </select>
                               </div>
                             </div>
@@ -537,7 +537,14 @@ function BookingFlightPage2() {
                           </div>
 
                           <div className="col-md-2 booking-row">
-                            <label className="">Middle Name <span style={{fontSize: 10 , position: 'absolute'}}>(optional)</span></label>
+                            <label className="">
+                              Middle Name{" "}
+                              <span
+                                style={{ fontSize: 10, position: "absolute" }}
+                              >
+                                (optional)
+                              </span>
+                            </label>
 
                             <input
                               autoComplete="off"
