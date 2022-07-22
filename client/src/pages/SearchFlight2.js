@@ -234,7 +234,7 @@ const SearchFlight2 = (props) => {
                   style={{ boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px" }}
                 >
                   <div className="col-md-10">
-                    {item.journey.map((journeyData) => (
+                    {item.journey.map((journeyData, index2) => (
                       <>
                         <div className="rounded-lg d-flex justify-content-between airlineBottom">
                           <div
@@ -318,11 +318,18 @@ const SearchFlight2 = (props) => {
                             >
                               <label>Arrival</label> <br />
                               <label>
-                                {
+                              {journeyData.stop !== 0
+                                ? journeyData.optionInfos[0][
+                                  "airSegmentInfos"
+                                ][1]["arrivalTime"]
+                                : journeyData.optionInfos[0][
+                                  "airSegmentInfos"
+                                ][0]["arrivalTime"]}
+                                {/* {
                                   journeyData.optionInfos[0][
                                     "airSegmentInfos"
                                   ][0]["arrivalTime"]
-                                }
+                                } */}
                               </label>
                             </div>
                           </div>
@@ -333,11 +340,18 @@ const SearchFlight2 = (props) => {
                             </label>{" "}
                             <br />
                             <label className="airportName">
-                              {
+                              {journeyData.stop !== 0
+                                ? journeyData.optionInfos[0][
+                                    "airSegmentInfos"
+                                  ][1]["destinationAirportName"]
+                                : journeyData.optionInfos[0]["airSegmentInfos"][
+                                    0
+                                  ]["destinationAirportName"]}
+                              {/* {
                                 journeyData.optionInfos[0][
                                   "airSegmentInfos"
                                 ][0]["destinationAirportName"]
-                              }
+                              } */}
                             </label>{" "}
                             <br />
                             <label className="airportName">
