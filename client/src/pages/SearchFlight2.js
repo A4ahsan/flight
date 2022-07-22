@@ -273,7 +273,13 @@ const SearchFlight2 = (props) => {
 
                           <div className="">
                             <label className="countryCode">
-                              {journeyData.origin}
+                            {journeyData.stop !== 0
+                                ? journeyData.optionInfos[0][
+                                    "airSegmentInfos"
+                                  ][0]["origin"]
+                                : journeyData.optionInfos[0]["airSegmentInfos"][
+                                    0
+                                  ]["origin"]}
                             </label>{" "}
                             <br />
                             <label className="airportName">
@@ -336,7 +342,14 @@ const SearchFlight2 = (props) => {
 
                           <div className="" style={{ textAlign: "right" }}>
                             <label className="countryCode">
-                              {journeyData.destination}
+                            {journeyData.stop !== 0
+                                ? journeyData.optionInfos[0][
+                                    "airSegmentInfos"
+                                  ][1]["destination"]
+                                : journeyData.optionInfos[0]["airSegmentInfos"][
+                                    0
+                                  ]["destination"]}
+                              {/* {journeyData.destination} */}
                             </label>{" "}
                             <br />
                             <label className="airportName">

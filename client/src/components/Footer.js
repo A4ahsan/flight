@@ -25,7 +25,7 @@ function Footer() {
           <div className="row">
             <div className="col-sm-3">
               <div className="logo2_wrapper">
-                <Link to="index.html" className="logo2">
+                <Link to="/" className="logo2">
                   <img
                     src="images/main_logo.png"
                     alt=""
