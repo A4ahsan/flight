@@ -503,7 +503,7 @@ const LandingPageRevamp = () => {
         <Covid />
         <TopBarOne />
         <TopBarTwo />
-        {showModal && <ContactFormPopup />}
+        {/* {showModal && <ContactFormPopup />} */}
         <section className="landing-page-banner-section home-bnerwrp">
           <div className="container">
             <div className="row">
