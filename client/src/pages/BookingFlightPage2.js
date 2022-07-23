@@ -630,7 +630,64 @@ function BookingFlightPage2() {
                             </label>
                           </div>
                         </div>
-                        {FlightPriceData.airSolutions[0]["journey"].map(
+
+                        {FlightPriceData.airSolutions.map(
+                          (airSolution, index) =>
+                            airSolution.journey.map((journey, index2) => (
+                              <>
+                                <div className="d-flex justify-content-between mt-3">
+                                  <div>
+                                    <label className="text-primary">
+                                      Take Off
+                                    </label>{" "}
+                                    <br />
+                                    <label className="mb-0">
+                                      {journey.airSegments[index2].origin}
+                                    </label>{" "}
+                                    <br />
+                                    <label className="mb-0">
+                                      {journey.airSegments[index2].departTime}
+                                    </label>{" "}
+                                    <br />
+                                    <label className="mb-0">
+                                      {journey.airSegments[index2].departDate}
+                                    </label>{" "}
+                                    <br />
+                                  </div>
+
+                                  <div>
+                                    <label className="mr-3 ml-3">
+                                      {
+                                        journey.airSegments[index2]
+                                          .travelDuration
+                                      }
+                                    </label>{" "}
+                                    <br />
+                                  </div>
+
+                                  <div className="text-right">
+                                    <label className="text-primary">
+                                      Landing
+                                    </label>{" "}
+                                    <br />
+                                    <label className="mb-0">
+                                      {journey.airSegments[index2].destination}
+                                    </label>{" "}
+                                    <br />
+                                    <label className="mb-0">
+                                      {journey.airSegments[index2].arrivalTime}
+                                    </label>{" "}
+                                    <br />
+                                    <label className="mb-0">
+                                      {journey.airSegments[index2].arrivalDate}
+                                    </label>{" "}
+                                    <br />
+                                  </div>
+                                </div>
+                              </>
+                            ))
+                        )}
+                        {/* {FlightPriceData.airSolutions[0]["journey"].map(
                           (journey, index) => (
                             <div className="d-flex justify-content-between mt-3">
                               <div>
@@ -675,7 +732,7 @@ function BookingFlightPage2() {
                               </div>
                             </div>
                           )
-                        )}
+                        )} */}
                       </div>
                       <div className="card p-3 mt-4">
                         <div className="">
