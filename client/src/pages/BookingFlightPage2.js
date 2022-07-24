@@ -24,6 +24,8 @@ function BookingFlightPage2() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [title, settitle] = useState("");
+  const [atolCharges, setatolCharges] = useState(passengersArray.length * 2.5);
+  const [bookingCharges, setbookingCharges] = useState(passengersArray.length * 5.0);
 
   const [userInfo, setUserInfo] = useState({
     holder: "true",
@@ -276,7 +278,7 @@ function BookingFlightPage2() {
       console.log("Booking Creatoin Response", res);
       navigate("/choose-payment", {
         state: {
-          flightPrice: FlightPriceData.airSolutions[0]["totalPrice"] + 5 + 2.5,
+          flightPrice: FlightPriceData.airSolutions[0]["totalPrice"] + bookingCharges + atolCharges,
         },
       });
       dispatch(setAlert("bookFlight"));
@@ -631,9 +633,9 @@ function BookingFlightPage2() {
                           </div>
                         </div>
 
-                        {FlightPriceData.airSolutions.map(
-                          (airSolution, index) =>
-                            airSolution.journey.map((journey, index2) => (
+                        {FlightPriceData.airSolutions[0].journey.map(
+                          (air, index2) =>
+                            air.airSegments.map((journey, index2) => (
                               <>
                                 <div className="d-flex justify-content-between mt-3">
                                   <div>
@@ -642,25 +644,22 @@ function BookingFlightPage2() {
                                     </label>{" "}
                                     <br />
                                     <label className="mb-0">
-                                      {journey.airSegments[index2].origin}
+                                      {journey.origin}
                                     </label>{" "}
                                     <br />
                                     <label className="mb-0">
-                                      {journey.airSegments[index2].departTime}
+                                      {journey.departTime}
                                     </label>{" "}
                                     <br />
                                     <label className="mb-0">
-                                      {journey.airSegments[index2].departDate}
+                                      {journey.departDate}
                                     </label>{" "}
                                     <br />
                                   </div>
 
                                   <div>
                                     <label className="mr-3 ml-3">
-                                      {
-                                        journey.airSegments[index2]
-                                          .travelDuration
-                                      }
+                                      {journey.travelDuration}
                                     </label>{" "}
                                     <br />
                                   </div>
@@ -671,15 +670,15 @@ function BookingFlightPage2() {
                                     </label>{" "}
                                     <br />
                                     <label className="mb-0">
-                                      {journey.airSegments[index2].destination}
+                                      {journey.destination}
                                     </label>{" "}
                                     <br />
                                     <label className="mb-0">
-                                      {journey.airSegments[index2].arrivalTime}
+                                      {journey.arrivalTime}
                                     </label>{" "}
                                     <br />
                                     <label className="mb-0">
-                                      {journey.airSegments[index2].arrivalDate}
+                                      {journey.arrivalDate}
                                     </label>{" "}
                                     <br />
                                   </div>
@@ -790,7 +789,9 @@ function BookingFlightPage2() {
                             <label>Flight Booking Charges</label>
                           </div>
                           <div>
-                            <label className="text-primary">£5.00</label>
+                            <label className="text-primary">
+                              £{bookingCharges}
+                            </label>
                           </div>
                         </div>
                         <div className="d-flex justify-content-between">
@@ -798,7 +799,9 @@ function BookingFlightPage2() {
                             <label>Atol charges</label>
                           </div>
                           <div>
-                            <label className="text-primary">£2.50</label>
+                            <label className="text-primary">
+                              £{atolCharges}
+                            </label>
                           </div>
                         </div>
 
@@ -812,8 +815,8 @@ function BookingFlightPage2() {
                             <label className="text-primary">
                               £
                               {FlightPriceData.airSolutions[0]["totalPrice"] +
-                                5 +
-                                2.5}
+                                atolCharges +
+                                bookingCharges}
                             </label>
                           </div>
                         </div>
@@ -852,8 +855,8 @@ function BookingFlightPage2() {
                             <span className="red" style={{ fontSize: "30px" }}>
                               £
                               {FlightPriceData.airSolutions[0]["totalPrice"] +
-                                5 +
-                                2.5}
+                                atolCharges +
+                                bookingCharges}
                             </span>
                           </div>
                         </div>
