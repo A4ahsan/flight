@@ -13,6 +13,7 @@ import { useAlert } from "react-alert";
 import Data from "../importantData/cityAndAirportInfo.json";
 import DatePicker from "react-date-picker";
 import { getBaseUrl, auth } from "../components/Utilities";
+import moment from "moment";
 
 function BookingFlightPage2() {
   const alert = useAlert();
@@ -25,7 +26,9 @@ function BookingFlightPage2() {
   const [error, setError] = useState("");
   const [title, settitle] = useState("");
   const [atolCharges, setatolCharges] = useState(passengersArray.length * 2.5);
-  const [bookingCharges, setbookingCharges] = useState(passengersArray.length * 5.0);
+  const [bookingCharges, setbookingCharges] = useState(
+    passengersArray.length * 5.0
+  );
 
   const [userInfo, setUserInfo] = useState({
     holder: "true",
@@ -64,13 +67,13 @@ function BookingFlightPage2() {
     setUserInfo({ ...userInfo, [key]: actualDate });
   };
   const minMaxDate = (target) => {
-    const date = new Date();
-    if (target === "birth") {
+    const date = new Date(FlightPriceData.returnDate);
+    if (target === "child") {
       // date of birth max
-      return new Date(date.setFullYear(date.getFullYear - 12));
-    } else if (target === "issuance") {
+      return new Date(date.setFullYear(date.getFullYear() - 12));
+    } else if (target === "infant") {
       // issuance Date of passport max
-      return new Date(date.setFullYear(date.getFullYear));
+      return new Date(date.setFullYear(date.getFullYear() - 2));
     } else if (target === "expiry") {
       // expiry date of passport
       return new Date(date.setFullYear(date.getFullYear));
@@ -278,7 +281,10 @@ function BookingFlightPage2() {
       console.log("Booking Creatoin Response", res);
       navigate("/choose-payment", {
         state: {
-          flightPrice: FlightPriceData.airSolutions[0]["totalPrice"] + bookingCharges + atolCharges,
+          flightPrice:
+            FlightPriceData.airSolutions[0]["totalPrice"] +
+            bookingCharges +
+            atolCharges,
         },
       });
       dispatch(setAlert("bookFlight"));
@@ -319,6 +325,16 @@ function BookingFlightPage2() {
 
   console.log("Passenger Array", Pax);
   console.log("Price Data", FlightPriceData);
+  var a = moment("7/25/2022");
+  var b = moment("7/25/2010");
+  a.diff(b, "years"); // 1
+  a.diff(b, "years", true); // 1.75
+
+  const date = new Date();
+  console.log(
+    "Difference new",
+    new Date(date.setFullYear(date.getFullYear() - 1))
+  );
 
   return (
     <>
@@ -588,21 +604,55 @@ function BookingFlightPage2() {
                               className="mt-4"
                               // style={{ paddingRight: "0", paddingLeft: "0" }}
                             >
-                              <DatePicker
-                                clearIcon={null}
-                                // minDate={minMaxDate("birth")}
-                                minDate={new Date("01-01-1922")}
-                                className="border-none"
-                                value={item.PaxDOB}
-                                onChange={(newDate) =>
-                                  handleInputChangeDate(
-                                    index,
-                                    newDate,
-                                    "PaxDOB"
-                                  )
-                                }
-                                format="y-MM-dd"
-                              ></DatePicker>
+                              {item.PaxType == "INF" ? (
+                                <DatePicker
+                                  clearIcon={null}
+                                  minDate={minMaxDate("infant")}
+                                  // minDate={new Date("01-01-1922")}
+                                  className="border-none"
+                                  value={item.PaxDOB}
+                                  onChange={(newDate) =>
+                                    handleInputChangeDate(
+                                      index,
+                                      newDate,
+                                      "PaxDOB"
+                                    )
+                                  }
+                                  format="y-MM-dd"
+                                ></DatePicker>
+                              ) : item.PaxType == "CHD" ? (
+                                <DatePicker
+                                  clearIcon={null}
+                                  minDate={minMaxDate("child")}
+                                  // minDate={new Date("01-01-1922")}
+                                  className="border-none"
+                                  value={item.PaxDOB}
+                                  onChange={(newDate) =>
+                                    handleInputChangeDate(
+                                      index,
+                                      newDate,
+                                      "PaxDOB"
+                                    )
+                                  }
+                                  format="y-MM-dd"
+                                ></DatePicker>
+                              ) : (
+                                <DatePicker
+                                  clearIcon={null}
+                                  // minDate={minMaxDate("birth")}
+                                  minDate={new Date("01-01-1922")}
+                                  className="border-none"
+                                  value={item.PaxDOB}
+                                  onChange={(newDate) =>
+                                    handleInputChangeDate(
+                                      index,
+                                      newDate,
+                                      "PaxDOB"
+                                    )
+                                  }
+                                  format="y-MM-dd"
+                                ></DatePicker>
+                              )}
                             </div>
                           </div>
                         </div>
