@@ -3753,6 +3753,8 @@ h5 {
   -webkit-box-shadow: none;
   margin-bottom: 0;
   background: none;
+  display: flex;
+  justify-content: center;
 }
 
 .thumb1 .thumbnail a {

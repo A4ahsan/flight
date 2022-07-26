@@ -566,7 +566,6 @@ function BookingFlightPage2() {
 
                             <input
                               autoComplete="off"
-                              required
                               onChange={(e) => handleInputChange(index, e)}
                               name="MiddelName"
                               value={item.MiddelName}
