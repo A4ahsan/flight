@@ -368,11 +368,18 @@ const SearchFlight2 = (props) => {
                             </label>{" "}
                             <br />
                             <label className="airportName">
-                              {
+                            {journeyData.stop !== 0
+                                ? journeyData.optionInfos[0][
+                                  "airSegmentInfos"
+                                ][1]["arrivalDate"]
+                                : journeyData.optionInfos[0][
+                                  "airSegmentInfos"
+                                ][0]["arrivalDate"]}
+                              {/* {
                                 journeyData.optionInfos[0][
                                   "airSegmentInfos"
                                 ][0]["arrivalDate"]
-                              }
+                              } */}
                             </label>
                           </div>
 

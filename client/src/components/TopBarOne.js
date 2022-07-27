@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import MailIcon from '@mui/icons-material/Mail';
 import { Link } from "react-router-dom";
 import PhoneIcon from '@mui/icons-material/Phone';
@@ -7,6 +7,11 @@ import Fade from 'react-reveal/Fade';
 
 
 function TopBarOne() {
+
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    } , [])
+
     return (
         <div className="top1_wrapper">
             <div className="container h-4">
