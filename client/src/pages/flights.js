@@ -569,7 +569,7 @@ function Flights() {
                           Flights
                         </li>
                       </Fade>
-                      <Fade delay={100} top>
+                      {/* <Fade delay={100} top>
                         <li onClick={hotelClick} className="hotels">
                           <FaHotel style={{ marginRight: "5px" }} />
                           Hotels
@@ -580,7 +580,7 @@ function Flights() {
                           <DirectionsCarIcon style={{ marginRight: "5px" }} />
                           Cars
                         </li>
-                      </Fade>
+                      </Fade> */}
                     </UL>
                   </div>
                   <Fade delay={300} right>
@@ -1684,17 +1684,17 @@ function Flights() {
               </div>
             </div>
           </div>
-          <div id="partners">
-            <div className="container">
-              <div className="row flex ">
+          <div className="pb-10">
+            <div className="container-fluid">
+              <div className="row">
                 <Flip delay={150}>
-                  <div className="col-sm-12 col-md-12 col-xs-12 col-lg-4">
+                  <div className="col-sm-12 col-md-12 col-xs-12 col-lg-2">
                     <div className="thumb1">
-                      <div className="thumbnail clearfix">
+                      <div className="thumbnail clearfix" style={{marginTop: 50}}>
                         <Link to="#">
                           <figure style={{ textAlign: "center" }}>
                             <img
-                              style={{ width: "20rem" }}
+                              style={{ width: "10rem" }}
                               src="images/ATOL.png"
                               alt=""
                               className="img1 img-responsive "
@@ -1710,8 +1710,8 @@ function Flights() {
                     </div>
                   </div>
                 </Flip>
-                <div className="col-sm-12 col-md-12 col-xs-12 col-lg-8">
-                  <h2>ATOL</h2>
+                <div className="col-sm-12 col-md-12 col-xs-12 col-lg-10 text-left">
+                  <h2 className="text-left">ATOL</h2>
                   <p>
                     We act as an agent for all ATOL holders. Please ask for
                     further information when you make your booking query.

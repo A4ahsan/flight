@@ -62,7 +62,7 @@ export default function ChoosePayment() {
   const publishableKey =
     "pk_test_51KyznpAapFKrkoR42tEKHEyQEo93YmaAcMEyoL0R6yDxjTRSWeMWJiDxvnyVYEyol6ArY5ZA9knoztqjZGWKrYM300Hu61HsOe";
   const [token, setToken] = useState(null);
-  const [doneModal, setdoneModal] = useState(true);
+  const [doneModal, setdoneModal] = useState(false);
 
   const onToken = (T) => {
     debugger;
@@ -211,18 +211,38 @@ export default function ChoosePayment() {
             <div className="d-flex justify-content-center">
               <FaCheckCircle style={{ fontSize: 50, color: "#00a99d" }} />
             </div>
-            <h3 className="text-center" style={{ color: "#00a99d" }}>
-              Thank you, We have received your payment!
-            </h3>
-            <h5 style={{ fontSize: 20 }} className="text-center">
+            <h4 className="text-center" style={{ color: "#00a99d" }}>
+              Thank you for booking with us
+            </h4>
+            <h4 style={{ color: "#00a99d" }}>
+              Your booking reference is axen-456
+            </h4>
+            {/* <h5 style={{ fontSize: 20 }} className="text-center">
               Feel free to call us
-            </h5>
+            </h5> */}
+            <div style={{ color: "#00a99d", textAlign: "left", fontSize: 12 }}>
+              <label>Nest Steps:</label>
+              <ul>
+                <li>You will receive booking confirmation within 24 hours</li>
+                <li>
+                  Please recheck your booking details and inform us in case of
+                  any errors
+                </li>
+                <li>
+                  Please contact us at{" "}
+                  <a href="mailto:cs@axenholidays.com">
+                    cs@axenholidays@gmail.com
+                  </a>
+                  for further queries
+                </li>
+              </ul>
+            </div>
             {/* <div className="phone2">
                 <a href="tel:+02081383891">0208-138-3891</a>
               </div> */}
-            <div className="phone2">
+            {/* <div className="phone2">
               <a href="tel:+02081383893">0208-138-3893</a>
-            </div>
+            </div> */}
           </div>
         </Box>
       </Modal>
