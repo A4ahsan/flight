@@ -11,6 +11,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useAlert } from "react-alert";
 import Loading from "../components/Loading";
+import SideBarFilter from "../components/SideBarSearchFilter/SideBarFilter";
 
 const SearchFlight2 = (props) => {
   const alert = useAlert();
@@ -183,6 +184,7 @@ const SearchFlight2 = (props) => {
       <div>
         <TopBarOne />
         <TopBarTwo />
+        <SideBarFilter />
         <div className="mb-12 mt-20 searchFlightSection">
           <h4 className="font-weight-bold">Sort Result By:</h4>
           <div className="d-flex">
@@ -273,13 +275,13 @@ const SearchFlight2 = (props) => {
 
                           <div className="">
                             <label className="countryCode">
-                            {journeyData.stop !== 0
+                              {journeyData.stop !== 0
                                 ? journeyData.optionInfos[0][
                                     "airSegmentInfos"
                                   ][0]["origin"]
-                                : journeyData.optionInfos[0]["airSegmentInfos"][
-                                    0
-                                  ]["origin"]}
+                                : journeyData.optionInfos[0][
+                                    "airSegmentInfos"
+                                  ][0]["origin"]}
                             </label>{" "}
                             <br />
                             <label className="airportName">
@@ -324,13 +326,13 @@ const SearchFlight2 = (props) => {
                             >
                               <label>Arrival</label> <br />
                               <label>
-                              {journeyData.stop !== 0
-                                ? journeyData.optionInfos[0][
-                                  "airSegmentInfos"
-                                ][1]["arrivalTime"]
-                                : journeyData.optionInfos[0][
-                                  "airSegmentInfos"
-                                ][0]["arrivalTime"]}
+                                {journeyData.stop !== 0
+                                  ? journeyData.optionInfos[0][
+                                      "airSegmentInfos"
+                                    ][1]["arrivalTime"]
+                                  : journeyData.optionInfos[0][
+                                      "airSegmentInfos"
+                                    ][0]["arrivalTime"]}
                                 {/* {
                                   journeyData.optionInfos[0][
                                     "airSegmentInfos"
@@ -342,13 +344,13 @@ const SearchFlight2 = (props) => {
 
                           <div className="" style={{ textAlign: "right" }}>
                             <label className="countryCode">
-                            {journeyData.stop !== 0
+                              {journeyData.stop !== 0
                                 ? journeyData.optionInfos[0][
                                     "airSegmentInfos"
                                   ][1]["destination"]
-                                : journeyData.optionInfos[0]["airSegmentInfos"][
-                                    0
-                                  ]["destination"]}
+                                : journeyData.optionInfos[0][
+                                    "airSegmentInfos"
+                                  ][0]["destination"]}
                               {/* {journeyData.destination} */}
                             </label>{" "}
                             <br />
@@ -357,9 +359,9 @@ const SearchFlight2 = (props) => {
                                 ? journeyData.optionInfos[0][
                                     "airSegmentInfos"
                                   ][1]["destinationAirportName"]
-                                : journeyData.optionInfos[0]["airSegmentInfos"][
-                                    0
-                                  ]["destinationAirportName"]}
+                                : journeyData.optionInfos[0][
+                                    "airSegmentInfos"
+                                  ][0]["destinationAirportName"]}
                               {/* {
                                 journeyData.optionInfos[0][
                                   "airSegmentInfos"
