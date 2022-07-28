@@ -28,6 +28,36 @@ const SearchFlight2 = (props) => {
 
   const [clickedId, setclickedId] = useState(null);
 
+  // filters
+  const getAllPrice = airSolutions?.map((price) => {
+    return price?.pricingInfos[0]?.totalPrice;
+  });
+  const getAllStops = airSolutions?.map((stops) => {
+    return stops.journey
+      .map((item) => item.stop)
+      .filter((value, index, self) => self.indexOf(value) === index);
+  });
+  const noOfStops = [...new Set([].concat.apply([], getAllStops))];
+  const getAllAirlines = airSolutions?.map((airline) => {
+    return airline.journey.map((singleJourney) => {
+      return singleJourney.optionInfos
+        .map((item) => item.airSegmentInfos[0].arlineName)
+        .filter((value, index, self) => self.indexOf(value) === index);
+    });
+  });
+  const filterAirlines = [].concat.apply([], getAllAirlines);
+  const filterAirliness = [...new Set([].concat.apply([], filterAirlines))];
+  const getDeparture = airSolutions?.map((airline) => {
+    return airline.journey.map((singleJourney) => {
+      return singleJourney.optionInfos
+        .map((item) => item.airSegmentInfos[0].originAirportCity)
+        .filter((value, index, self) => self.indexOf(value) === index);
+    });
+  });
+  const departure = [].concat.apply([], getDeparture);
+  const departureCity = [...new Set([].concat.apply([], departure))];
+  //console.log("departureCity: ", departureCity);
+
   const hitFlightPriceAPI = async (data) => {
     setIsLoading(true);
     if (state.details.TripType == "RT") {
@@ -184,7 +214,12 @@ const SearchFlight2 = (props) => {
       <div>
         <TopBarOne />
         <TopBarTwo />
-        <SideBarFilter />
+        <SideBarFilter
+          priceInfo={getAllPrice}
+          totalStops={noOfStops}
+          airlines={filterAirliness}
+          departure={departureCity}
+        />
         <div className="mb-12 mt-20 searchFlightSection">
           <h4 className="font-weight-bold">Sort Result By:</h4>
           <div className="d-flex">
