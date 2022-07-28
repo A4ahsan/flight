@@ -285,6 +285,7 @@ function BookingFlightPage2() {
             FlightPriceData.airSolutions[0]["totalPrice"] +
             bookingCharges +
             atolCharges,
+          FlightPriceData,
         },
       });
       dispatch(setAlert("bookFlight"));

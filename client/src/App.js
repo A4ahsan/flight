@@ -35,6 +35,7 @@ import Contact from "./pages/contact";
 import SearchFlight2 from "./pages/SearchFlight2";
 import BookingFlightPage2 from "./pages/BookingFlightPage2";
 import LandingPageRevamp from "./pages/LandingPageRevamp";
+import ThankyouPage from "./pages/ThankyouPage";
 
 function App() {
   // trave -agency functions
@@ -71,6 +72,7 @@ function App() {
           <Route path="/TermsAndCondition" element={<TermsAndCondition />} />
           <Route path="/LandingPage" element={<LandingPage />} />
           <Route path="/booking" element={<LandingPageRevamp />} />
+          <Route path="/ThankyouPage" element={<ThankyouPage />} />
           <Route
             path="/flight-checkout"
             element={

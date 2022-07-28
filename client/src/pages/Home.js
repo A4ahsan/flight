@@ -306,9 +306,7 @@ function Home() {
         Origin: valueFromSearch.split("-")[0],
         Destination: valueFromSearch2.split("-")[0],
         AirlineCode: "",
-        DepartDate: format(oneWayDate, "yyyy/MM/dd")
-          .split("/")
-          .join("-"),
+        DepartDate: format(oneWayDate, "yyyy/MM/dd").split("/").join("-"),
         // ArrivalDate: format(date[0].endDate, "yyyy/MM/dd").split("/").join("-"),
         Class: cabin,
         IsFlexibleDate: "false",
@@ -476,10 +474,7 @@ function Home() {
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
 
-  console.log("Dates", format(oneWayDate, "yyyy/MM/dd")
-  .split("/")
-  .join("-"));
-
+  console.log("Dates", format(oneWayDate, "yyyy/MM/dd").split("/").join("-"));
   return (
     <>
       <div>
@@ -1624,7 +1619,10 @@ function Home() {
                 <Flip delay={150}>
                   <div className="col-sm-12 col-md-12 col-xs-12 col-lg-2">
                     <div className="thumb1">
-                      <div className="thumbnail clearfix" style={{marginTop: 50}}>
+                      <div
+                        className="thumbnail clearfix"
+                        style={{ marginTop: 50 }}
+                      >
                         <Link to="#">
                           <figure style={{ textAlign: "center" }}>
                             <img

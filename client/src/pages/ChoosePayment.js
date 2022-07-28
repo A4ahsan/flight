@@ -54,6 +54,7 @@ const theme = createTheme();
 export default function ChoosePayment() {
   const navigate = useNavigate();
   const { state } = useLocation();
+  const { FlightPriceData } = state;
   console.log(state);
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -82,8 +83,12 @@ export default function ChoosePayment() {
 
   const doReload = () => {
     setdoneModal(false);
-    // window.location.reload();
-    navigate("/");
+    navigate("/ThankyouPage", {
+      state: {
+        cardDetails: token,
+        FlightDetails: FlightPriceData,
+      },
+    });
   };
   const style = (theme) => ({
     position: "absolute",
@@ -212,15 +217,24 @@ export default function ChoosePayment() {
               <FaCheckCircle style={{ fontSize: 50, color: "#00a99d" }} />
             </div>
             <h4 className="text-center" style={{ color: "#00a99d" }}>
-              Thank you for booking with us
+              We have received your payments
             </h4>
-            <h4 style={{ color: "#00a99d" }}>
+            <div>
+              <button
+                className="btn btn-primary btn-block"
+                style={{ background: "#00a99d" }}
+                onClick={() => doReload()}
+              >
+                OK
+              </button>
+            </div>
+            {/* <h4 style={{ color: "#00a99d" }}>
               Your booking reference is axen-456
-            </h4>
+            </h4> */}
             {/* <h5 style={{ fontSize: 20 }} className="text-center">
               Feel free to call us
             </h5> */}
-            <div style={{ color: "#00a99d", textAlign: "left", fontSize: 12 }}>
+            {/* <div style={{ color: "#00a99d", textAlign: "left", fontSize: 12 }}>
               <label>Nest Steps:</label>
               <ul>
                 <li>You will receive booking confirmation within 24 hours</li>
@@ -236,7 +250,7 @@ export default function ChoosePayment() {
                   for further queries
                 </li>
               </ul>
-            </div>
+            </div> */}
             {/* <div className="phone2">
                 <a href="tel:+02081383891">0208-138-3891</a>
               </div> */}
