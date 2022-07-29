@@ -10,7 +10,7 @@ const ThankyouPage = (props) => {
   const { FlightDetails, cardDetails } = state;
 
   console.log("Flight Data", FlightDetails);
-  console.log("cardDetails", cardDetails);
+  console.log("cardDetails", cardDetails);  
   return (
     <>
       <div id="main">
@@ -19,7 +19,10 @@ const ThankyouPage = (props) => {
         <div id="content">
           <div className="container">
             <div className="row">
-              <div className="col-md-12 text-center">
+              <div className="col-md-6 text-center mb-5">
+                <img src='images/plane.png' />
+                </div>
+              <div className="col-md-6 text-left mb-5">
                 <div className="d-flex justify-content-center">
                   <FaCheckCircle style={{ fontSize: 50, color: "#00a99d" }} />
                 </div>
