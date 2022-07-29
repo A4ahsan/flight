@@ -33,31 +33,6 @@ const ThankyouPage = (props) => {
                   Thank you for booking with us
                 </h5>{" "}
                 <br />
-                <div
-                  style={{
-                    color: "#00a99d",
-                    textAlign: "center",
-                    fontSize: 15,
-                  }}
-                >
-                  <label>Nest Steps:</label>
-                  <ul>
-                    <li>
-                      You will receive booking confirmation within 24 hours
-                    </li>
-                    <li>
-                      Please recheck your booking details and inform us in case
-                      of any errors
-                    </li>
-                    <li>
-                      Please contact us at{" "}
-                      <a href="mailto:cs@axenholidays.com">
-                        cs@axenholidays@gmail.com
-                      </a>
-                      for further queries
-                    </li>
-                  </ul>
-                </div>
               </div>
               <hr />
               <div className="col-md-6">
@@ -108,7 +83,8 @@ const ThankyouPage = (props) => {
                             "airSegments"
                           ][0]["arlineName"]
                         }{" "}
-                      </label> <br />
+                      </label>{" "}
+                      <br />
                       <label className="">
                         {
                           FlightDetails["airSolutions"][0]["journey"][0][
@@ -121,9 +97,11 @@ const ThankyouPage = (props) => {
 
                   {FlightDetails.airSolutions[0].journey.map((air, index2) =>
                     air.airSegments.map((journey, index2) => (
-                      <> 
-                      <hr />
-                        <label className="mb-0">Flight No. {journey.flightNumber}</label>
+                      <>
+                        <hr />
+                        <label className="mb-0">
+                          Flight No. {journey.flightNumber}
+                        </label>
                         <div className="d-flex justify-content-between mt-3">
                           <div>
                             <label className="text-primary">Take Off</label>{" "}
@@ -300,6 +278,30 @@ const ThankyouPage = (props) => {
                     </div>
                   </div>
                 </div> */}
+              </div>
+              <div
+                style={{
+                  color: "#00a99d",
+                  textAlign: "left",
+                  fontSize: 15,
+                  marginTop: 50
+                }}
+              >
+                <label>Nest Steps:</label>
+                <ul>
+                  <li>You will receive booking confirmation within 24 hours</li>
+                  <li>
+                    Please recheck your booking details and inform us in case of
+                    any errors
+                  </li>
+                  <li>
+                    Please contact us at{" "}
+                    <a href="mailto:cs@axenholidays.com">
+                      cs@axenholidays@gmail.com
+                    </a>
+                    for further queries
+                  </li>
+                </ul>
               </div>
             </div>
           </div>
