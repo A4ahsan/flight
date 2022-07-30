@@ -22,6 +22,8 @@ const SearchFlight2 = (props) => {
   const [airSolutions, setairSolutions] = useState(
     state.flightOffers.result.airSolutions
   );
+  const copyAirSolutions = state.flightOffers.result.airSolutions;
+  //console.log("copyAirSolutions: ", copyAirSolutions);
   const [isLoading, setIsLoading] = useState(false);
   const [byPrice, setbyPrice] = useState("LtoH");
   const [byName, setbyName] = useState("ZtoA");
@@ -29,16 +31,16 @@ const SearchFlight2 = (props) => {
   const [clickedId, setclickedId] = useState(null);
 
   // filters
-  const getAllPrice = airSolutions?.map((price) => {
+  const getAllPrice = copyAirSolutions?.map((price) => {
     return price?.pricingInfos[0]?.totalPrice;
   });
-  const getAllStops = airSolutions?.map((stops) => {
+  const getAllStops = copyAirSolutions?.map((stops) => {
     return stops.journey
       .map((item) => item.stop)
       .filter((value, index, self) => self.indexOf(value) === index);
   });
   const noOfStops = [...new Set([].concat.apply([], getAllStops))];
-  const getAllAirlines = airSolutions?.map((airline) => {
+  const getAllAirlines = copyAirSolutions?.map((airline) => {
     return airline.journey.map((singleJourney) => {
       return singleJourney.optionInfos
         .map((item) => item.airSegmentInfos[0].arlineName)
@@ -47,7 +49,7 @@ const SearchFlight2 = (props) => {
   });
   const filterAirlines = [].concat.apply([], getAllAirlines);
   const filterAirliness = [...new Set([].concat.apply([], filterAirlines))];
-  const getDeparture = airSolutions?.map((airline) => {
+  const getDeparture = copyAirSolutions?.map((airline) => {
     return airline.journey.map((singleJourney) => {
       return singleJourney.optionInfos
         .map((item) => item.airSegmentInfos[0].originAirportCity)
@@ -104,8 +106,8 @@ const SearchFlight2 = (props) => {
         setIsLoading(false);
         alert.error("No Price Found");
       }
-      console.log("Final Data for Price", finalData);
-      console.log("Flight Price Response", res.data);
+      // console.log("Final Data for Price", finalData);
+      // console.log("Flight Price Response", res.data);
     } else {
       debugger;
       let finalData = {
@@ -150,8 +152,8 @@ const SearchFlight2 = (props) => {
         setIsLoading(false);
         alert.error("No Price Found");
       }
-      console.log("Final Data for Price", finalData);
-      console.log("Flight Price Response", res.data);
+      // console.log("Final Data for Price", finalData);
+      // console.log("Flight Price Response", res.data);
     }
   };
 
@@ -203,12 +205,140 @@ const SearchFlight2 = (props) => {
         return 0;
       });
     }
-    debugger;
+    // debugger;
     setbyName(action);
   };
-  console.log("Flight Info", globalScope);
-  console.log("Air Solutions", airSolutions);
+  // console.log("Flight Info", globalScope);
+  // console.log("Air Solutions", airSolutions);
 
+  const filterByPriceHandler = (price) => {
+    const filterByPrice = copyAirSolutions.filter(
+      (data) => data.totalPrice <= price
+    );
+    setairSolutions(filterByPrice);
+  };
+
+  const filterByStopsHandler = (value, checked) => {
+    if (!checked) {
+      const journey = airSolutions?.map((element) => {
+        return {
+          ...element,
+          journey: element.journey.filter(
+            (subElement) => subElement.stop != value
+          ),
+        };
+      });
+      const removeEmpty = journey.filter((j) => j.journey.length > 0);
+      setairSolutions(removeEmpty);
+    } else {
+      const journey = copyAirSolutions?.map((element) => {
+        return {
+          ...element,
+          journey: element.journey.filter(
+            (subElement) => subElement.stop == value
+          ),
+        };
+      });
+      const removeEmpty = journey.filter((j) => j.journey.length > 0);
+      setairSolutions(removeEmpty);
+    }
+  };
+
+  // const airline = airSolutions?.map((data) => {
+  //   return {
+  //     ...data,
+  //     journey: data.journey.map((journey) => {
+  //       return {
+  //         ...journey,
+  //         optionInfos: journey.optionInfos.map((singleFlight) => {
+  //           return {
+  //             ...singleFlight,
+  //             airSegmentInfos: singleFlight.airSegmentInfos.filter(
+  //               (airline) => airline.arlineName != "Qatar Airways"
+  //             ),
+  //           };
+  //         }),
+  //       };
+  //     }),
+  //   };
+  // });
+  // arr = arr
+  //   .map((v) => ({
+  //     ...v,
+  //     parents: v.parents.filter(({ parent }) => parent !== idToDelete),
+  //   }))
+  //   .filter((v) => v.parents.length);
+  const filterByAirlineHandler = (value, checked) => {
+    if (!checked) {
+      const airline = airSolutions
+        .map((data) => ({
+          ...data,
+          journey: data.journey
+            .map((a) => ({
+              ...a,
+              optionInfos: a.optionInfos
+                .map((b) => ({
+                  ...b,
+                  airSegmentInfos: b.airSegmentInfos.filter(
+                    ({ arlineName }) => arlineName !== value.toString()
+                  ),
+                }))
+                .filter((v) => v.airSegmentInfos.length),
+            }))
+            .filter((v) => v.optionInfos.length),
+        }))
+        .filter((v) => v.journey.length);
+      // console.log("airline: ", airline);
+      setairSolutions(airline);
+    } else {
+      const airline = copyAirSolutions
+        .map((data) => ({
+          ...data,
+          journey: data.journey
+            .map((a) => ({
+              ...a,
+              optionInfos: a.optionInfos
+                .map((b) => ({
+                  ...b,
+                  airSegmentInfos: b.airSegmentInfos.filter(
+                    ({ arlineName }) => arlineName === value.toString()
+                  ),
+                }))
+                .filter((v) => v.airSegmentInfos.length),
+            }))
+            .filter((v) => v.optionInfos.length),
+        }))
+        .filter((v) => v.journey.length);
+      // console.log("airline: ", airline);
+      setairSolutions(airline);
+    }
+  };
+  // const airline = airSolutions
+  //   .map((data) => ({
+  //     ...data,
+  //     journey: data.journey
+  //       .map((a) => ({
+  //         ...a,
+  //         optionInfos: a.optionInfos
+  //           .map((b) => ({
+  //             ...b,
+  //             airSegmentInfos: b.airSegmentInfos.filter(
+  //               ({ arlineName }) => arlineName === "Qatar Airways"
+  //             ),
+  //           }))
+  //           .filter((v) => v.airSegmentInfos.length),
+  //       }))
+  //       .filter((v) => v.optionInfos.length),
+  //   }))
+  //   .filter((v) => v.journey.length);
+  // console.log("airline: ", airline);
+  //console.log("emptyAirline: ", emptyAirline);
+  // console.log(
+  //   "Filter by stops",
+  //   journey.filter((j) => j.journey.length > 0)
+  // );
+  // let copy = airSolutions;
+  // copy = {};
   return (
     <>
       <div>
@@ -219,6 +349,9 @@ const SearchFlight2 = (props) => {
           totalStops={noOfStops}
           airlines={filterAirliness}
           departure={departureCity}
+          priceHandler={filterByPriceHandler}
+          stopHandler={filterByStopsHandler}
+          airlineHandler={filterByAirlineHandler}
         />
         <div className="mb-12 mt-20 searchFlightSection">
           <h4 className="font-weight-bold">Sort Result By:</h4>
@@ -262,7 +395,7 @@ const SearchFlight2 = (props) => {
             </div> */}
           </div>
 
-          {airSolutions.map((item, index) => (
+          {airSolutions?.map((item, index) => (
             <div className="">
               {clickedId !== index ? (
                 <div
@@ -289,19 +422,19 @@ const SearchFlight2 = (props) => {
                             />
                             <label>
                               {
-                                journeyData.optionInfos[0][
+                                journeyData?.optionInfos[0][
                                   "airSegmentInfos"
                                 ][0]["arlineName"]
                               }
                             </label>
                             <p>
                               {
-                                journeyData.optionInfos[0][
+                                journeyData?.optionInfos[0][
                                   "airSegmentInfos"
                                 ][0]["ticketCarrier"]
                               }
                               {
-                                journeyData.optionInfos[0][
+                                journeyData?.optionInfos[0][
                                   "airSegmentInfos"
                                 ][0]["flightNumber"]
                               }
@@ -310,18 +443,18 @@ const SearchFlight2 = (props) => {
 
                           <div className="">
                             <label className="countryCode">
-                              {journeyData.stop !== 0
-                                ? journeyData.optionInfos[0][
+                              {journeyData?.stop !== 0
+                                ? journeyData?.optionInfos[0][
                                     "airSegmentInfos"
                                   ][0]["origin"]
-                                : journeyData.optionInfos[0][
+                                : journeyData?.optionInfos[0][
                                     "airSegmentInfos"
                                   ][0]["origin"]}
                             </label>{" "}
                             <br />
                             <label className="airportName">
                               {
-                                journeyData.optionInfos[0][
+                                journeyData?.optionInfos[0][
                                   "airSegmentInfos"
                                 ][0]["originAirportName"]
                               }
@@ -329,7 +462,7 @@ const SearchFlight2 = (props) => {
                             <br />
                             <label className="airportName">
                               {
-                                journeyData.optionInfos[0][
+                                journeyData?.optionInfos[0][
                                   "airSegmentInfos"
                                 ][0]["departDate"]
                               }
@@ -350,8 +483,8 @@ const SearchFlight2 = (props) => {
                             <div>
                               <ImAirplane className="ml-5 mr-5" /> <br />
                               <label className="text-muted">
-                                {journeyData.stop !== 0
-                                  ? `${journeyData.stop} Stops(s)`
+                                {journeyData?.stop !== 0
+                                  ? `${journeyData?.stop} Stops(s)`
                                   : "Direct"}
                               </label>
                             </div>
@@ -361,11 +494,15 @@ const SearchFlight2 = (props) => {
                             >
                               <label>Arrival</label> <br />
                               <label>
-                                {journeyData.stop == 1
+                                {journeyData.stop == 1 &&
+                                journeyData?.optionInfos[0]?.airSegmentInfos
+                                  .length > 1
                                   ? journeyData.optionInfos[0][
                                       "airSegmentInfos"
                                     ][1]["arrivalTime"]
-                                  : journeyData.stop == 2
+                                  : journeyData.stop == 2 &&
+                                    journeyData?.optionInfos[0]?.airSegmentInfos
+                                      .length > 1
                                   ? journeyData.optionInfos[0][
                                       "airSegmentInfos"
                                     ][2]["arrivalTime"]
@@ -383,11 +520,15 @@ const SearchFlight2 = (props) => {
 
                           <div className="" style={{ textAlign: "right" }}>
                             <label className="countryCode">
-                              {journeyData.stop == 1
+                              {journeyData.stop == 1 &&
+                              journeyData?.optionInfos[0]?.airSegmentInfos
+                                .length > 1
                                 ? journeyData.optionInfos[0][
                                     "airSegmentInfos"
                                   ][1]["destination"]
-                                : journeyData.stop == 2
+                                : journeyData.stop == 2 &&
+                                  journeyData?.optionInfos[0]?.airSegmentInfos
+                                    .length > 1
                                 ? journeyData.optionInfos[0][
                                     "airSegmentInfos"
                                   ][2]["destination"]
@@ -398,11 +539,15 @@ const SearchFlight2 = (props) => {
                             </label>{" "}
                             <br />
                             <label className="airportName">
-                              {journeyData.stop == 1
+                              {journeyData.stop == 1 &&
+                              journeyData?.optionInfos[0]?.airSegmentInfos
+                                .length > 1
                                 ? journeyData.optionInfos[0][
                                     "airSegmentInfos"
                                   ][1]["destinationAirportName"]
-                                : journeyData.stop == 2
+                                : journeyData.stop == 2 &&
+                                  journeyData?.optionInfos[0]?.airSegmentInfos
+                                    .length > 1
                                 ? journeyData.optionInfos[0][
                                     "airSegmentInfos"
                                   ][2]["destinationAirportName"]
@@ -417,11 +562,15 @@ const SearchFlight2 = (props) => {
                             </label>{" "}
                             <br />
                             <label className="airportName">
-                              {journeyData.stop == 1
+                              {journeyData.stop == 1 &&
+                              journeyData?.optionInfos[0]?.airSegmentInfos
+                                .length > 1
                                 ? journeyData.optionInfos[0][
                                     "airSegmentInfos"
                                   ][1]["arrivalDate"]
-                                : journeyData.stop == 2
+                                : journeyData.stop == 2 &&
+                                  journeyData?.optionInfos[0]?.airSegmentInfos
+                                    .length > 1
                                 ? journeyData.optionInfos[0][
                                     "airSegmentInfos"
                                   ][2]["arrivalDate"]
