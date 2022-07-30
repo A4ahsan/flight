@@ -494,13 +494,19 @@ const SearchFlight2 = (props) => {
                             >
                               <label>Arrival</label> <br />
                               <label>
-                                {journeyData?.stop !== 0 &&
+                                {journeyData.stop == 1 &&
                                 journeyData?.optionInfos[0]?.airSegmentInfos
                                   .length > 1
-                                  ? journeyData?.optionInfos[0][
+                                  ? journeyData.optionInfos[0][
                                       "airSegmentInfos"
                                     ][1]["arrivalTime"]
-                                  : journeyData?.optionInfos[0][
+                                  : journeyData.stop == 2 &&
+                                    journeyData?.optionInfos[0]?.airSegmentInfos
+                                      .length > 1
+                                  ? journeyData.optionInfos[0][
+                                      "airSegmentInfos"
+                                    ][2]["arrivalTime"]
+                                  : journeyData.optionInfos[0][
                                       "airSegmentInfos"
                                     ][0]["arrivalTime"]}
                                 {/* {
@@ -514,12 +520,18 @@ const SearchFlight2 = (props) => {
 
                           <div className="" style={{ textAlign: "right" }}>
                             <label className="countryCode">
-                              {journeyData.stop !== 0 &&
+                              {journeyData.stop == 1 &&
                               journeyData?.optionInfos[0]?.airSegmentInfos
                                 .length > 1
                                 ? journeyData.optionInfos[0][
                                     "airSegmentInfos"
                                   ][1]["destination"]
+                                : journeyData.stop == 2 &&
+                                  journeyData?.optionInfos[0]?.airSegmentInfos
+                                    .length > 1
+                                ? journeyData.optionInfos[0][
+                                    "airSegmentInfos"
+                                  ][2]["destination"]
                                 : journeyData.optionInfos[0][
                                     "airSegmentInfos"
                                   ][0]["destination"]}
@@ -527,12 +539,18 @@ const SearchFlight2 = (props) => {
                             </label>{" "}
                             <br />
                             <label className="airportName">
-                              {journeyData.stop !== 0 &&
+                              {journeyData.stop == 1 &&
                               journeyData?.optionInfos[0]?.airSegmentInfos
                                 .length > 1
                                 ? journeyData.optionInfos[0][
                                     "airSegmentInfos"
                                   ][1]["destinationAirportName"]
+                                : journeyData.stop == 2 &&
+                                  journeyData?.optionInfos[0]?.airSegmentInfos
+                                    .length > 1
+                                ? journeyData.optionInfos[0][
+                                    "airSegmentInfos"
+                                  ][2]["destinationAirportName"]
                                 : journeyData.optionInfos[0][
                                     "airSegmentInfos"
                                   ][0]["destinationAirportName"]}
@@ -544,11 +562,26 @@ const SearchFlight2 = (props) => {
                             </label>{" "}
                             <br />
                             <label className="airportName">
-                              {
+                              {journeyData.stop == 1 &&
+                              journeyData?.optionInfos[0]?.airSegmentInfos
+                                .length > 1
+                                ? journeyData.optionInfos[0][
+                                    "airSegmentInfos"
+                                  ][1]["arrivalDate"]
+                                : journeyData.stop == 2 &&
+                                  journeyData?.optionInfos[0]?.airSegmentInfos
+                                    .length > 1
+                                ? journeyData.optionInfos[0][
+                                    "airSegmentInfos"
+                                  ][2]["arrivalDate"]
+                                : journeyData.optionInfos[0][
+                                    "airSegmentInfos"
+                                  ][0]["arrivalDate"]}
+                              {/* {
                                 journeyData.optionInfos[0][
                                   "airSegmentInfos"
                                 ][0]["arrivalDate"]
-                              }
+                              } */}
                             </label>
                           </div>
 

@@ -285,6 +285,7 @@ function BookingFlightPage2() {
             FlightPriceData.airSolutions[0]["totalPrice"] +
             bookingCharges +
             atolCharges,
+          FlightPriceData,
         },
       });
       dispatch(setAlert("bookFlight"));
@@ -566,7 +567,6 @@ function BookingFlightPage2() {
 
                             <input
                               autoComplete="off"
-                              required
                               onChange={(e) => handleInputChange(index, e)}
                               name="MiddelName"
                               value={item.MiddelName}
