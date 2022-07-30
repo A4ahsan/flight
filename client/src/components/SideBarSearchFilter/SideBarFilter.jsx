@@ -17,17 +17,23 @@ import "./SidebarSearchFilter.css";
 
 export default function SideBarFilter(props) {
   const [state, setState] = useState(false);
-  const { priceInfo, totalStops, airlines, departure } = props;
-  //console.log("priceInfo: ", priceInfo);
-  // const airlines = [
-  //   "Emirates",
-  //   "Oman Air",
-  //   "Eithead Airways",
-  //   "Gulf Air",
-  //   "Fly Dubai",
-  //   "Turkish Airlines",
-  // ];
-  //const departure = ["karachi", "Lahore", "Islamabad", "Multan"];
+  const {
+    priceInfo,
+    totalStops,
+    airlines,
+    departure,
+    priceHandler,
+    stopHandler,
+    airlineHandler,
+  } = props;
+  const [finalPrice, setFinalPrice] = useState(
+    priceInfo[priceInfo?.length - 1]
+  );
+  const [isChecked, setIsChecked] = useState(() => totalStops.map((i) => true));
+  const [isAirlineChecked, setIsAirlineChecked] = useState(() =>
+    airlines.map((i) => true)
+  );
+
   const stopOverLocation = [
     "Dubai",
     "Muscat",
@@ -36,6 +42,7 @@ export default function SideBarFilter(props) {
     "Muharraq",
   ];
   const baggage = ["10", "20", "25", "30", "50"];
+
   const toggleDrawer = (anchor) => (event) => {
     if (
       event.type === "keydown" &&
@@ -47,6 +54,30 @@ export default function SideBarFilter(props) {
     setState(anchor);
   };
 
+  const handlePriceHandler = (event) => {
+    setFinalPrice(event.target.value);
+    priceHandler(event.target.value);
+  };
+
+  const handleCheckBox = (event, checked, index) => {
+    stopHandler(event.target.name, checked);
+    setIsChecked((isChecked) => {
+      return isChecked.map((c, i) => {
+        if (i === index) return checked;
+        return c;
+      });
+    });
+  };
+
+  const handleAirlineCheckBox = (event, checked, index) => {
+    setIsAirlineChecked((isChecked) => {
+      return isChecked.map((c, i) => {
+        if (i === index) return checked;
+        return c;
+      });
+    });
+    airlineHandler(event.target.name, checked);
+  };
   const list = (anchor) => (
     <Box
       sx={{ width: 280 }}
@@ -82,13 +113,19 @@ export default function SideBarFilter(props) {
                 padding: "10px",
               }}
             >
-              <Slider defaultValue={50} aria-label="Default" />
+              <Slider
+                defaultValue={finalPrice}
+                value={finalPrice}
+                aria-label="Default"
+                step={100}
+                min={priceInfo[0]}
+                max={priceInfo[priceInfo?.length - 1]}
+                onChange={handlePriceHandler}
+              />
               <Typography sx={{ fontSize: "14px" }}>
                 Showing flights from{" "}
                 <span className="rangeSlide-text">£{priceInfo[0]}</span> to{" "}
-                <span className="rangeSlide-text">
-                  £{priceInfo[priceInfo?.length - 1]}
-                </span>
+                <span className="rangeSlide-text">£{finalPrice}</span>
               </Typography>
             </Box>
           </AccordionDetails>
@@ -120,74 +157,30 @@ export default function SideBarFilter(props) {
                 padding: "0px 10px",
               }}
             >
-              {totalStops?.map((stops) => (
+              {totalStops?.map((stops, index) => (
                 <Box
                   sx={{
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "space-between",
                   }}
-                  key={stops}
+                  key={index + stops}
                 >
-                  {/* <React.Fragment> */}
                   <FormControlLabel
-                    control={<Checkbox defaultChecked />}
+                    control={
+                      <Checkbox
+                        checked={isChecked[index]}
+                        name={stops}
+                        onChange={(e, checked) =>
+                          handleCheckBox(e, checked, index)
+                        }
+                      />
+                    }
                     label={stops === 0 ? "Direct" : `${stops} Stop(s)`}
                     sx={{ marginTop: "5px" }}
                   />
-                  {/* <Typography
-                    sx={{
-                      fontSize: "12px",
-                      color: "#333",
-                    }}
-                  >
-                    from <span className="rangeSlide-text">£2945</span>
-                  </Typography> */}
-                  {/* </React.Fragment> */}
                 </Box>
               ))}
-              {/* <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                }}
-              >
-                <FormControlLabel
-                  control={<Checkbox defaultChecked />}
-                  label="1 Stop"
-                  sx={{ marginTop: "5px" }}
-                />
-                <Typography
-                  sx={{
-                    fontSize: "12px",
-                    color: "#333",
-                  }}
-                >
-                  from <span className="rangeSlide-text">£3945</span>
-                </Typography>
-              </Box> */}
-              {/* <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                }}
-              >
-                <FormControlLabel
-                  control={<Checkbox defaultChecked />}
-                  label="2 Stop"
-                  sx={{ marginTop: "5px" }}
-                />
-                <Typography
-                  sx={{
-                    fontSize: "12px",
-                    color: "#333",
-                  }}
-                >
-                  from <span className="rangeSlide-text">£4945</span>
-                </Typography>
-              </Box> */}
             </Box>
           </AccordionDetails>
         </Accordion>
@@ -225,21 +218,21 @@ export default function SideBarFilter(props) {
                     alignItems: "center",
                     justifyContent: "space-between",
                   }}
-                  key={index}
+                  key={airlineData + index}
                 >
                   <FormControlLabel
-                    control={<Checkbox defaultChecked />}
+                    control={
+                      <Checkbox
+                        name={airlineData}
+                        checked={isAirlineChecked[index]}
+                        onChange={(e, checked) =>
+                          handleAirlineCheckBox(e, checked, index)
+                        }
+                      />
+                    }
                     label={airlineData}
                     sx={{ marginTop: "5px" }}
                   />
-                  {/* <Typography
-                    sx={{
-                      fontSize: "12px",
-                      color: "#333",
-                    }}
-                  >
-                    from <span className="rangeSlide-text">£2945</span>
-                  </Typography> */}
                 </Box>
               ))}
             </Box>
@@ -286,20 +279,12 @@ export default function SideBarFilter(props) {
                     label={departureData}
                     sx={{ marginTop: "5px" }}
                   />
-                  {/* <Typography
-                    sx={{
-                      fontSize: "12px",
-                      color: "#333",
-                    }}
-                  >
-                    from <span className="rangeSlide-text">£2945</span>
-                  </Typography> */}
                 </Box>
               ))}
             </Box>
           </AccordionDetails>
         </Accordion>
-        <Accordion disableGutters={true}>
+        {/* <Accordion disableGutters={true}>
           <AccordionSummary
             expandIcon={
               <ExpandMoreIcon sx={{ height: "20px", width: "20px" }} />
@@ -340,14 +325,6 @@ export default function SideBarFilter(props) {
                     label={stopoverData}
                     sx={{ marginTop: "5px" }}
                   />
-                  {/* <Typography
-                    sx={{
-                      fontSize: "12px",
-                      color: "#333",
-                    }}
-                  >
-                    from <span className="rangeSlide-text">£2945</span>
-                  </Typography> */}
                 </Box>
               ))}
             </Box>
@@ -394,7 +371,7 @@ export default function SideBarFilter(props) {
               ))}
             </Box>
           </AccordionDetails>
-        </Accordion>
+        </Accordion> */}
       </Box>
     </Box>
   );
