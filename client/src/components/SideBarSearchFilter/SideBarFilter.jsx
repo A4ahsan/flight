@@ -25,6 +25,7 @@ export default function SideBarFilter(props) {
     priceHandler,
     stopHandler,
     airlineHandler,
+    departureHandler,
   } = props;
   const [finalPrice, setFinalPrice] = useState(
     priceInfo[priceInfo?.length - 1]
@@ -32,6 +33,9 @@ export default function SideBarFilter(props) {
   const [isChecked, setIsChecked] = useState(() => totalStops.map((i) => true));
   const [isAirlineChecked, setIsAirlineChecked] = useState(() =>
     airlines.map((i) => true)
+  );
+  const [isDepartureChecked, setIsDepartureChecked] = useState(() =>
+    departure.map((i) => true)
   );
 
   const stopOverLocation = [
@@ -78,6 +82,18 @@ export default function SideBarFilter(props) {
     });
     airlineHandler(event.target.name, checked);
   };
+
+  const handleDeparture = (event, checked, index) => {
+    console.log("event: ", event.target.name);
+    setIsDepartureChecked((isChecked) => {
+      return isChecked.map((c, i) => {
+        if (i === index) return checked;
+        return c;
+      });
+    });
+    departureHandler(event.target.name, checked);
+  };
+
   const list = (anchor) => (
     <Box
       sx={{ width: 280 }}
@@ -136,7 +152,7 @@ export default function SideBarFilter(props) {
               <ExpandMoreIcon sx={{ height: "20px", width: "20px" }} />
             }
             aria-controls="panel2a-content"
-            id="panel1a-header"
+            id="panel2a-header"
             sx={{ borderBottom: "1px solid #dedede" }}
           >
             <Typography
@@ -272,10 +288,18 @@ export default function SideBarFilter(props) {
                     alignItems: "center",
                     justifyContent: "space-between",
                   }}
-                  key={index}
+                  key={departureData + index}
                 >
                   <FormControlLabel
-                    control={<Checkbox defaultChecked />}
+                    control={
+                      <Checkbox
+                        name={departureData}
+                        checked={isDepartureChecked[index]}
+                        onChange={(event, checked) =>
+                          handleDeparture(event, checked, index)
+                        }
+                      />
+                    }
                     label={departureData}
                     sx={{ marginTop: "5px" }}
                   />

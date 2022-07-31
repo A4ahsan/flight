@@ -313,6 +313,51 @@ const SearchFlight2 = (props) => {
       setairSolutions(airline);
     }
   };
+  const handleFilterByDeparture = (value, checked) => {
+    if (!checked) {
+      const filterByDeparture = airSolutions
+        .map((data) => ({
+          ...data,
+          journey: data.journey
+            .map((a) => ({
+              ...a,
+              optionInfos: a.optionInfos
+                .map((b) => ({
+                  ...b,
+                  airSegmentInfos: b.airSegmentInfos.filter(
+                    ({ originAirportCity }) =>
+                      originAirportCity != value.toString()
+                  ),
+                }))
+                .filter((v) => v.airSegmentInfos.length),
+            }))
+            .filter((v) => v.optionInfos.length),
+        }))
+        .filter((v) => v.journey.length);
+      setairSolutions(filterByDeparture);
+    } else {
+      const filterByDeparture = copyAirSolutions
+        .map((data) => ({
+          ...data,
+          journey: data.journey
+            .map((a) => ({
+              ...a,
+              optionInfos: a.optionInfos
+                .map((b) => ({
+                  ...b,
+                  airSegmentInfos: b.airSegmentInfos.filter(
+                    ({ originAirportCity }) =>
+                      originAirportCity == value.toString()
+                  ),
+                }))
+                .filter((v) => v.airSegmentInfos.length),
+            }))
+            .filter((v) => v.optionInfos.length),
+        }))
+        .filter((v) => v.journey.length);
+      setairSolutions(filterByDeparture);
+    }
+  };
   // const airline = airSolutions
   //   .map((data) => ({
   //     ...data,
@@ -352,6 +397,7 @@ const SearchFlight2 = (props) => {
           priceHandler={filterByPriceHandler}
           stopHandler={filterByStopsHandler}
           airlineHandler={filterByAirlineHandler}
+          departureHandler={handleFilterByDeparture}
         />
         <div className="mb-12 mt-20 searchFlightSection">
           <h4 className="font-weight-bold">Sort Result By:</h4>
