@@ -7,7 +7,7 @@ import { FaHotel, FaCheckCircle } from "react-icons/fa";
 
 const ThankyouPage = (props) => {
   const { state } = useLocation();
-  const { FlightDetails, cardDetails } = state;
+  const { FlightDetails, cardDetails , flightPrice } = state;
 
   console.log("Flight Data", FlightDetails);
   console.log("cardDetails", cardDetails);  
@@ -197,7 +197,7 @@ const ThankyouPage = (props) => {
                           )
                         )} */}
                 </div>
-                {/* <div className="card p-3 mt-4">
+                <div className="card p-3 mt-4">
                   <div className="">
                     <h3 className="p-0">Price Details</h3>
                     <hr className="mt-0 mb-2" />
@@ -248,7 +248,7 @@ const ThankyouPage = (props) => {
                     )
                   )}
 
-                  <div className="d-flex justify-content-between">
+                  {/* <div className="d-flex justify-content-between">
                     <div>
                       <label>Flight Booking Charges</label>
                     </div>
@@ -263,7 +263,7 @@ const ThankyouPage = (props) => {
                     <div>
                       <label className="text-primary">£{atolCharges}</label>
                     </div>
-                  </div>
+                  </div> */}
 
                   <div className="d-flex justify-content-between mt-5">
                     <div>
@@ -274,13 +274,11 @@ const ThankyouPage = (props) => {
                     <div>
                       <label className="text-primary">
                         £
-                        {FlightDetails.airSolutions[0]["totalPrice"] +
-                          atolCharges +
-                          bookingCharges}
+                        {flightPrice}
                       </label>
                     </div>
                   </div>
-                </div> */}
+                </div>
               </div>
               <div
                 style={{
@@ -300,7 +298,7 @@ const ThankyouPage = (props) => {
                   <li>
                     Please contact us at{" "}
                     <a href="mailto:cs@axenholidays.com">
-                      cs@axenholidays@gmail.com
+                      cs@axenholidays.com
                     </a>
                     for further queries
                   </li>

@@ -54,7 +54,7 @@ const theme = createTheme();
 export default function ChoosePayment() {
   const navigate = useNavigate();
   const { state } = useLocation();
-  const { FlightPriceData } = state;
+  const { FlightPriceData , flightPrice} = state;
   console.log(state);
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -69,7 +69,7 @@ export default function ChoosePayment() {
     debugger;
     console.log("Card Details", T);
     setToken(T);
-    setdoneModal(true);
+    // setdoneModal(true);
     // navigate("/");
   };
   const amount = 80000;
@@ -87,6 +87,7 @@ export default function ChoosePayment() {
       state: {
         cardDetails: token,
         FlightDetails: FlightPriceData,
+        flightPrice
       },
     });
   };

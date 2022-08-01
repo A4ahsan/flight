@@ -2096,13 +2096,15 @@ header {
   padding-bottom: 180px;
   padding-top: 270px;
   /* background-image: url("https://axen-trave-test.herokuapp.com/images/slider.jpg"); */
-  background-image: url("../../public/images/slider.jpg");
+  background-image: url("../../public/images/Axen.jpg");
   background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 100%;
   z-index: -100;
 }
 @media only screen and (max-width: 600px) {
   #slider_wrapper {
-    height: 100vh;
+    height: 40vh;
   }
 }
 
